@@ -1,6 +1,24 @@
-// ========================================
-// EMAILJS CONFIG
-// ========================================
+(function initShieldIntro() {
+    const intro = document.getElementById('shieldIntro');
+    const title = document.getElementById('introTitle');
+    if (!intro || !title) {
+        document.body.classList.remove('intro-active');
+        return;
+    }
+
+    setTimeout(() => { intro.classList.add('breaking'); }, 600);
+    setTimeout(() => { intro.classList.add('exploding'); }, 1500);
+    setTimeout(() => { title.classList.add('show'); }, 2000);
+    setTimeout(() => {
+        intro.classList.add('done');
+        document.body.classList.remove('intro-active');
+    }, 3200);
+    setTimeout(() => {
+        intro.style.display = 'none';
+        intro.remove();
+    }, 3900);
+})();
+
 const EMAILJS_SERVICE_ID = 'service_px36p6n';
 const EMAILJS_TEMPLATE_ID = 'template_g0hgzbm';
 const EMAILJS_PUBLIC_KEY = 'LqmXJ6msgFytUh1E-';
@@ -9,9 +27,6 @@ if (typeof emailjs !== 'undefined') {
     emailjs.init(EMAILJS_PUBLIC_KEY);
 }
 
-// ========================================
-// MAIN APP
-// ========================================
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initDropdowns();
@@ -26,9 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackToTop();
 });
 
-// ========================================
-// NAVIGATION
-// ========================================
 function initNavigation() {
     const toggle = document.querySelector('.nav-toggle');
     const links = document.querySelector('.nav-links');
@@ -63,9 +75,6 @@ function initNavigation() {
     });
 }
 
-// ========================================
-// DROPDOWNS
-// ========================================
 function initDropdowns() {
     const dropdowns = document.querySelectorAll('.dropdown-toggle');
 
@@ -108,9 +117,6 @@ styleDropdown.textContent = `
 `;
 document.head.appendChild(styleDropdown);
 
-// ========================================
-// CONTACT FORM
-// ========================================
 function initContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) return;
@@ -132,22 +138,22 @@ function initContactForm() {
 
         if (!name.value.trim()) {
             isValid = false;
-            name.style.borderColor = '#000000';
-            name.style.boxShadow = '0 0 0 4px rgba(0, 0, 0, 0.1)';
+            name.style.borderColor = '#00e5ff';
+            name.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
             name.focus();
         }
 
         if (!email.value.trim() || !isValidEmail(email.value)) {
             isValid = false;
-            email.style.borderColor = '#000000';
-            email.style.boxShadow = '0 0 0 4px rgba(0, 0, 0, 0.1)';
+            email.style.borderColor = '#00e5ff';
+            email.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
             if (isValid) email.focus();
         }
 
         if (!message.value.trim()) {
             isValid = false;
-            message.style.borderColor = '#000000';
-            message.style.boxShadow = '0 0 0 4px rgba(0, 0, 0, 0.1)';
+            message.style.borderColor = '#00e5ff';
+            message.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
             if (isValid) message.focus();
         }
 
@@ -189,9 +195,9 @@ function initContactForm() {
                 </svg>
                 Sent Successfully!
             `;
-            btn.style.background = '#000000';
-            btn.style.borderColor = '#000000';
-            btn.style.color = '#ffffff';
+            btn.style.background = '#00e5ff';
+            btn.style.borderColor = '#00e5ff';
+            btn.style.color = '#0a0c10';
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -230,9 +236,6 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// ========================================
-// SCROLL EFFECTS
-// ========================================
 function initScrollEffects() {
     const navbar = document.querySelector('.navbar');
 
@@ -245,9 +248,6 @@ function initScrollEffects() {
     });
 }
 
-// ========================================
-// SMOOTH SCROLL
-// ========================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -262,9 +262,6 @@ function initSmoothScroll() {
     });
 }
 
-// ========================================
-// CARD GLOW (3D tilt)
-// ========================================
 function initCardGlow() {
     const cards = document.querySelectorAll('.skill-card, .project-card, .cert-card, .profile-card, .achievement-card, .stat-block');
 
@@ -286,19 +283,16 @@ function initCardGlow() {
     });
 }
 
-// ========================================
-// HERO REVEAL — show immediately on load
-// ========================================
 function initHeroReveal() {
     const heroElements = document.querySelectorAll(
         '.hero-split .reveal-left, .hero-split .reveal-right, .hero-tagline'
     );
-    heroElements.forEach(el => el.classList.add('revealed'));
+
+    setTimeout(() => {
+        heroElements.forEach(el => el.classList.add('revealed'));
+    }, 2700);
 }
 
-// ========================================
-// SCROLL REVEAL
-// ========================================
 function initScrollReveal() {
     const revealElements = document.querySelectorAll('.section .reveal-up');
 
@@ -324,9 +318,6 @@ function initScrollReveal() {
     });
 }
 
-// ========================================
-// TYPED TEXT
-// ========================================
 function initTypedText() {
     const el = document.getElementById('typedText');
     if (!el) return;
@@ -368,19 +359,16 @@ function initTypedText() {
         }
     }
 
-    setTimeout(type, 300);
+    setTimeout(type, 3400);
 }
 
-// ========================================
-// COUNT UP
-// ========================================
 function initCountUp() {
     const nums = document.querySelectorAll('.stat-num[data-count]');
     if (!nums.length) return;
 
     setTimeout(() => {
         nums.forEach(n => animateCount(n));
-    }, 300);
+    }, 3200);
 }
 
 function animateCount(el) {
@@ -400,9 +388,6 @@ function animateCount(el) {
     requestAnimationFrame(update);
 }
 
-// ========================================
-// BACK TO TOP
-// ========================================
 function initBackToTop() {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
@@ -450,9 +435,6 @@ function initBackToTop() {
     updateButton();
 }
 
-// ========================================
-// KEYBOARD ESCAPE
-// ========================================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         document.querySelectorAll('.dropdown-toggle').forEach(button => {
@@ -473,9 +455,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// ========================================
-// EXTRA STYLES
-// ========================================
 const additionalStyles = document.createElement('style');
 additionalStyles.textContent = `
     @keyframes shake {
