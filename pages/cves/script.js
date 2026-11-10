@@ -1,28 +1,102 @@
 document.addEventListener('DOMContentLoaded', () => {
+    initNavigation();
+    initScrollEffects();
+    initBackToTop();
     initScrollReveal();
 });
 
-/* ==============================
-   SMOOTH SCROLL REVEAL
-   ============================== */
-function initScrollReveal() {
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+/* ========================================
+   NAVIGATION
+   ======================================== */
+function initNavigation() {
+    const toggle = document.querySelector('.nav-toggle');
+    const links = document.querySelector('.nav-links');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    if (toggle) {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', !isOpen);
+            links.classList.toggle('open');
+        });
+    }
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (links) links.classList.remove('open');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        });
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (links && links.classList.contains('open')) {
+            const nav = document.querySelector('.navbar');
+            if (nav && !nav.contains(e.target)) {
+                links.classList.remove('open');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+}
 
+/* ========================================
+   SCROLL EFFECTS
+   ======================================== */
+function initScrollEffects() {
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 30);
+    });
+}
+
+/* ========================================
+   BACK TO TOP
+   ======================================== */
+function initBackToTop() {
+    const button = document.getElementById('backToTop');
+    if (!button) return;
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            button.classList.add('visible');
+        } else {
+            button.classList.remove('visible');
+        }
+    });
+    
+    button.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+/* ========================================
+   SCROLL REVEAL ANIMATIONS
+   ======================================== */
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
+    
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Add a slight stagger based on the element's index for a cascading effect
+                // Find the index of this element to create a staggered/cascading effect
+                const allAchievements = Array.from(document.querySelectorAll('.reveal-achievement'));
+                const index = allAchievements.indexOf(entry.target);
+                const delay = index >= 0 ? index * 150 : 0; // 150ms delay between cards
+                
                 setTimeout(() => {
                     entry.target.classList.add('revealed');
-                }, index * 100); // 100ms delay between each element
-
+                }, delay);
+                
                 observer.unobserve(entry.target);
             }
         });
     }, {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -80px 0px'
     });
-
+    
     revealElements.forEach(el => observer.observe(el));
 }
