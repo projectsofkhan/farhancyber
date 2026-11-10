@@ -11,7 +11,7 @@
     <meta name="keywords" content="Farhan Khan CVEs, Security Advisories, Vulnerability Research, CVE Assignment, Responsible Disclosure, Web Security, API Security, Open Source Security" />
     <meta name="author" content="Farhan Khan" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#0a0c10" />
+    <meta name="theme-color" content="#f8fafc" />
     <link rel="canonical" href="https://farhancyber.vercel.app/pages/cves/index.html" />
 
     <meta name="google-site-verification" content="HPqX77JCVCDljvpo2hwEBUbDxG0lb0wrPHe-5Ck4r94" />
@@ -44,28 +44,25 @@
     }
     </script>
 
-    <!-- Main Stylesheet (Fixed Path) -->
     <link rel="stylesheet" href="../../style.css" />
 
-    <!-- Page Specific Overrides -->
     <style>
         :root {
-            --sev-high: #ff8a3d;
-            --sev-high-glow: rgba(255, 138, 61, 0.25);
-            
-            --sev-medium: #ffc93d;
-            --sev-medium-glow: rgba(255, 201, 61, 0.25);
-            
-            --status-disclosed: #00e5ff;
-            --status-disclosed-bg: rgba(0, 229, 255, 0.08);
-            --status-disclosed-border: rgba(0, 229, 255, 0.25);
-            
-            --status-in-progress: #ffb84d;
-            --status-in-progress-bg: rgba(255, 184, 77, 0.08);
-            --status-in-progress-border: rgba(255, 184, 77, 0.25);
+            --sev-high: #ea580c;
+            --sev-high-glow: rgba(234, 88, 12, 0.2);
+
+            --sev-medium: #ca8a04;
+            --sev-medium-glow: rgba(202, 138, 4, 0.2);
+
+            --status-disclosed: #059669;
+            --status-disclosed-bg: rgba(5, 150, 105, 0.08);
+            --status-disclosed-border: rgba(5, 150, 105, 0.25);
+
+            --status-in-progress: #d97706;
+            --status-in-progress-bg: rgba(217, 119, 6, 0.08);
+            --status-in-progress-border: rgba(217, 119, 6, 0.25);
         }
 
-        /* Smoothing general page rendering */
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -78,7 +75,6 @@
             overflow: hidden;
         }
 
-        /* Filters */
         .filters-container {
             display: flex;
             flex-wrap: wrap;
@@ -90,7 +86,7 @@
         }
 
         .filter-btn {
-            background: rgba(10, 12, 16, 0.65);
+            background: #ffffff;
             border: 1px solid var(--color-border);
             color: var(--color-text-muted);
             padding: 10px 24px;
@@ -100,63 +96,55 @@
             cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: transform;
+            box-shadow: var(--shadow-card);
         }
 
         .filter-btn:hover {
-            border-color: var(--color-border-hover);
-            color: var(--color-text);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
             transform: translateY(-2px);
         }
 
         .filter-btn.active {
             background: var(--color-primary);
-            color: #0a0c10;
+            color: #ffffff;
             border-color: var(--color-primary);
-            box-shadow: 0 0 20px var(--color-primary-glow);
+            box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
             transform: translateY(-2px);
         }
 
-        /* CVE List & Cards */
         .cve-list {
             display: flex;
             flex-direction: column;
             gap: 24px;
             max-width: 1050px;
             margin: 0 auto;
-            min-height: 400px; /* Prevents layout jump during filtering */
+            min-height: 400px;
         }
 
         .cve-card {
             position: relative;
-            background: linear-gradient(135deg, rgba(5, 7, 10, 0.95), rgba(13, 17, 23, 0.9));
+            background: var(--color-bg-card);
             border: 1px solid var(--color-border);
             border-radius: 20px;
             padding: 32px 36px;
-            backdrop-filter: blur(20px);
             overflow: hidden;
             width: 100%;
-            
-            /* Smooth specific properties only */
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
                         transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 0.3s ease,
                         box-shadow 0.3s ease;
-            
-            /* Hardware acceleration */
             will-change: opacity, transform;
-            
-            /* Default hidden state for scroll reveal */
             opacity: 0;
             transform: translate3d(0, 30px, 0);
+            box-shadow: var(--shadow-card);
         }
 
-        /* Scroll Reveal State */
         .cve-card.revealed {
             opacity: 1;
             transform: translate3d(0, 0, 0);
         }
 
-        /* Filtering Hidden State */
         .cve-card.filtered-out {
             opacity: 0 !important;
             transform: translate3d(0, 10px, 0) scale(0.98) !important;
@@ -169,21 +157,19 @@
             top: 0; left: 0; bottom: 0;
             width: 4px;
             background: var(--sev-color);
-            box-shadow: 0 0 20px var(--sev-glow);
             transition: width 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cve-card:hover {
             border-color: var(--color-border-hover);
             transform: translate3d(0, -6px, 0);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--sev-glow);
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1), 0 0 40px var(--sev-glow);
         }
 
         .cve-card:hover::before {
             width: 6px;
         }
 
-        /* Card Header */
         .cve-header {
             display: flex;
             flex-wrap: wrap;
@@ -197,10 +183,10 @@
             font-size: 0.85rem;
             font-weight: 800;
             color: var(--color-primary);
-            background: rgba(0, 229, 255, 0.08);
+            background: rgba(5, 150, 105, 0.08);
             padding: 6px 14px;
             border-radius: 8px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(5, 150, 105, 0.2);
             transition: background-color 0.3s ease;
         }
 
@@ -223,7 +209,6 @@
             height: 6px;
             border-radius: 50%;
             background: currentColor;
-            box-shadow: 0 0 8px currentColor;
         }
 
         .status-in-progress {
@@ -238,7 +223,6 @@
             border: 1px solid var(--status-disclosed-border);
         }
 
-        /* Card Body */
         .cve-body {
             display: grid;
             grid-template-columns: 1fr auto;
@@ -275,7 +259,7 @@
             line-height: 1.7;
             margin-bottom: 20px;
             padding-left: 16px;
-            border-left: 2px solid rgba(255,255,255,0.05);
+            border-left: 2px solid var(--color-border);
             transition: border-color 0.3s ease;
         }
 
@@ -293,19 +277,18 @@
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--color-primary);
-            background: rgba(0, 229, 255, 0.05);
+            background: rgba(5, 150, 105, 0.06);
             padding: 4px 12px;
             border-radius: 6px;
-            border: 1px solid rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(5, 150, 105, 0.15);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .cve-card:hover .cve-tag {
-            background: rgba(0, 229, 255, 0.1);
-            border-color: rgba(0, 229, 255, 0.25);
+            background: rgba(5, 150, 105, 0.1);
+            border-color: rgba(5, 150, 105, 0.25);
         }
 
-        /* Gauge */
         .cve-gauge-wrap {
             display: flex;
             flex-direction: column;
@@ -328,7 +311,7 @@
 
         .gauge-track {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.05);
+            stroke: var(--color-border);
             stroke-width: 6;
         }
 
@@ -339,17 +322,11 @@
             stroke-linecap: round;
             stroke-dasharray: 264;
             stroke-dashoffset: 264;
-            /* Smooth gauge animation */
             transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-            filter: drop-shadow(0 0 8px var(--sev-glow));
         }
 
         .cve-card.revealed .gauge-fill {
             stroke-dashoffset: var(--offset);
-        }
-
-        .cve-card:hover .gauge-fill {
-            filter: drop-shadow(0 0 15px var(--sev-glow));
         }
 
         .gauge-text {
@@ -387,7 +364,6 @@
             color: var(--sev-color);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .cve-body {
                 grid-template-columns: 1fr;
@@ -427,7 +403,6 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
@@ -455,8 +430,7 @@
 
     <main>
         <section class="section cves-page-section">
-            
-            <!-- Background elements -->
+
             <div class="wavy-background">
                 <div class="wave wave-1"></div>
                 <div class="wave wave-2"></div>
@@ -466,21 +440,19 @@
             <div class="grid-overlay"></div>
 
             <div class="container">
-                
+
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
                     <p>Documented vulnerabilities, responsible disclosures &amp; ongoing security research</p>
                 </div>
 
-                <!-- Filters -->
                 <div class="filters-container reveal-on-scroll">
                     <button class="filter-btn active" data-filter="all">All Advisories</button>
                     <button class="filter-btn" data-filter="disclosed">Disclosed</button>
                     <button class="filter-btn" data-filter="in-progress">In Progress</button>
                 </div>
 
-                <!-- CVE List -->
                 <div class="cve-list">
 
                     <!-- 1. GHSA-773r-585g-6vc3 (Moderate) - In Progress -->
@@ -509,7 +481,6 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <!-- Offset calculated for 6.5 CVSS -->
                                         <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 92.4;"/>
                                     </svg>
                                     <div class="gauge-text">
@@ -548,7 +519,6 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <!-- Offset calculated for 4.3 CVSS -->
                                         <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 150.48;"/>
                                     </svg>
                                     <div class="gauge-text">
@@ -587,7 +557,6 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <!-- Offset calculated for 5.3 CVSS -->
                                         <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 124.08;"/>
                                     </svg>
                                     <div class="gauge-text">
@@ -605,7 +574,6 @@
         </section>
     </main>
 
-    <!-- BACK TO TOP (Ring removed, smooth fade) -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -615,7 +583,6 @@
         <span class="btt-glow"></span>
     </button>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -643,26 +610,23 @@
         </div>
     </footer>
 
-    <!-- Main Script -->
     <script src="../../script.js"></script>
-    
-    <!-- PAGE SPECIFIC LOGIC (Smooth Filters & Reveal) -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Scroll Reveal for Cards (Staggered)
             const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
-            
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
                         const index = allCards.indexOf(entry.target);
                         const delay = index >= 0 ? index * 80 : 0;
-                        
+
                         setTimeout(() => {
                             entry.target.classList.add('revealed');
                         }, delay);
-                        
+
                         observer.unobserve(entry.target);
                     }
                 });
@@ -673,7 +637,6 @@
 
             revealElements.forEach(el => observer.observe(el));
 
-            // 2. Smooth Filter Logic
             const filterBtns = document.querySelectorAll('.filter-btn');
             const cveCards = document.querySelectorAll('.cve-card');
 
