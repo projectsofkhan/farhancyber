@@ -69,93 +69,12 @@
 </head>
 <body class="intro-active">
 
-    <!-- SNAKE & GUAVA LANDING / LOADING SCREEN -->
-    <div class="minimal-intro" id="minimalIntro" role="status" aria-live="polite" aria-label="Loading portfolio">
+    <!-- FAST CURTAIN REVEAL (no loading, just atmosphere) -->
+    <div class="minimal-intro" id="minimalIntro" aria-hidden="true">
         <div class="intro-panel top"></div>
         <div class="intro-panel bottom"></div>
-
-        <div class="intro-bg">
-            <div class="intro-grid"></div>
-            <div class="intro-orb intro-orb-1"></div>
-            <div class="intro-orb intro-orb-2"></div>
-        </div>
-
+        <div class="intro-glow"></div>
         <div class="intro-seam"></div>
-
-        <div class="intro-content">
-            <div class="snake-wrapper">
-                <span class="ring-pulse"></span>
-                <span class="ring-pulse delay"></span>
-
-                <svg viewBox="0 0 100 100" class="snake-svg" aria-hidden="true">
-                    <defs>
-                        <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#10b981"/>
-                            <stop offset="100%" stop-color="#059669"/>
-                        </linearGradient>
-                        <radialGradient id="guavaGrad" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#fcd34d"/>
-                            <stop offset="100%" stop-color="#f59e0b"/>
-                        </radialGradient>
-                    </defs>
-
-                    <path class="snake-track" d="M 50 15 A 35 35 0 0 1 50 85 A 35 35 0 0 1 50 15" />
-                    <path class="snake-body" id="snakePath" d="M 50 15 A 35 35 0 0 1 50 85 A 35 35 0 0 1 50 15" />
-
-                    <g id="fruits">
-                        <g class="fruit-pos" data-at="0.2">
-                            <g class="fruit">
-                                <ellipse cx="0" cy="0" rx="3" ry="3.5" />
-                                <path d="M0 -3.5 Q2 -5 3.5 -3.8" stroke="#65a30d" stroke-width="1" fill="none" stroke-linecap="round" />
-                            </g>
-                        </g>
-                        <g class="fruit-pos" data-at="0.4">
-                            <g class="fruit">
-                                <ellipse cx="0" cy="0" rx="3" ry="3.5" />
-                                <path d="M0 -3.5 Q2 -5 3.5 -3.8" stroke="#65a30d" stroke-width="1" fill="none" stroke-linecap="round" />
-                            </g>
-                        </g>
-                        <g class="fruit-pos" data-at="0.6">
-                            <g class="fruit">
-                                <ellipse cx="0" cy="0" rx="3" ry="3.5" />
-                                <path d="M0 -3.5 Q2 -5 3.5 -3.8" stroke="#65a30d" stroke-width="1" fill="none" stroke-linecap="round" />
-                            </g>
-                        </g>
-                        <g class="fruit-pos" data-at="0.8">
-                            <g class="fruit">
-                                <ellipse cx="0" cy="0" rx="3" ry="3.5" />
-                                <path d="M0 -3.5 Q2 -5 3.5 -3.8" stroke="#65a30d" stroke-width="1" fill="none" stroke-linecap="round" />
-                            </g>
-                        </g>
-                    </g>
-
-                    <g id="snakeHead" transform="translate(50 15)">
-                        <path class="tongue" d="M4 0 L8 0 M8 0 L10 -1.5 M8 0 L10 1.5" stroke="#ef4444" stroke-width="0.7" fill="none" stroke-linecap="round" />
-                        <circle class="snake-head" cx="0" cy="0" r="4.2" />
-                        <circle cx="1.6" cy="-1.9" r="1.2" fill="#ffffff" />
-                        <circle cx="2" cy="-1.9" r="0.6" fill="#0f172a" />
-                        <circle cx="1.6" cy="1.9" r="1.2" fill="#ffffff" />
-                        <circle cx="2" cy="1.9" r="0.6" fill="#0f172a" />
-                    </g>
-                </svg>
-
-                <div class="intro-percent"><span id="introPercent">0</span><small>%</small></div>
-            </div>
-
-            <div class="intro-name" aria-label="Farhan Khan">
-                <span style="--i:0" aria-hidden="true">F</span><span style="--i:1" aria-hidden="true">A</span><span style="--i:2" aria-hidden="true">R</span><span style="--i:3" aria-hidden="true">H</span><span style="--i:4" aria-hidden="true">A</span><span style="--i:5" aria-hidden="true">N</span><span class="sp" style="--i:6" aria-hidden="true"></span><span style="--i:7" aria-hidden="true">K</span><span style="--i:8" aria-hidden="true">H</span><span style="--i:9" aria-hidden="true">A</span><span style="--i:10" aria-hidden="true">N</span>
-            </div>
-
-            <p class="intro-tagline">Day Zero To <span class="gradient-text">ZeroDay</span></p>
-
-            <div class="intro-progress"><span id="introBar"></span></div>
-
-            <p class="intro-status">
-                <span class="intro-prompt">$</span><span id="introStatus">Initializing environment</span><span class="intro-caret">_</span>
-            </p>
-
-            <span class="intro-skip">Tap to skip</span>
-        </div>
     </div>
 
     <nav class="navbar" role="navigation" aria-label="Main navigation">
