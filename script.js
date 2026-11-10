@@ -8,16 +8,16 @@
         return;
     }
 
-    // The animation takes 2 seconds. We wait 2.2s to let the last guava pop, then fade out.
+    // The animation takes 1.8 seconds. We wait 2.0s to let the last guava pop, then fade out.
     setTimeout(() => {
         intro.classList.add('hidden');
         document.body.classList.remove('intro-active');
-    }, 2200);
+    }, 2000);
 
-    // Remove from DOM after fade out (2.8s total)
+    // Remove from DOM after fade out (2.5s total)
     setTimeout(() => {
         intro.remove();
-    }, 2800);
+    }, 2500);
 })();
 
 // ========================================
@@ -302,7 +302,7 @@ function initHeroReveal() {
 
     setTimeout(() => {
         heroElements.forEach(el => el.classList.add('revealed'));
-    }, 2400);
+    }, 2200);
 }
 
 // ========================================
@@ -377,7 +377,7 @@ function initTypedText() {
         }
     }
 
-    setTimeout(type, 3000);
+    setTimeout(type, 2800);
 }
 
 // ========================================
@@ -389,7 +389,7 @@ function initCountUp() {
 
     setTimeout(() => {
         nums.forEach(n => animateCount(n));
-    }, 2800);
+    }, 2600);
 }
 
 function animateCount(el) {
