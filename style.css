@@ -94,7 +94,6 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     cursor: pointer;
 }
 
-/* Two curtain halves that split open on exit */
 .intro-panel {
     position: absolute;
     left: 0; right: 0;
@@ -213,23 +212,24 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.45));
 }
 
+/* Fruits: start hidden, JS adds .visible to trigger the appear animation */
 .fruit {
     transform-box: fill-box;
     transform-origin: center;
     opacity: 0;
-    animation: fruitIn 0.5s var(--transition-bounce) forwards;
-    animation-delay: 0.25s;
+    transform: scale(0);
 }
-.fruit-pos:nth-child(2) .fruit { animation-delay: 0.38s; }
-.fruit-pos:nth-child(3) .fruit { animation-delay: 0.51s; }
-.fruit-pos:nth-child(4) .fruit { animation-delay: 0.64s; }
+.fruit.visible {
+    animation: fruitIn 0.4s var(--transition-bounce) forwards;
+}
+.fruit.eaten {
+    animation: fruitEat 0.28s ease-out forwards !important;
+}
 
 .fruit ellipse {
     fill: url(#guavaGrad);
     filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.55));
 }
-
-.fruit.eaten { animation: fruitEat 0.35s ease-out forwards; }
 
 @keyframes fruitIn {
     from { opacity: 0; transform: scale(0); }
@@ -237,7 +237,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 }
 @keyframes fruitEat {
     0% { opacity: 1; transform: scale(1); }
-    40% { opacity: 1; transform: scale(1.7); }
+    40% { opacity: 1; transform: scale(1.6); }
     100% { opacity: 0; transform: scale(0); }
 }
 
@@ -272,7 +272,6 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     color: var(--color-primary);
 }
 
-/* Name */
 .intro-name {
     display: flex;
     justify-content: center;
@@ -305,7 +304,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     text-transform: uppercase;
     color: var(--color-text-muted);
     opacity: 0;
-    animation: fadeInText 0.6s ease 1s forwards;
+    animation: fadeInText 0.6s ease 0.8s forwards;
 }
 
 .intro-progress {
@@ -336,13 +335,14 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 .intro-prompt { color: var(--color-text-dim); margin-right: 4px; }
 .intro-caret { animation: cursorBlink 1s steps(2) infinite; font-weight: 700; }
 
+/* ⚡ "Tap to skip" now appears much earlier */
 .intro-skip {
     font-size: 0.65rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--color-text-dim);
     opacity: 0;
-    animation: fadeInText 0.6s ease 1.4s forwards;
+    animation: fadeInText 0.5s ease 0.3s forwards;
 }
 
 @keyframes fadeInText { to { opacity: 1; } }
@@ -471,7 +471,6 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     pointer-events: none;
 }
 
-/* Keep button content above the ripple overlay */
 .btn > * { position: relative; z-index: 1; }
 
 @media (hover: hover) {
@@ -913,7 +912,6 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
     transform: scaleX(0);
 }
 
-/* Starts only once the intro has finished */
 body.site-ready .stat-bar span {
     animation: barGrow 1.6s var(--transition-bounce) forwards;
     animation-delay: 0.4s;
@@ -1042,7 +1040,6 @@ body.site-ready .stat-bar span {
     transform: translate(0) scale(1);
 }
 
-/* After reveal finishes, remove stagger delay so hover feels instant */
 .reveal-left.settled,
 .reveal-right.settled,
 .reveal-up.settled {
