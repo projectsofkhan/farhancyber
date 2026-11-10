@@ -11,10 +11,7 @@
     <meta name="keywords" content="Farhan Khan, Cyber Security, Penetration Tester, Ethical Hacker, Bug Bounty, TryHackMe, Active Directory, Web Security, CTF Player, Security Researcher, Farhan Cyber, farhancyber" />
     <meta name="author" content="Farhan Khan" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    
-    <!-- ✅ LIGHT THEME COLOR -->
     <meta name="theme-color" content="#f8fafc" />
-    
     <link rel="canonical" href="https://farhancyber.vercel.app/" />
 
     <meta name="google-site-verification" content="HPqX77JCVCDljvpo2hwEBUbDxG0lb0wrPHe-5Ck4r94" />
@@ -72,9 +69,32 @@
 </head>
 <body class="intro-active">
 
-    <!-- UNIQUE MINIMAL LOADING SCREEN -->
+    <!-- NEW SNAKE & GUAVA LOADING SCREEN -->
     <div class="minimal-intro" id="minimalIntro">
-        <div class="loader-ring"></div>
+        <div class="snake-wrapper">
+            <svg viewBox="0 0 100 100" class="snake-svg">
+                <defs>
+                    <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#10b981"/>
+                        <stop offset="100%" stop-color="#059669"/>
+                    </linearGradient>
+                    <radialGradient id="guavaGrad" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#fcd34d"/>
+                        <stop offset="100%" stop-color="#f59e0b"/>
+                    </radialGradient>
+                </defs>
+                <!-- Track -->
+                <circle class="snake-track" cx="50" cy="50" r="40" />
+                <!-- Guavas -->
+                <circle class="guava g1" cx="50" cy="10" r="4" />
+                <circle class="guava g2" cx="90" cy="50" r="4" />
+                <circle class="guava g3" cx="50" cy="90" r="4" />
+                <circle class="guava g4" cx="10" cy="50" r="4" />
+                <!-- Snake Body & Head -->
+                <circle class="snake-body" cx="50" cy="50" r="40" />
+                <circle class="snake-head" cx="0" cy="0" r="4.5" />
+            </svg>
+        </div>
         <span class="loader-text">Loading</span>
     </div>
 
@@ -853,10 +873,6 @@
     </main>
 
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <svg class="btt-ring" viewBox="0 0 100 100" width="100%" height="100%">
-            <circle class="btt-ring-track" cx="50" cy="50" r="46" />
-            <circle class="btt-ring-progress" cx="50" cy="50" r="46" />
-        </svg>
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
