@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>CVEs & Advisories — Farhan Khan | Vulnerability Research</title>
+
+    <meta name="description" content="Security advisories, CVE assignments, and vulnerability research disclosed by Farhan Khan. Focused on web applications, API security, and open-source software." />
+    <meta name="keywords" content="Farhan Khan CVEs, Security Advisories, Vulnerability Research, CVE Assignment, Responsible Disclosure, Web Security, API Security, Open Source Security" />
+    <meta name="author" content="Farhan Khan" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0a0c10" />
+    <link rel="canonical" href="https://farhancyber.vercel.app/pages/cves/index.html" />
+
+    <meta name="google-site-verification" content="HPqX77JCVCDljvpo2hwEBUbDxG0lb0wrPHe-5Ck4r94" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Farhan Khan — Cyber Security Enthusiast" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="CVEs & Advisories — Farhan Khan" />
+    <meta property="og:description" content="Vulnerability research and responsible disclosures by Farhan Khan." />
+    <meta property="og:url" content="https://farhancyber.vercel.app/pages/cves/index.html" />
+    <meta property="og:image" content="https://farhancyber.vercel.app/profiles.gif" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CVEs & Advisories — Farhan Khan" />
+    <meta name="twitter:description" content="Vulnerability research and responsible disclosures." />
+    <meta name="twitter:image" content="https://farhancyber.vercel.app/profiles.gif" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Farhan Khan",
+      "url": "https://farhancyber.vercel.app/",
+      "description": "Vulnerability research and CVE advisories by Farhan Khan."
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* Specific Styles for CVEs Page */
+        .cves-page-section {
+            position: relative;
+            padding-top: 130px;
+            min-height: 100vh;
+            overflow: hidden;
+            background: var(--color-bg);
+        }
+
+        .cves-bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            animation: gridDrift 30s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridDrift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(60px, 60px); }
+        }
+
+        .cves-page-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 30%, transparent 10%, rgba(10, 12, 16, 0.9) 90%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cves-hero {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-shield-wrap {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
+        }
+
+        .hero-shield-wrap svg {
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.4));
+            animation: shieldGlow 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes shieldGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)); }
+            50% { filter: drop-shadow(0 0 35px rgba(0, 229, 255, 0.7)); }
+        }
+
+        .hero-ring-cve {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 180px; height: 180px;
+            border: 1px dashed rgba(0, 229, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: ringSpin 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .hero-ring-cve-2 {
+            width: 230px; height: 230px;
+            border: 1px solid rgba(0, 229, 255, 0.05);
+            animation: ringPulse 4s ease-in-out infinite;
+            border-style: solid;
+        }
+
+        @keyframes ringSpin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes ringPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+
+        /* Timeline / List Layout */
+        .cves-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+            z-index: 1;
+        }
+
+        .cves-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 32px;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 229, 255, 0.2) 10%, rgba(0, 229, 255, 0.2) 90%, transparent);
+            pointer-events: none;
+        }
+
+        .cve-card {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease-out-smooth), transform 0.8s var(--ease-out-smooth);
+        }
+
+        .cve-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cve-node {
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            width: 26px;
+            height: 26px;
+            background: var(--color-bg);
+            border: 2px solid var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .cve-node::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .cve-card:hover .cve-node {
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.8);
+            transform: scale(1.1);
+        }
+
+        .cve-card:hover .cve-node::after {
+            transform: scale(1.2);
+        }
+
+        /* Card Body */
+        .cve-content-box {
+            background: linear-gradient(135deg, rgba(5, 7, 10, 0.9), rgba(13, 17, 23, 0.95));
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-out-smooth);
+            backdrop-filter: blur(10px);
+        }
+
+        .cve-content-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 10%, rgba(0, 229, 255, 0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .cve-card:hover .cve-content-box {
+            border-color: rgba(0, 229, 255, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 229, 255, 0.08);
+            transform: translateX(8px);
+        }
+
+        .cve-card:hover .cve-content-box::before {
+            opacity: 1;
+        }
+
+        .cve-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cve-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .cve-id {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--color-text);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cve-id:hover {
+            color: var(--color-primary);
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+
+        .cve-type {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-text-muted);
+        }
+
+        .cve-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: var(--font-display);
+        }
+
+        .badge-status.in-progress {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.1);
+        }
+
+        .badge-status.disclosed {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+        }
+
+        .badge-status.pending {
+            background: rgba(124, 92, 255, 0.1);
+            color: #a491ff;
+            border: 1px solid rgba(124, 92, 255, 0.3);
+            box-shadow: 0 0 15px rgba(124, 92, 255, 0.1);
+        }
+
+        .badge-cvss {
+            background: rgba(255, 61, 129, 0.1);
+            color: #ff6b9d;
+            border: 1px solid rgba(255, 61, 129, 0.3);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        .badge-cvss.severe {
+            background: rgba(255, 61, 129, 0.15);
+            color: #ff3d81;
+            border-color: #ff3d81;
+            box-shadow: 0 0 20px rgba(255, 61, 129, 0.2);
+        }
+
+        .cve-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cve-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-dim);
+            font-weight: 600;
+        }
+
+        .meta-value {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .cve-description {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            padding-left: 16px;
+            border-left: 2px solid rgba(0, 229, 255, 0.15);
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .cve-card:hover .cve-description {
+            border-left-color: var(--color-primary);
+            color: var(--color-text);
+        }
+
+        .cve-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .cve-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .cve-tags span {
+            font-size: 0.75rem;
+            color: var(--color-primary-light);
+            background: rgba(0, 229, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 229, 255, 0.1);
+        }
+
+        .cve-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cve-link-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .cve-link-btn:hover {
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .cve-link-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        .section-divider {
+            margin: 60px auto 40px;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-divider h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-text);
+            margin-bottom: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-divider h3 svg {
+            color: var(--color-primary);
+        }
+
+        .section-divider p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .cve-card {
+                padding-left: 50px;
+            }
+            .cves-timeline::before {
+                left: 16px;
+            }
+            .cve-node {
+                left: 4px;
+                top: 20px;
+                width: 24px; height: 24px;
+            }
+            .cve-node::after {
+                width: 8px; height: 8px;
+            }
+            .cve-content-box {
+                padding: 20px;
+            }
+            .cve-id {
+                font-size: 1.15rem;
+            }
+            .cve-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cve-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../../index.html"><span>Farhan Khan</span></a>
+            </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../experience/index.html">Experience</a></li>
+                <li><a href="../cves/index.html" class="active">CVEs & Advisories</a></li>
+                <li><a href="../achievements/index.html">Achievements</a></li>
+                <li><a href="../projects/index.html">Projects</a></li>
+                <li><a href="../writeups/index.html">Writeups</a></li>
+                <li><a href="../certifications/index.html">Certifications</a></li>
+                <li><a href="../profiles/index.html">Profiles</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="section cves-page-section">
+            <div class="cves-bg-grid"></div>
+
+            <div class="container">
+                <div class="cves-hero">
+                    <div class="hero-shield-wrap">
+                        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                            <defs>
+                                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#66f0ff"/>
+                                    <stop offset="100%" stop-color="#00b4d8"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M50 10 L85 25 V50 C85 70 70 85 50 92 C30 85 15 70 15 50 V25 L50 10 Z" stroke="url(#shieldGrad)" stroke-width="2.5" stroke-linejoin="round" fill="rgba(0,229,255,0.05)"/>
+                            <path d="M50 25 L73 35 V50 C73 63 63 73 50 78 C37 73 27 63 27 50 V35 L50 25 Z" stroke="url(#shieldGrad)" stroke-width="1.5" stroke-linejoin="round" fill="none" opacity="0.4"/>
+                            <path d="M38 50 L46 58 L64 40" stroke="url(#shieldGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <div class="hero-ring-cve"></div>
+                        <div class="hero-ring-cve hero-ring-cve-2"></div>
+                    </div>
+                </div>
+
+                <div class="section-header reveal-on-scroll">
+                    <span class="section-tag">Security Research</span>
+                    <h2>CVEs & Advisories</h2>
+                    <p>Documented vulnerabilities, responsible disclosures, and ongoing security research</p>
+                </div>
+
+                <div class="cves-timeline">
+
+                    <!-- CVE Card 1 -->
+                    <div class="cve-card reveal-on-scroll">
+                        <div class="cve-node"></div>
+                        <div class="cve-content-box">
+                            <div class="cve-header">
+                                <div class="cve-title-group">
+                                    <div class="cve-id">
+                                        CVE-2026-XXXXX
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 13V19C18 20.1046 17.1046 21 16 21H5C3.89543 21 3 20.1046 3 19V8C3 6.89543 3.89543 6 5 6H11M15 3H21M21 3V9M21 3L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                    <div class="cve-type">Open Source Software · Web Application</div>
+                                </div>
+                                <div class="cve-badges">
+                                    <span class="badge-status in-progress">
+                                        <span style="width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor;"></span>
+                                        In Progress
+                                    </span>
+                                    <span class="badge-cvss severe">CVSS 9.8</span>
+                                </div>
+                            </div>
+
+                            <div class="cve-meta-grid">
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Vulnerability Type</span>
+                                    <span class="meta-value">SQL Injection (SQLi)</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Affected Version</span>
+                                    <span class="meta-value">v2.4.1 and below</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Reported Date</span>
+                                    <span class="meta-value">Oct 12, 2026</span>
+                                </div>
+                            </div>
+
+                            <p class="cve-description">
+                                A critical SQL injection vulnerability was identified in the authentication endpoint of the target application. The flaw allows unauthenticated attackers to bypass login mechanisms and execute arbitrary SQL queries, potentially leading to full database compromise. The issue has been reported to the vendor and a patch is currently in development.
+                            </p>
+
+                            <div class="cve-footer">
+                                <div class="cve-tags">
+                                    <span>SQLi</span>
+                                    <span>Auth Bypass</span>
+                                    <span>Critical</span>
+                                </div>
+                                <a href="#" class="cve-link-btn">
+                                    View Advisory (Pending)
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CVE Card 2 -->
+                    <div class="cve-card reveal-on-scroll">
+                        <div class="cve-node"></div>
+                        <div class="cve-content-box">
+                            <div class="cve-header">
+                                <div class="cve-title-group">
+                                    <div class="cve-id">
+                                        CVE-2025-XXXXX
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 13V19C18 20.1046 17.1046 21 16 21H5C3.89543 21 3 20.1046 3 19V8C3 6.89543 3.89543 6 5 6H11M15 3H21M21 3V9M21 3L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                    <div class="cve-type">API Security · GraphQL</div>
+                                </div>
+                                <div class="cve-badges">
+                                    <span class="badge-status disclosed">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Disclosed
+                                    </span>
+                                    <span class="badge-cvss">CVSS 7.5</span>
+                                </div>
+                            </div>
+
+                            <div class="cve-meta-grid">
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Vulnerability Type</span>
+                                    <span class="meta-value">Broken Object Level Auth (BOLA)</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Affected Version</span>
+                                    <span class="meta-value">API v1.0 - v1.2</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Reported Date</span>
+                                    <span class="meta-value">Aug 05, 2025</span>
+                                </div>
+                            </div>
+
+                            <p class="cve-description">
+                                An Insecure Direct Object Reference (IDOR) / BOLA vulnerability was discovered in the GraphQL API. By manipulating object IDs in mutation requests, authenticated users could access and modify data belonging to other users without authorization. This issue was responsibly disclosed and successfully patched by the maintainers in version v1.3.
+                            </p>
+
+                            <div class="cve-footer">
+                                <div class="cve-tags">
+                                    <span>GraphQL</span>
+                                    <span>BOLA</span>
+                                    <span>IDOR</span>
+                                </div>
+                                <a href="#" class="cve-link-btn">
+                                    Read Disclosure
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CVE Card 3 -->
+                    <div class="cve-card reveal-on-scroll">
+                        <div class="cve-node"></div>
+                        <div class="cve-content-box">
+                            <div class="cve-header">
+                                <div class="cve-title-group">
+                                    <div class="cve-id">
+                                        CVE-2025-XXXXX
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 13V19C18 20.1046 17.1046 21 16 21H5C3.89543 21 3 20.1046 3 19V8C3 6.89543 3.89543 6 5 6H11M15 3H21M21 3V9M21 3L10 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </div>
+                                    <div class="cve-type">Enterprise Software · Active Directory</div>
+                                </div>
+                                <div class="cve-badges">
+                                    <span class="badge-status pending">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        Pending Assignment
+                                    </span>
+                                    <span class="badge-cvss">CVSS 8.1</span>
+                                </div>
+                            </div>
+
+                            <div class="cve-meta-grid">
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Vulnerability Type</span>
+                                    <span class="meta-value">Privilege Escalation</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Affected Version</span>
+                                    <span class="meta-value">Build 10.0.19041</span>
+                                </div>
+                                <div class="cve-meta-item">
+                                    <span class="meta-label">Reported Date</span>
+                                    <span class="meta-value">Nov 20, 2025</span>
+                                </div>
+                            </div>
+
+                            <p class="cve-description">
+                                Identified a local privilege escalation vector within the Windows Active Directory environment. The vulnerability allows a low-privileged domain user to leverage misconfigured Group Policy Objects (GPOs) and Service Principal Names (SPNs) to execute code as a Domain Admin. The CVE ID request is currently pending with MITRE.
+                            </p>
+
+                            <div class="cve-footer">
+                                <div class="cve-tags">
+                                    <span>Active Directory</span>
+                                    <span>PrivEsc</span>
+                                    <span>Windows</span>
+                                </div>
+                                <a href="#" class="cve-link-btn">
+                                    Track Status
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section-divider reveal-on-scroll">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V6L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                        Responsible Disclosure Policy
+                    </h3>
+                    <p>I follow a strict 90-day responsible disclosure timeline. If you are a vendor and need to discuss an active report, please reach out via my profiles page.</p>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg class="btt-ring" viewBox="0 0 100 100" width="100%" height="100%">
+            <circle class="btt-ring-track" cx="50" cy="50" r="46" />
+            <circle class="btt-ring-progress" cx="50" cy="50" r="46" />
+        </svg>
+        <span class="btt-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </span>
+        <span class="btt-glow"></span>
+    </button>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="../../index.html"><span>Farhan Khan</span></a>
+                    <p>Cyber Security Enthusiast &amp; Engineer</p>
+                </div>
+
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <a href="../../index.html">Home</a>
+                    <a href="../experience/index.html">Experience</a>
+                    <a href="../cves/index.html">CVEs & Advisories</a>
+                    <a href="../achievements/index.html">Achievements</a>
+                    <a href="../projects/index.html">Projects</a>
+                    <a href="../writeups/index.html">Writeups</a>
+                    <a href="../certifications/index.html">Certifications</a>
+                    <a href="../profiles/index.html">Profiles</a>
+                </nav>
+
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Farhan Khan. All rights reserved.</p>
+                    <p>Built with precision &amp; passion</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Intersection Observer for smooth reveal of CVE cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add a slight staggered delay based on the element's position in the DOM
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, index * 150);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
