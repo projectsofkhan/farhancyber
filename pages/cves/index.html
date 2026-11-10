@@ -44,10 +44,10 @@
     }
     </script>
 
-    <!-- MAIN STYLESHEET -->
-    <link rel="stylesheet" href="style.css" />
+    <!-- 🚨 FIXED: Path to main stylesheet -->
+    <link rel="stylesheet" href="../../style.css" />
 
-    <!-- PAGE SPECIFIC OVERRIDES -->
+    <!-- Page Specific Overrides -->
     <style>
         :root {
             /* VERY RED for Critical */
@@ -80,18 +80,62 @@
             overflow: hidden;
         }
 
+        /* Filters */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .filter-btn {
+            background: rgba(10, 12, 16, 0.65);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-medium) var(--ease-smooth);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-border-hover);
+            color: var(--color-text);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: #0a0c10;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px var(--color-primary-glow);
+        }
+
+        /* CVE List & Cards */
+        .cve-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
         .cve-card {
             position: relative;
             background: linear-gradient(135deg, rgba(5, 7, 10, 0.95), rgba(13, 17, 23, 0.9));
             border: 1px solid var(--color-border);
             border-radius: 20px;
             padding: 32px 36px;
-            transition: all var(--transition-slow) var(--ease-out-smooth);
+            transition: all var(--duration-slow) var(--ease-out-smooth);
             backdrop-filter: blur(20px);
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
-            margin-bottom: 24px;
             width: 100%;
         }
 
@@ -120,6 +164,7 @@
             width: 6px;
         }
 
+        /* Card Header */
         .cve-header {
             display: flex;
             flex-wrap: wrap;
@@ -179,6 +224,7 @@
             border: 1px solid var(--status-pending-border);
         }
 
+        /* Card Body */
         .cve-body {
             display: grid;
             grid-template-columns: 1fr auto;
@@ -234,6 +280,7 @@
             border: 1px solid rgba(0, 229, 255, 0.1);
         }
 
+        /* Gauge */
         .cve-gauge-wrap {
             display: flex;
             flex-direction: column;
@@ -310,62 +357,39 @@
             color: var(--sev-color);
         }
 
-        /* Filters */
-        .filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 48px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .filter-btn {
-            background: rgba(10, 12, 16, 0.65);
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-medium) var(--ease-smooth);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--color-border-hover);
-            color: var(--color-text);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background: var(--color-primary);
-            color: #0a0c10;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 20px var(--color-primary-glow);
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .cve-body {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
+
             .cve-gauge-wrap {
                 flex-direction: row;
                 justify-content: flex-start;
                 border-top: 1px solid var(--color-border);
                 padding-top: 20px;
             }
-            .gauge { width: 70px; height: 70px; }
+
+            .gauge {
+                width: 70px;
+                height: 70px;
+            }
+
             .gauge-num { font-size: 1rem; }
+            .gauge-lbl { font-size: 0.45rem; }
+
             .cve-content h3 { font-size: 1.1rem; }
             .cve-description { font-size: 0.85rem; }
         }
 
         @media (max-width: 480px) {
-            .cve-card { padding: 24px 20px; }
-            .cve-header { gap: 8px; }
+            .cve-card {
+                padding: 24px 20px;
+            }
+            .cve-header {
+                gap: 8px;
+            }
             .cve-id { font-size: 0.75rem; padding: 4px 10px; }
             .status-text { font-size: 0.6rem; padding: 4px 10px; }
         }
@@ -415,6 +439,8 @@
 
             <div class="container">
                 
+                <!-- 🚨 REMOVED: Shield SVG Icon from here 🚨 -->
+
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
@@ -741,7 +767,7 @@
         </section>
     </main>
 
-    <!-- BACK TO TOP (Removed the SVG ring as requested) -->
+    <!-- BACK TO TOP (Ring removed) -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -781,10 +807,10 @@
         </div>
     </footer>
 
-    <!-- MAIN SCRIPT -->
-    <script src="script.js"></script>
+    <!-- 🚨 FIXED: Path to main script -->
+    <script src="../../script.js"></script>
     
-    <!-- PAGE SPECIFIC LOGIC -->
+    <!-- PAGE SPECIFIC LOGIC (Filters & Reveal) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Scroll Reveal for Cards
