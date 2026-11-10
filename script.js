@@ -1,5 +1,5 @@
 // ========================================
-// MINIMALIST LOADING SCREEN
+// SNAKE & GUAVA LOADING SCREEN
 // ========================================
 (function initMinimalIntro() {
     const intro = document.getElementById('minimalIntro');
@@ -8,14 +8,16 @@
         return;
     }
 
+    // The animation takes 2 seconds. We wait 2.2s to let the last guava pop, then fade out.
     setTimeout(() => {
         intro.classList.add('hidden');
         document.body.classList.remove('intro-active');
     }, 2200);
 
+    // Remove from DOM after fade out (2.8s total)
     setTimeout(() => {
         intro.remove();
-    }, 3000);
+    }, 2800);
 })();
 
 // ========================================
