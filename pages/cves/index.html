@@ -44,7 +44,77 @@
     }
     </script>
 
+    <!-- Your main style.css -->
     <link rel="stylesheet" href="style.css" />
+    
+    <!-- Tiny addition to handle the specific CVE status colors, matching your design tokens -->
+    <style>
+        /* Status Badges */
+        .status-in-progress {
+            color: #ffb84d;
+            background: rgba(255, 184, 77, 0.08);
+            border: 1px solid rgba(255, 184, 77, 0.25);
+            box-shadow: 0 0 20px rgba(255, 184, 77, 0.08);
+        }
+        
+        .achievement-card:hover .status-in-progress {
+            transform: translateX(4px);
+            background: rgba(255, 184, 77, 0.14);
+            border-color: rgba(255, 184, 77, 0.5);
+            box-shadow: 0 0 24px rgba(255, 184, 77, 0.2);
+        }
+
+        .status-disclosed {
+            color: var(--color-primary);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
+        }
+
+        .achievement-card:hover .status-disclosed {
+            transform: translateX(4px);
+            background: rgba(0, 229, 255, 0.14);
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 0 24px rgba(0, 229, 255, 0.2);
+        }
+
+        .status-pending {
+            color: #a491ff;
+            background: rgba(124, 92, 255, 0.08);
+            border: 1px solid rgba(124, 92, 255, 0.25);
+            box-shadow: 0 0 20px rgba(124, 92, 255, 0.08);
+        }
+
+        .achievement-card:hover .status-pending {
+            transform: translateX(4px);
+            background: rgba(124, 92, 255, 0.14);
+            border-color: rgba(124, 92, 255, 0.5);
+            box-shadow: 0 0 24px rgba(124, 92, 255, 0.2);
+        }
+
+        /* CVSS Score Badges */
+        .cvss-badge {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #ff6b9d;
+            background: rgba(255, 61, 129, 0.08);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 61, 129, 0.2);
+            margin-left: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .cvss-badge.medium { color: #ffb84d; background: rgba(255, 184, 77, 0.08); border-color: rgba(255, 184, 77, 0.2); }
+        .cvss-badge.high { color: #ff6b9d; background: rgba(255, 61, 129, 0.08); border-color: rgba(255, 61, 129, 0.2); }
+        .cvss-badge.critical {
+            color: #ff3d81;
+            background: rgba(255, 61, 129, 0.15);
+            border-color: #ff3d81;
+            box-shadow: 0 0 12px rgba(255, 61, 129, 0.2);
+        }
+    </style>
 </head>
 <body>
 
@@ -74,130 +144,159 @@
     </nav>
 
     <main>
-        <section class="section cves-page-section">
-            <div class="cves-bg-glow"></div>
+        <!-- Reusing the exact classes from your achievements page -->
+        <section class="section achievements-page-section" id="cvesTop">
+            <div class="wavy-background">
+                <div class="wave wave-1"></div>
+                <div class="wave wave-2"></div>
+                <div class="wave wave-3"></div>
+                <div class="wave wave-4"></div>
+                <div class="wave wave-5"></div>
+            </div>
+
+            <div class="particles-container">
+                <div class="particle p1"></div>
+                <div class="particle p2"></div>
+                <div class="particle p3"></div>
+                <div class="particle p4"></div>
+                <div class="particle p5"></div>
+                <div class="particle p6"></div>
+            </div>
+
+            <div class="grid-overlay"></div>
 
             <div class="container">
-                <!-- Minimal Section Header -->
+                <div class="achievements-hero">
+                    <div class="hero-icon-wrap">
+                        <!-- Changed to a Security Shield/Radar icon to fit the theme -->
+                        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                            <defs>
+                                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#66f0ff"/>
+                                    <stop offset="100%" stop-color="#00b4d8"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M50 10 L85 25 V50 C85 70 70 85 50 92 C30 85 15 70 15 50 V25 L50 10 Z" stroke="url(#shieldGrad)" stroke-width="2.5" stroke-linejoin="round" fill="rgba(0,229,255,0.05)"/>
+                            <path d="M50 25 L73 35 V50 C73 63 63 73 50 78 C37 73 27 63 27 50 V35 L50 25 Z" stroke="url(#shieldGrad)" stroke-width="1.5" stroke-linejoin="round" fill="none" opacity="0.4"/>
+                            <path d="M38 50 L46 58 L64 40" stroke="url(#shieldGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="50" cy="50" r="10" stroke="#00e5ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
+                            <circle cx="50" cy="50" r="18" stroke="#00e5ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.3" />
+                            <circle cx="50" cy="50" r="26" stroke="#00e5ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.1" />
+                        </svg>
+                        <div class="hero-ring"></div>
+                        <div class="hero-ring hero-ring-2"></div>
+                    </div>
+                </div>
+
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
-                    <p>Documented vulnerabilities, responsible disclosures, and ongoing security research</p>
+                    <p>Documented vulnerabilities, responsible disclosures &amp; ongoing security research</p>
                 </div>
 
-                <!-- Clean Grid Layout -->
-                <div class="cves-grid">
+                <div class="achievements-list">
 
-                    <!-- Card 1: In Progress -->
-                    <div class="cve-card reveal-on-scroll">
-                        <div class="cve-card-header">
-                            <div class="cve-id-group">
-                                <span class="cve-id">CVE-2026-XXXXX</span>
-                                <span class="cve-status in-progress">
-                                    <span class="status-dot"></span>
-                                    In Progress
-                                </span>
+                    <!-- CVE Card 1 -->
+                    <div class="achievement-card reveal-achievement">
+                        <div class="card-orb"></div>
+
+                        <div class="achievement-content">
+                            <div class="rank-badge-inline status-in-progress">
+                                <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+                                    <path d="M16 4L19 12L27 12L21 17L23 25L16 20L9 25L11 17L5 12L13 12L16 4Z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span>In Progress</span>
+                                <span class="cvss-badge critical">CVSS 9.8</span>
                             </div>
-                            <span class="cve-score high">CVSS 9.8</span>
-                        </div>
-                        
-                        <div class="cve-card-body">
-                            <h3>SQL Injection in Authentication Endpoint</h3>
-                            <p>A critical SQL injection vulnerability was identified in the authentication endpoint of an open-source web application. The flaw allows unauthenticated attackers to bypass login mechanisms and execute arbitrary SQL queries, potentially leading to full database compromise.</p>
+                            <h3 class="ach-title">CVE-2026-XXXXX</h3>
+                            <p class="ach-event">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                                    <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M5 1V3M11 1V3M2 7H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                SQL Injection · Open Source Web Application
+                            </p>
+                            <p class="ach-description">
+                                A critical SQL injection vulnerability was identified in the authentication endpoint of the target application. The flaw allows unauthenticated attackers to bypass login mechanisms and execute arbitrary SQL queries, potentially leading to full database compromise. The issue has been reported to the vendor and a patch is currently in development.
+                            </p>
+                            <div class="ach-tags">
+                                <span>SQLi</span>
+                                <span>Auth Bypass</span>
+                                <span>Critical</span>
+                            </div>
                         </div>
 
-                        <div class="cve-card-footer">
-                            <div class="cve-meta">
-                                <span class="meta-item"><strong>Type:</strong> SQLi</span>
-                                <span class="meta-item"><strong>Vendor:</strong> Open Source</span>
-                                <span class="meta-item"><strong>Reported:</strong> Oct 2026</span>
-                            </div>
-                            <a href="#" class="cve-link">
-                                View Details
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </a>
-                        </div>
+                        <div class="ach-glow"></div>
                     </div>
 
-                    <!-- Card 2: Disclosed -->
-                    <div class="cve-card reveal-on-scroll">
-                        <div class="cve-card-header">
-                            <div class="cve-id-group">
-                                <span class="cve-id">CVE-2025-XXXXX</span>
-                                <span class="cve-status disclosed">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                    Disclosed
-                                </span>
+                    <!-- CVE Card 2 -->
+                    <div class="achievement-card reveal-achievement">
+                        <div class="card-orb"></div>
+
+                        <div class="achievement-content">
+                            <div class="rank-badge-inline status-disclosed">
+                                <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+                                    <path d="M16 4L19 12L27 12L21 17L23 25L16 20L9 25L11 17L5 12L13 12L16 4Z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                                <span>Disclosed</span>
+                                <span class="cvss-badge high">CVSS 7.5</span>
                             </div>
-                            <span class="cve-score medium">CVSS 7.5</span>
-                        </div>
-                        
-                        <div class="cve-card-body">
-                            <h3>Broken Object Level Authorization (BOLA) in GraphQL API</h3>
-                            <p>An Insecure Direct Object Reference (IDOR) / BOLA vulnerability was discovered in a GraphQL API. By manipulating object IDs in mutation requests, authenticated users could access and modify data belonging to other users without authorization.</p>
+                            <h3 class="ach-title">CVE-2025-XXXXX</h3>
+                            <p class="ach-event">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                                    <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M5 1V3M11 1V3M2 7H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                BOLA / IDOR · GraphQL API
+                            </p>
+                            <p class="ach-description">
+                                An Insecure Direct Object Reference (IDOR) / BOLA vulnerability was discovered in the GraphQL API. By manipulating object IDs in mutation requests, authenticated users could access and modify data belonging to other users without authorization. This issue was responsibly disclosed and successfully patched by the maintainers in version v1.3.
+                            </p>
+                            <div class="ach-tags">
+                                <span>GraphQL</span>
+                                <span>BOLA</span>
+                                <span>IDOR</span>
+                            </div>
                         </div>
 
-                        <div class="cve-card-footer">
-                            <div class="cve-meta">
-                                <span class="meta-item"><strong>Type:</strong> BOLA / IDOR</span>
-                                <span class="meta-item"><strong>Vendor:</strong> API Platform</span>
-                                <span class="meta-item"><strong>Reported:</strong> Aug 2025</span>
-                            </div>
-                            <a href="#" class="cve-link">
-                                Read Advisory
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </a>
-                        </div>
+                        <div class="ach-glow"></div>
                     </div>
 
-                    <!-- Card 3: Pending -->
-                    <div class="cve-card reveal-on-scroll">
-                        <div class="cve-card-header">
-                            <div class="cve-id-group">
-                                <span class="cve-id">CVE-2025-XXXXX</span>
-                                <span class="cve-status pending">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                                    Pending
-                                </span>
+                    <!-- CVE Card 3 -->
+                    <div class="achievement-card reveal-achievement">
+                        <div class="card-orb"></div>
+
+                        <div class="achievement-content">
+                            <div class="rank-badge-inline status-pending">
+                                <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+                                    <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M16 8V16L21 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span>Pending Assignment</span>
+                                <span class="cvss-badge medium">CVSS 8.1</span>
                             </div>
-                            <span class="cve-score critical">CVSS 8.1</span>
-                        </div>
-                        
-                        <div class="cve-card-body">
-                            <h3>Local Privilege Escalation in Active Directory Environment</h3>
-                            <p>Identified a local privilege escalation vector within a Windows Active Directory environment. The vulnerability allows a low-privileged domain user to leverage misconfigured Group Policy Objects (GPOs) and Service Principal Names (SPNs) to execute code as a Domain Admin.</p>
+                            <h3 class="ach-title">CVE-2025-XXXXX</h3>
+                            <p class="ach-event">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                                    <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M5 1V3M11 1V3M2 7H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                                Privilege Escalation · Active Directory
+                            </p>
+                            <p class="ach-description">
+                                Identified a local privilege escalation vector within the Windows Active Directory environment. The vulnerability allows a low-privileged domain user to leverage misconfigured Group Policy Objects (GPOs) and Service Principal Names (SPNs) to execute code as a Domain Admin. The CVE ID request is currently pending with MITRE.
+                            </p>
+                            <div class="ach-tags">
+                                <span>Active Directory</span>
+                                <span>PrivEsc</span>
+                                <span>Windows</span>
+                            </div>
                         </div>
 
-                        <div class="cve-card-footer">
-                            <div class="cve-meta">
-                                <span class="meta-item"><strong>Type:</strong> PrivEsc</span>
-                                <span class="meta-item"><strong>Vendor:</strong> Enterprise</span>
-                                <span class="meta-item"><strong>Reported:</strong> Nov 2025</span>
-                            </div>
-                            <a href="#" class="cve-link">
-                                Track Status
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </a>
-                        </div>
+                        <div class="ach-glow"></div>
                     </div>
 
                 </div>
-
-                <!-- Bottom Information Box -->
-                <div class="cves-footer-info reveal-on-scroll">
-                    <div class="info-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#00e5ff" stroke-width="2"/>
-                            <path d="M12 16V12" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 8H12.01" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4>Responsible Disclosure Policy</h4>
-                        <p>I follow a strict 90-day responsible disclosure timeline. If you are a vendor and need to discuss an active report, please reach out via my <a href="../profiles/index.html">profiles page</a>.</p>
-                    </div>
-                </div>
-
             </div>
         </section>
     </main>
@@ -242,9 +341,35 @@
         </div>
     </footer>
 
-    <!-- Include the main script.js from the root directory -->
-    <script src="../../script.js"></script>
-    <!-- Include specific script for the CVEs page reveal animations -->
+    <!-- Your main script.js -->
     <script src="script.js"></script>
+    
+    <!-- Tiny script to ensure the intersection observer picks up the reveal classes exactly like the achievements page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const allAchievements = Array.from(document.querySelectorAll('.reveal-achievement'));
+                        const index = allAchievements.indexOf(entry.target);
+                        const delay = index >= 0 ? index * 120 : 0;
+                        
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, delay);
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -80px 0px'
+            });
+            
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
