@@ -73,7 +73,7 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--color-primary-dark); }
 
 /* =========================================================
-   LANDING / LOADING SCREEN — SNAKE & GUAVA
+   FAST CURTAIN REVEAL — no loading, just atmosphere
    ========================================================= */
 body.intro-active { overflow: hidden !important; }
 body.intro-active .navbar,
@@ -81,293 +81,79 @@ body.intro-active main,
 body.intro-active .footer,
 body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 
-.navbar, main, .footer, .back-to-top { transition: opacity 0.8s ease 0.1s; }
+.navbar, main, .footer, .back-to-top { transition: opacity 0.6s ease 0.1s; }
 
 .minimal-intro {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
-    cursor: pointer;
+    pointer-events: none;
 }
 
+/* Two curtain panels that split open */
 .intro-panel {
     position: absolute;
     left: 0; right: 0;
     height: 50.5%;
     background: var(--color-bg);
     z-index: 1;
-    transition: transform 0.95s cubic-bezier(0.77, 0, 0.175, 1) 0.3s;
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
 }
 .intro-panel.top { top: 0; }
 .intro-panel.bottom { bottom: 0; }
 
-.intro-bg {
+.minimal-intro.exit .intro-panel.top { transform: translateY(-101%); }
+.minimal-intro.exit .intro-panel.bottom { transform: translateY(101%); }
+
+/* Subtle ambient glow that peaks as the reveal begins */
+.intro-glow {
     position: absolute;
-    inset: 0;
+    top: 50%; left: 50%;
+    width: 450px; height: 450px;
+    transform: translate(-50%, -50%) scale(0.6);
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.14), transparent 60%);
+    filter: blur(50px);
+    opacity: 0;
     z-index: 2;
     pointer-events: none;
-    transition: opacity 0.4s ease;
-    background:
-        radial-gradient(ellipse at 50% 45%, rgba(16, 185, 129, 0.08), transparent 60%);
+    animation: glowPulse 750ms ease-in-out forwards;
 }
 
-.intro-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(5, 150, 105, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(5, 150, 105, 0.06) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-    animation: gridDrift 18s linear infinite;
+@keyframes glowPulse {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+    40% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); }
 }
 
-.intro-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-}
-.intro-orb-1 {
-    width: 340px; height: 340px;
-    top: -80px; left: -80px;
-    background: radial-gradient(circle, rgba(5, 150, 105, 0.22), transparent 70%);
-    animation: orbFloat 9s ease-in-out infinite;
-}
-.intro-orb-2 {
-    width: 300px; height: 300px;
-    bottom: -80px; right: -60px;
-    background: radial-gradient(circle, rgba(8, 145, 178, 0.2), transparent 70%);
-    animation: orbFloat 11s ease-in-out infinite reverse;
-}
-
+/* Seam line flashes during the split */
 .intro-seam {
     position: absolute;
     top: 50%; left: 0; right: 0;
     height: 2px;
     margin-top: -1px;
-    z-index: 4;
-    background: linear-gradient(90deg, transparent, var(--color-primary-light), var(--color-accent-2), transparent);
-    box-shadow: 0 0 24px rgba(16, 185, 129, 0.7);
-    opacity: 0;
-    transform: scaleX(0);
-    pointer-events: none;
-}
-
-.intro-content {
-    position: relative;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 24px;
-    text-align: center;
-    transition: opacity 0.45s ease, transform 0.6s ease;
-}
-
-/* Ring */
-.snake-wrapper {
-    position: relative;
-    width: 180px;
-    height: 180px;
-}
-
-.ring-pulse {
-    position: absolute;
-    inset: 12px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(16, 185, 129, 0.35);
-    animation: ringPulse 2.4s ease-out infinite;
-}
-.ring-pulse.delay { animation-delay: 1.2s; }
-
-@keyframes ringPulse {
-    0% { transform: scale(0.85); opacity: 0.7; }
-    100% { transform: scale(1.35); opacity: 0; }
-}
-
-.snake-svg {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-.snake-track {
-    fill: none;
-    stroke: rgba(5, 150, 105, 0.1);
-    stroke-width: 2;
-}
-
-.snake-body {
-    fill: none;
-    stroke: url(#snakeGrad);
-    stroke-width: 3;
-    stroke-linecap: round;
-    filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.45));
-}
-
-/* Fruits: start hidden, JS adds .visible to trigger the appear animation */
-.fruit {
-    transform-box: fill-box;
-    transform-origin: center;
+    background: linear-gradient(90deg, transparent, var(--color-primary-light), var(--color-accent-2), transparent);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
     opacity: 0;
-    transform: scale(0);
-}
-.fruit.visible {
-    animation: fruitIn 0.4s var(--transition-bounce) forwards;
-}
-.fruit.eaten {
-    animation: fruitEat 0.28s ease-out forwards !important;
-}
-
-.fruit ellipse {
-    fill: url(#guavaGrad);
-    filter: drop-shadow(0 0 3px rgba(245, 158, 11, 0.55));
-}
-
-@keyframes fruitIn {
-    from { opacity: 0; transform: scale(0); }
-    to { opacity: 1; transform: scale(1); }
-}
-@keyframes fruitEat {
-    0% { opacity: 1; transform: scale(1); }
-    40% { opacity: 1; transform: scale(1.6); }
-    100% { opacity: 0; transform: scale(0); }
-}
-
-.snake-head { fill: #10b981; }
-
-.tongue {
-    transform-box: fill-box;
-    transform-origin: left center;
-    animation: tongueFlick 0.7s ease-in-out infinite;
-}
-@keyframes tongueFlick {
-    0%, 60%, 100% { transform: scaleX(0.3); opacity: 0.6; }
-    80% { transform: scaleX(1); opacity: 1; }
-}
-
-.intro-percent {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 2rem;
-    letter-spacing: -0.02em;
-    color: var(--color-text);
+    transform: scaleX(0);
     pointer-events: none;
 }
-.intro-percent small {
-    font-size: 0.9rem;
-    margin-left: 2px;
-    color: var(--color-primary);
-}
 
-.intro-name {
-    display: flex;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: 0.32em;
-    color: var(--color-text);
-    padding-left: 0.32em;
+.minimal-intro.exit .intro-seam {
+    animation: seamFlash 600ms ease forwards;
 }
-.intro-name span {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(14px);
-    filter: blur(6px);
-    animation: letterIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    animation-delay: calc(0.3s + var(--i) * 0.055s);
-}
-.intro-name .sp { width: 0.7em; }
-
-@keyframes letterIn {
-    to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-.intro-tagline {
-    font-family: var(--font-display);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    opacity: 0;
-    animation: fadeInText 0.6s ease 0.8s forwards;
-}
-
-.intro-progress {
-    width: 220px;
-    height: 3px;
-    background: rgba(5, 150, 105, 0.12);
-    border-radius: 3px;
-    overflow: hidden;
-}
-.intro-progress span {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent-2));
-    transform-origin: left;
-    transform: scaleX(0);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-}
-
-.intro-status {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 1px;
-    color: var(--color-primary);
-    min-height: 1.2em;
-}
-.intro-prompt { color: var(--color-text-dim); margin-right: 4px; }
-.intro-caret { animation: cursorBlink 1s steps(2) infinite; font-weight: 700; }
-
-/* ⚡ "Tap to skip" now appears much earlier */
-.intro-skip {
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--color-text-dim);
-    opacity: 0;
-    animation: fadeInText 0.5s ease 0.3s forwards;
-}
-
-@keyframes fadeInText { to { opacity: 1; } }
-
-/* Completion flash */
-.minimal-intro.complete .snake-body { filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.9)); }
-.minimal-intro.complete .intro-status { color: var(--color-primary-dark); font-weight: 700; }
-
-/* Exit: content fades, seam flashes, curtains split */
-.minimal-intro.exit { pointer-events: none; }
-.minimal-intro.exit .intro-content { opacity: 0; transform: scale(0.94) translateY(-8px); }
-.minimal-intro.exit .intro-bg { opacity: 0; }
-.minimal-intro.exit .intro-panel.top { transform: translateY(-101%); }
-.minimal-intro.exit .intro-panel.bottom { transform: translateY(101%); }
-.minimal-intro.exit .intro-seam { animation: seamFlash 0.9s ease forwards; }
 
 @keyframes seamFlash {
-    0% { opacity: 1; transform: scaleX(0); }
-    40% { opacity: 1; transform: scaleX(1); }
+    0% { opacity: 0; transform: scaleX(0); }
+    20% { opacity: 1; transform: scaleX(1); }
+    60% { opacity: 1; transform: scaleX(1); }
     100% { opacity: 0; transform: scaleX(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .intro-grid, .intro-orb, .ring-pulse { animation: none; }
-    .intro-panel { transition-duration: 0.4s; transition-delay: 0s; }
+    .intro-panel { transition-duration: 0.3s; }
+    .intro-glow, .intro-seam { animation: none !important; }
 }
 
 /* =========================================================
@@ -2080,12 +1866,6 @@ body.site-ready .stat-bar span {
     .contact-form { padding: 20px 16px; }
     .tagline-text { font-size: 0.65rem; letter-spacing: 1.5px; }
     .hero-tagline { gap: 10px; max-width: 260px; }
-
-    .snake-wrapper { width: 150px; height: 150px; }
-    .intro-percent { font-size: 1.6rem; }
-    .intro-name { font-size: 1rem; letter-spacing: 0.26em; padding-left: 0.26em; }
-    .intro-tagline { font-size: 0.6rem; letter-spacing: 2px; }
-    .intro-progress { width: 180px; }
 
     .btn {
         padding: 12px 24px;
