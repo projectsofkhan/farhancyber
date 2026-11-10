@@ -8,16 +8,14 @@
         return;
     }
 
-    // Hide loading screen after animation completes (2.6s)
     setTimeout(() => {
         intro.classList.add('hidden');
         document.body.classList.remove('intro-active');
-    }, 2600);
+    }, 2200);
 
-    // Remove from DOM after fade out (3.5s)
     setTimeout(() => {
         intro.remove();
-    }, 3500);
+    }, 3000);
 })();
 
 // ========================================
@@ -143,22 +141,22 @@ function initContactForm() {
 
         if (!name.value.trim()) {
             isValid = false;
-            name.style.borderColor = '#00e5ff';
-            name.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
+            name.style.borderColor = '#059669';
+            name.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
             name.focus();
         }
 
         if (!email.value.trim() || !isValidEmail(email.value)) {
             isValid = false;
-            email.style.borderColor = '#00e5ff';
-            email.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
+            email.style.borderColor = '#059669';
+            email.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
             if (isValid) email.focus();
         }
 
         if (!message.value.trim()) {
             isValid = false;
-            message.style.borderColor = '#00e5ff';
-            message.style.boxShadow = '0 0 0 4px rgba(0, 229, 255, 0.1)';
+            message.style.borderColor = '#059669';
+            message.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
             if (isValid) message.focus();
         }
 
@@ -188,7 +186,6 @@ function initContactForm() {
                 to_name: 'Farhan Khan',
             };
 
-            // Simulate network request (or replace with actual EmailJS call)
             await new Promise(r => setTimeout(r, 800));
 
             btn.innerHTML = `
@@ -197,9 +194,9 @@ function initContactForm() {
                 </svg>
                 Sent Successfully!
             `;
-            btn.style.background = '#00e5ff';
-            btn.style.borderColor = '#00e5ff';
-            btn.style.color = '#0a0c10';
+            btn.style.background = '#059669';
+            btn.style.borderColor = '#059669';
+            btn.style.color = '#ffffff';
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -219,8 +216,8 @@ function initContactForm() {
                 </svg>
                 Failed. Try Again
             `;
-            btn.style.background = '#ff5f57';
-            btn.style.color = '#fff';
+            btn.style.background = '#ef4444';
+            btn.style.color = '#ffffff';
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -303,7 +300,7 @@ function initHeroReveal() {
 
     setTimeout(() => {
         heroElements.forEach(el => el.classList.add('revealed'));
-    }, 2700);
+    }, 2400);
 }
 
 // ========================================
@@ -378,7 +375,7 @@ function initTypedText() {
         }
     }
 
-    setTimeout(type, 3400);
+    setTimeout(type, 3000);
 }
 
 // ========================================
@@ -390,7 +387,7 @@ function initCountUp() {
 
     setTimeout(() => {
         nums.forEach(n => animateCount(n));
-    }, 3200);
+    }, 2800);
 }
 
 function animateCount(el) {
@@ -417,30 +414,15 @@ function initBackToTop() {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
 
-    const progress = btn.querySelector('.btt-ring-progress');
-    const circumference = 2 * Math.PI * 46;
-
-    if (progress) {
-        progress.style.strokeDasharray = circumference;
-        progress.style.strokeDashoffset = circumference;
-    }
-
     let ticking = false;
 
     function updateButton() {
         const scrollTop = window.pageYOffset;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
 
         if (scrollTop > 400) {
             btn.classList.add('visible');
         } else {
             btn.classList.remove('visible');
-        }
-
-        if (progress) {
-            const offset = circumference * (1 - scrollPercent);
-            progress.style.strokeDashoffset = offset;
         }
 
         ticking = false;
