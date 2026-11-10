@@ -44,7 +44,7 @@
     }
     </script>
 
-    <!-- 🚨 FIXED: Path to main stylesheet -->
+    <!-- Main Stylesheet (Fixed Path) -->
     <link rel="stylesheet" href="../../style.css" />
 
     <!-- Page Specific Overrides -->
@@ -52,13 +52,13 @@
         :root {
             /* VERY RED for Critical */
             --sev-critical: #ff0000;
-            --sev-critical-glow: rgba(255, 0, 0, 0.5);
+            --sev-critical-glow: rgba(255, 0, 0, 0.4);
             
             --sev-high: #ff8a3d;
-            --sev-high-glow: rgba(255, 138, 61, 0.3);
+            --sev-high-glow: rgba(255, 138, 61, 0.25);
             
             --sev-medium: #ffc93d;
-            --sev-medium-glow: rgba(255, 201, 61, 0.3);
+            --sev-medium-glow: rgba(255, 201, 61, 0.25);
             
             --status-disclosed: #00e5ff;
             --status-disclosed-bg: rgba(0, 229, 255, 0.08);
@@ -71,6 +71,12 @@
             --status-pending: #a491ff;
             --status-pending-bg: rgba(164, 145, 255, 0.08);
             --status-pending-border: rgba(164, 145, 255, 0.25);
+        }
+
+        /* Smoothing general page rendering */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .cves-page-section {
@@ -100,7 +106,8 @@
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all var(--transition-medium) var(--ease-smooth);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform;
         }
 
         .filter-btn:hover {
@@ -114,6 +121,7 @@
             color: #0a0c10;
             border-color: var(--color-primary);
             box-shadow: 0 0 20px var(--color-primary-glow);
+            transform: translateY(-2px);
         }
 
         /* CVE List & Cards */
@@ -123,6 +131,7 @@
             gap: 24px;
             max-width: 1050px;
             margin: 0 auto;
+            min-height: 400px; /* Prevents layout jump during filtering */
         }
 
         .cve-card {
@@ -131,17 +140,35 @@
             border: 1px solid var(--color-border);
             border-radius: 20px;
             padding: 32px 36px;
-            transition: all var(--duration-slow) var(--ease-out-smooth);
             backdrop-filter: blur(20px);
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
             width: 100%;
+            
+            /* Smooth specific properties only */
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease;
+            
+            /* Hardware acceleration */
+            will-change: opacity, transform;
+            
+            /* Default hidden state for scroll reveal */
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
         }
 
+        /* Scroll Reveal State */
         .cve-card.revealed {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Filtering Hidden State */
+        .cve-card.filtered-out {
+            opacity: 0 !important;
+            transform: translate3d(0, 10px, 0) scale(0.98) !important;
+            pointer-events: none;
         }
 
         .cve-card::before {
@@ -151,12 +178,12 @@
             width: 4px;
             background: var(--sev-color);
             box-shadow: 0 0 20px var(--sev-glow);
-            transition: all var(--transition-medium) ease;
+            transition: width 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cve-card:hover {
             border-color: var(--color-border-hover);
-            transform: translateY(-6px);
+            transform: translate3d(0, -6px, 0);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--sev-glow);
         }
 
@@ -182,6 +209,7 @@
             padding: 6px 14px;
             border-radius: 8px;
             border: 1px solid rgba(0, 229, 255, 0.2);
+            transition: background-color 0.3s ease;
         }
 
         .status-text {
@@ -239,7 +267,7 @@
             color: var(--color-text);
             margin-bottom: 10px;
             line-height: 1.3;
-            transition: color var(--transition-medium) ease;
+            transition: color 0.3s ease;
         }
 
         .cve-card:hover .cve-content h3 {
@@ -262,6 +290,11 @@
             margin-bottom: 20px;
             padding-left: 16px;
             border-left: 2px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        .cve-card:hover .cve-description {
+            border-left-color: var(--sev-color);
         }
 
         .cve-tags {
@@ -278,6 +311,12 @@
             padding: 4px 12px;
             border-radius: 6px;
             border: 1px solid rgba(0, 229, 255, 0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cve-card:hover .cve-tag {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.25);
         }
 
         /* Gauge */
@@ -314,12 +353,17 @@
             stroke-linecap: round;
             stroke-dasharray: 264;
             stroke-dashoffset: 264;
-            transition: stroke-dashoffset 1.5s var(--ease-out-smooth);
+            /* Smooth gauge animation */
+            transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
             filter: drop-shadow(0 0 8px var(--sev-glow));
         }
 
         .cve-card.revealed .gauge-fill {
             stroke-dashoffset: var(--offset);
+        }
+
+        .cve-card:hover .gauge-fill {
+            filter: drop-shadow(0 0 15px var(--sev-glow));
         }
 
         .gauge-text {
@@ -397,9 +441,7 @@
 </head>
 <body>
 
-    <!-- ==========================================
-         NAVBAR (Exact copy from main site)
-         ========================================== -->
+    <!-- NAVBAR -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
@@ -439,8 +481,6 @@
 
             <div class="container">
                 
-                <!-- 🚨 REMOVED: Shield SVG Icon from here 🚨 -->
-
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
@@ -458,7 +498,7 @@
                 <!-- CVE List -->
                 <div class="cve-list">
 
-                    <!-- 1. CVE-2026-28417 (Critical - VERY RED) -->
+                    <!-- 1. CVE-2026-28417 (Critical) -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-28417</span>
@@ -572,11 +612,11 @@
                         </div>
                     </div>
 
-                    <!-- 4. GHSA-773r-585g-6vc3 (Moderate) -->
-                    <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
+                    <!-- 4. GHSA-773r-585g-6vc3 (Moderate) - In Progress -->
+                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-773r-585g-6vc3</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="status-text status-in-progress">In Progress</span>
                         </div>
                         <div class="cve-body">
                             <div class="cve-content">
@@ -586,7 +626,7 @@
                                     <span class="meta-item">Authentication</span>
                                 </div>
                                 <p class="cve-description">
-                                    The login rate limit is applied per username exactly as provided. By changing the case of the username, an attacker can bypass the per-account lockout mechanism and perform unlimited brute-force attempts.
+                                    The login rate limit is applied per username exactly as provided. By changing the case of the username (e.g., "User" vs "user"), an attacker can bypass the per-account lockout mechanism and perform unlimited brute-force attempts. Published Nov 4, 2026.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Brute Force</span>
@@ -610,7 +650,7 @@
                         </div>
                     </div>
 
-                    <!-- 5. CVE-2026-121735 / GHSA-qp6g-7v4v-33r9 (Moderate) -->
+                    <!-- 5. CVE-2026-121735 (Moderate) - Disclosed -->
                     <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-121735</span>
@@ -620,26 +660,26 @@
                             <div class="cve-content">
                                 <h3>Account Confirmation Tokens Have No Expiry Window</h3>
                                 <div class="cve-meta">
+                                    <span class="meta-item">CWE-613</span>
                                     <span class="meta-item">Token Expiry</span>
-                                    <span class="meta-item">Account Security</span>
                                 </div>
                                 <p class="cve-description">
-                                    Account confirmation tokens remain valid indefinitely. If a user's email is compromised long after registration, an attacker can use the stale confirmation token to activate the account. (GHSA-qp6g-7v4v-33r9)
+                                    When someone registers, a confirmation token is generated and emailed to them. The code only verifies that the token matches and the account isn't already confirmed, but never checks how old the token is. The token stays valid forever, allowing anyone with an old confirmation email to activate an account that was never meant to be active.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Token</span>
                                     <span class="cve-tag">Expiry</span>
-                                    <span class="cve-tag">Account</span>
+                                    <span class="cve-tag">Account Security</span>
                                 </div>
                             </div>
                             <div class="cve-gauge-wrap">
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 124.08;"/>
+                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 150.48;"/>
                                     </svg>
                                     <div class="gauge-text">
-                                        <span class="gauge-num">5.3</span>
+                                        <span class="gauge-num">4.3</span>
                                         <span class="gauge-lbl">CVSS</span>
                                     </div>
                                 </div>
@@ -648,11 +688,11 @@
                         </div>
                     </div>
 
-                    <!-- 6. GHSA-fwgq-c3c6-p67j (Moderate) -->
-                    <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
+                    <!-- 6. GHSA-fwgq-c3c6-p67j (Moderate) - In Progress -->
+                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-fwgq-c3c6-p67j</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="status-text status-in-progress">In Progress</span>
                         </div>
                         <div class="cve-body">
                             <div class="cve-content">
@@ -662,7 +702,7 @@
                                     <span class="meta-item">Password Reset</span>
                                 </div>
                                 <p class="cve-description">
-                                    The password reset endpoint returns different responses for valid vs. invalid email addresses, allowing attackers to enumerate registered users. Additionally, the rate limit can be bypassed by distributing requests.
+                                    The password reset endpoint returns different responses for valid vs. invalid email addresses, allowing attackers to enumerate registered users. Additionally, the rate limit can be bypassed by distributing requests. Published Nov 4, 2026.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Enumeration</span>
@@ -686,7 +726,7 @@
                         </div>
                     </div>
 
-                    <!-- 7. CVE-2026-11025 (Critical - VERY RED) -->
+                    <!-- 7. CVE-2026-11025 (Critical) -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-11025</span>
@@ -767,7 +807,7 @@
         </section>
     </main>
 
-    <!-- BACK TO TOP (Ring removed) -->
+    <!-- BACK TO TOP (Ring removed, smooth fade) -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -777,9 +817,7 @@
         <span class="btt-glow"></span>
     </button>
 
-    <!-- ==========================================
-         FOOTER (Exact copy from main site)
-         ========================================== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -807,20 +845,22 @@
         </div>
     </footer>
 
-    <!-- 🚨 FIXED: Path to main script -->
+    <!-- Main Script -->
     <script src="../../script.js"></script>
     
-    <!-- PAGE SPECIFIC LOGIC (Filters & Reveal) -->
+    <!-- PAGE SPECIFIC LOGIC (Smooth Filters & Reveal) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Scroll Reveal for Cards
+            // 1. Scroll Reveal for Cards (Staggered)
             const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
                         const index = allCards.indexOf(entry.target);
-                        const delay = index >= 0 ? index * 100 : 0;
+                        // Stagger animation based on card index
+                        const delay = index >= 0 ? index * 80 : 0;
                         
                         setTimeout(() => {
                             entry.target.classList.add('revealed');
@@ -836,25 +876,51 @@
 
             revealElements.forEach(el => observer.observe(el));
 
-            // 2. Filter Logic
+            // 2. Smooth Filter Logic
             const filterBtns = document.querySelectorAll('.filter-btn');
             const cveCards = document.querySelectorAll('.cve-card');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    // Update button states
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
                     const filter = btn.getAttribute('data-filter');
+                    let visibleCount = 0;
 
                     cveCards.forEach(card => {
                         const status = card.getAttribute('data-status');
-                        if (filter === 'all' || status === filter) {
-                            card.style.display = 'block';
-                            setTimeout(() => card.classList.add('revealed'), 50);
+                        const matches = filter === 'all' || status === filter;
+
+                        if (matches) {
+                            visibleCount++;
+                            // If it was hidden by a previous filter, reset it
+                            if (card.style.display === 'none') {
+                                card.style.display = 'block';
+                                card.classList.remove('filtered-out');
+                                // Force a browser reflow so the transition triggers
+                                void card.offsetWidth; 
+                                // Slight delay to let layout settle before fading in
+                                setTimeout(() => {
+                                    card.classList.add('revealed');
+                                }, 50);
+                            } else {
+                                card.classList.remove('filtered-out');
+                                card.classList.add('revealed');
+                            }
                         } else {
-                            card.style.display = 'none';
+                            // Fade out smoothly
+                            card.classList.add('filtered-out');
                             card.classList.remove('revealed');
+                            
+                            // Wait for CSS transition to finish before removing from DOM flow
+                            setTimeout(() => {
+                                // Double check it hasn't been re-enabled while waiting
+                                if (card.classList.contains('filtered-out')) {
+                                    card.style.display = 'none';
+                                }
+                            }, 400); // Matches the CSS transition duration
                         }
                     });
                 });
