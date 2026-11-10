@@ -50,10 +50,6 @@
     <!-- Page Specific Overrides -->
     <style>
         :root {
-            /* VERY RED for Critical */
-            --sev-critical: #ff0000;
-            --sev-critical-glow: rgba(255, 0, 0, 0.4);
-            
             --sev-high: #ff8a3d;
             --sev-high-glow: rgba(255, 138, 61, 0.25);
             
@@ -67,10 +63,6 @@
             --status-in-progress: #ffb84d;
             --status-in-progress-bg: rgba(255, 184, 77, 0.08);
             --status-in-progress-border: rgba(255, 184, 77, 0.25);
-            
-            --status-pending: #a491ff;
-            --status-pending-bg: rgba(164, 145, 255, 0.08);
-            --status-pending-border: rgba(164, 145, 255, 0.25);
         }
 
         /* Smoothing general page rendering */
@@ -244,12 +236,6 @@
             color: var(--status-disclosed);
             background: var(--status-disclosed-bg);
             border: 1px solid var(--status-disclosed-border);
-        }
-
-        .status-pending {
-            color: var(--status-pending);
-            background: var(--status-pending-bg);
-            border: 1px solid var(--status-pending-border);
         }
 
         /* Card Body */
@@ -492,127 +478,12 @@
                     <button class="filter-btn active" data-filter="all">All Advisories</button>
                     <button class="filter-btn" data-filter="disclosed">Disclosed</button>
                     <button class="filter-btn" data-filter="in-progress">In Progress</button>
-                    <button class="filter-btn" data-filter="pending">Pending</button>
                 </div>
 
                 <!-- CVE List -->
                 <div class="cve-list">
 
-                    <!-- 1. CVE-2026-28417 (Critical) -->
-                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-2026-28417</span>
-                            <span class="status-text status-in-progress">In Progress</span>
-                        </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>SQL Injection in Authentication Endpoint</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">SQL Injection</span>
-                                    <span class="meta-item">Open-source Web App</span>
-                                </div>
-                                <p class="cve-description">
-                                    A time-based blind SQL injection was identified in the login flow. The vulnerability allows unauthenticated actors to enumerate the database schema and exfiltrate credentials. The vendor was notified and a coordinated fix is currently under validation.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">SQLi</span>
-                                    <span class="cve-tag">Auth Bypass</span>
-                                    <span class="cve-tag">Database</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 5.28;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">9.8</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Critical</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2. CVE-2025-58103 (High) -->
-                    <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-high); --sev-glow: var(--sev-high-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-2025-58103</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
-                        </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>BOLA / IDOR in GraphQL Mutations</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">GraphQL</span>
-                                    <span class="meta-item">API Security</span>
-                                </div>
-                                <p class="cve-description">
-                                    Authenticated users could manipulate object identifiers in GraphQL mutation requests to access or modify resources owned by other tenants. The missing authorization check exposed personally identifiable information across the platform. A patched release was published.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">GraphQL</span>
-                                    <span class="cve-tag">BOLA</span>
-                                    <span class="cve-tag">IDOR</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 66;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">7.5</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">High</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3. CVE-2025-47291 (High) - Pending -->
-                    <div class="cve-card reveal-achievement" data-status="pending" style="--sev-color: var(--sev-high); --sev-glow: var(--sev-high-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-2025-47291</span>
-                            <span class="status-text status-pending">Pending Assignment</span>
-                        </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Active Directory Privilege Escalation</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">Privilege Escalation</span>
-                                    <span class="meta-item">Windows AD</span>
-                                </div>
-                                <p class="cve-description">
-                                    A misconfigured Group Policy Object combined with an over-permissive Service Principal Name allows low-privileged domain users to escalate to Domain Admin. The MITRE CNA is currently reviewing the submission and a CVE identifier is expected shortly.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Active Directory</span>
-                                    <span class="cve-tag">PrivEsc</span>
-                                    <span class="cve-tag">Windows</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 50.16;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">8.1</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">High</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4. GHSA-773r-585g-6vc3 (Moderate) - In Progress -->
+                    <!-- 1. GHSA-773r-585g-6vc3 (Moderate) - In Progress -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-773r-585g-6vc3</span>
@@ -638,7 +509,8 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 105.6;"/>
+                                        <!-- Offset calculated for 6.5 CVSS -->
+                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 92.4;"/>
                                     </svg>
                                     <div class="gauge-text">
                                         <span class="gauge-num">6.5</span>
@@ -650,7 +522,7 @@
                         </div>
                     </div>
 
-                    <!-- 5. CVE-2026-121735 (Moderate) - Disclosed -->
+                    <!-- 2. CVE-2026-121735 (Moderate) - Disclosed -->
                     <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-121735</span>
@@ -676,6 +548,7 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
+                                        <!-- Offset calculated for 4.3 CVSS -->
                                         <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 150.48;"/>
                                     </svg>
                                     <div class="gauge-text">
@@ -688,7 +561,7 @@
                         </div>
                     </div>
 
-                    <!-- 6. GHSA-fwgq-c3c6-p67j (Moderate) - In Progress -->
+                    <!-- 3. GHSA-fwgq-c3c6-p67j (Moderate) - In Progress -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-fwgq-c3c6-p67j</span>
@@ -714,6 +587,7 @@
                                 <div class="gauge">
                                     <svg viewBox="0 0 100 100">
                                         <circle class="gauge-track" cx="50" cy="50" r="42"/>
+                                        <!-- Offset calculated for 5.3 CVSS -->
                                         <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 124.08;"/>
                                     </svg>
                                     <div class="gauge-text">
@@ -722,82 +596,6 @@
                                     </div>
                                 </div>
                                 <span class="sev-label">Moderate</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 7. CVE-2026-11025 (Critical) -->
-                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-2026-11025</span>
-                            <span class="status-text status-in-progress">In Progress</span>
-                        </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Insecure Deserialization Leading to RCE</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">Deserialization</span>
-                                    <span class="meta-item">Java Backend</span>
-                                </div>
-                                <p class="cve-description">
-                                    Unsafe deserialization of untrusted input in the session management layer allows an unauthenticated attacker to achieve remote code execution on the server. The issue affects versions prior to the 2026 Q1 release.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Deserialization</span>
-                                    <span class="cve-tag">RCE</span>
-                                    <span class="cve-tag">Java</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 23.76;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">9.1</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Critical</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 8. CVE-2025-29471 (Medium) -->
-                    <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-2025-29471</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
-                        </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>SSRF in URL Preview Service</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">SSRF</span>
-                                    <span class="meta-item">Cloud Backend</span>
-                                </div>
-                                <p class="cve-description">
-                                    The URL preview feature failed to validate user-supplied URLs, allowing server-side requests to internal metadata endpoints. This behavior could be leveraged to retrieve cloud IAM credentials and pivot into adjacent infrastructure.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">SSRF</span>
-                                    <span class="cve-tag">Cloud</span>
-                                    <span class="cve-tag">Backend</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 108.24;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">5.9</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
                             </div>
                         </div>
                     </div>
@@ -859,7 +657,6 @@
                     if (entry.isIntersecting) {
                         const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
                         const index = allCards.indexOf(entry.target);
-                        // Stagger animation based on card index
                         const delay = index >= 0 ? index * 80 : 0;
                         
                         setTimeout(() => {
@@ -882,45 +679,33 @@
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Update button states
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
                     const filter = btn.getAttribute('data-filter');
-                    let visibleCount = 0;
 
                     cveCards.forEach(card => {
                         const status = card.getAttribute('data-status');
                         const matches = filter === 'all' || status === filter;
 
                         if (matches) {
-                            visibleCount++;
-                            // If it was hidden by a previous filter, reset it
                             if (card.style.display === 'none') {
                                 card.style.display = 'block';
                                 card.classList.remove('filtered-out');
-                                // Force a browser reflow so the transition triggers
                                 void card.offsetWidth; 
-                                // Slight delay to let layout settle before fading in
-                                setTimeout(() => {
-                                    card.classList.add('revealed');
-                                }, 50);
+                                setTimeout(() => card.classList.add('revealed'), 50);
                             } else {
                                 card.classList.remove('filtered-out');
                                 card.classList.add('revealed');
                             }
                         } else {
-                            // Fade out smoothly
                             card.classList.add('filtered-out');
                             card.classList.remove('revealed');
-                            
-                            // Wait for CSS transition to finish before removing from DOM flow
                             setTimeout(() => {
-                                // Double check it hasn't been re-enabled while waiting
                                 if (card.classList.contains('filtered-out')) {
                                     card.style.display = 'none';
                                 }
-                            }, 400); // Matches the CSS transition duration
+                            }, 400);
                         }
                     });
                 });
