@@ -1,23 +1,116 @@
 // ========================================
-// SNAKE & GUAVA LOADING SCREEN
+// INTRO (Snake & Guava loading screen)
 // ========================================
-(function initMinimalIntro() {
+let resolveIntro;
+const introDone = new Promise(r => { resolveIntro = r; });
+
+(function initIntro() {
     const intro = document.getElementById('minimalIntro');
-    if (!intro) {
+
+    function finishSite() {
         document.body.classList.remove('intro-active');
-        return;
+        document.body.classList.add('site-ready');
+        resolveIntro();
     }
 
-    // The animation takes 1.8 seconds. We wait 2.0s to let the last guava pop, then fade out.
-    setTimeout(() => {
-        intro.classList.add('hidden');
-        document.body.classList.remove('intro-active');
-    }, 2000);
+    if (!intro) { finishSite(); return; }
 
-    // Remove from DOM after fade out (2.5s total)
-    setTimeout(() => {
-        intro.remove();
-    }, 2500);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = reduce ? 600 : 2800;
+
+    const path = intro.querySelector('#snakePath');
+    const body = intro.querySelector('.snake-body');
+    const head = intro.querySelector('#snakeHead');
+    const pctEl = intro.querySelector('#introPercent');
+    const barEl = intro.querySelector('#introBar');
+    const statusEl = intro.querySelector('#introStatus');
+    const fruitPos = [...intro.querySelectorAll('.fruit-pos')];
+
+    const L = path.getTotalLength();
+    body.setAttribute('stroke-dasharray', L);
+    body.setAttribute('stroke-dashoffset', L);
+
+    // Place guavas along the ring
+    const fruits = fruitPos.map(g => {
+        const at = parseFloat(g.dataset.at);
+        const pt = path.getPointAtLength(at * L);
+        g.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
+        return { at, el: g.querySelector('.fruit'), eaten: false };
+    });
+
+    const messages = [
+        'Initializing environment',
+        'Enumerating targets',
+        'Escalating privileges',
+        'Capturing flags',
+        'Access granted'
+    ];
+    let msgIndex = -1;
+    function setStatus(i) {
+        if (i === msgIndex) return;
+        msgIndex = i;
+        statusEl.textContent = messages[i];
+    }
+
+    const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+
+    function render(p) {
+        const d = p * L;
+        body.setAttribute('stroke-dashoffset', L - d);
+        const sw = 3 + 6 * p;
+        body.setAttribute('stroke-width', sw.toFixed(2));
+
+        const a = path.getPointAtLength(Math.min(d, L));
+        const ahead = d + 0.6 <= L ? d + 0.6 : d - 0.6;
+        const b = path.getPointAtLength(Math.max(0, ahead));
+        let angle = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+        if (d + 0.6 > L) angle += 180;
+        const scale = (sw / 2 + 0.9) / 4.2;
+        head.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${angle}) scale(${scale.toFixed(3)})`);
+
+        fruits.forEach(f => {
+            if (!f.eaten && p >= f.at - 0.015) {
+                f.eaten = true;
+                f.el.classList.add('eaten');
+            }
+        });
+
+        pctEl.textContent = Math.round(p * 100);
+        barEl.style.transform = `scaleX(${p})`;
+        setStatus(p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : p < 1 ? 3 : 4);
+    }
+
+    let exited = false;
+    let raf;
+    function exit() {
+        if (exited) return;
+        exited = true;
+        cancelAnimationFrame(raf);
+        intro.classList.add('exit');
+        setTimeout(finishSite, 350);
+        setTimeout(() => intro.remove(), 1600);
+    }
+
+    const start = performance.now();
+    function frame(now) {
+        if (exited) return;
+        const t = Math.min((now - start) / DURATION, 1);
+        render(ease(t));
+        if (t < 1) {
+            raf = requestAnimationFrame(frame);
+        } else {
+            intro.classList.add('complete');
+            setTimeout(exit, reduce ? 100 : 550);
+        }
+    }
+
+    render(0);
+    raf = requestAnimationFrame(frame);
+
+    // Skip handlers + safety fallback (e.g. background tab throttling)
+    intro.addEventListener('click', exit);
+    window.addEventListener('keydown', exit, { once: true });
+    setTimeout(exit, 7000);
 })();
 
 // ========================================
@@ -49,7 +142,7 @@ function initNavigation() {
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-            toggle.setAttribute('aria-expanded', !isOpen);
+            toggle.setAttribute('aria-expanded', String(!isOpen));
             links.classList.toggle('open');
         });
     }
@@ -75,49 +168,79 @@ function initNavigation() {
 }
 
 // ========================================
-// DROPDOWNS
+// DROPDOWNS (View buttons)
 // ========================================
 function initDropdowns() {
-    const dropdowns = document.querySelectorAll('.dropdown-toggle');
+    const toggles = [...document.querySelectorAll('.dropdown-toggle')];
 
-    dropdowns.forEach(button => {
-        button.addEventListener('click', () => {
-            const content = button.closest('.dropdown-wrapper').nextElementSibling;
-            const isOpen = button.getAttribute('aria-expanded') === 'true';
+    const getContent = btn => {
+        const wrapper = btn.closest('.dropdown-wrapper');
+        return wrapper ? wrapper.nextElementSibling : null;
+    };
 
-            document.querySelectorAll('.dropdown-toggle').forEach(b => {
-                if (b !== button) {
-                    b.setAttribute('aria-expanded', 'false');
-                    const otherContent = b.closest('.dropdown-wrapper').nextElementSibling;
-                    if (otherContent) otherContent.hidden = true;
-                }
-            });
+    function setLabel(btn, open) {
+        const label = btn.querySelector('span');
+        if (!label) return;
+        if (!btn.dataset.label) btn.dataset.label = label.textContent.trim();
+        label.textContent = open ? btn.dataset.label.replace(/^View/, 'Hide') : btn.dataset.label;
+    }
 
-            button.setAttribute('aria-expanded', !isOpen);
-            if (content) {
-                if (isOpen) {
-                    content.style.animation = 'dropdownClose 0.3s ease forwards';
-                    setTimeout(() => {
-                        content.hidden = true;
-                        content.style.animation = '';
-                    }, 300);
-                } else {
-                    content.hidden = false;
-                    content.style.animation = 'dropdownReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-                }
+    function openDropdown(btn) {
+        const content = getContent(btn);
+        if (!content) return;
+        clearTimeout(content._closeTimer);
+        content.classList.remove('is-closing');
+        content.hidden = false;
+        btn.setAttribute('aria-expanded', 'true');
+        setLabel(btn, true);
+
+        // On small screens, bring the opened section into view
+        setTimeout(() => {
+            const r = content.getBoundingClientRect();
+            if (r.bottom > window.innerHeight || r.top < 80) {
+                btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
+        }, 360);
+    }
+
+    function closeDropdown(btn) {
+        const content = getContent(btn);
+        btn.setAttribute('aria-expanded', 'false');
+        setLabel(btn, false);
+        if (!content || content.hidden) return;
+        content.classList.add('is-closing');
+        clearTimeout(content._closeTimer);
+        content._closeTimer = setTimeout(() => {
+            content.hidden = true;
+            content.classList.remove('is-closing');
+        }, 300);
+    }
+
+    toggles.forEach((btn, i) => {
+        const content = getContent(btn);
+        if (content) {
+            if (!content.id) content.id = `dropdown-panel-${i}`;
+            btn.setAttribute('aria-controls', content.id);
+        }
+
+        btn.addEventListener('click', () => {
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+            toggles.forEach(other => {
+                if (other !== btn && other.getAttribute('aria-expanded') === 'true') closeDropdown(other);
+            });
+            if (isOpen) closeDropdown(btn);
+            else openDropdown(btn);
         });
     });
-}
 
-const styleDropdown = document.createElement('style');
-styleDropdown.textContent = `
-    @keyframes dropdownClose {
-        from { opacity: 1; transform: translateY(0) scale(1); }
-        to { opacity: 0; transform: translateY(-12px) scale(0.96); }
-    }
-`;
-document.head.appendChild(styleDropdown);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            toggles.forEach(b => {
+                if (b.getAttribute('aria-expanded') === 'true') closeDropdown(b);
+            });
+        }
+    });
+}
 
 // ========================================
 // CONTACT FORM
@@ -134,6 +257,7 @@ function initContactForm() {
         const message = document.getElementById('contactMessage');
 
         let isValid = true;
+        let focused = false;
 
         [name, email, message].forEach(field => {
             if (!field) return;
@@ -141,26 +265,16 @@ function initContactForm() {
             field.style.boxShadow = '';
         });
 
-        if (!name.value.trim()) {
+        function flag(field) {
             isValid = false;
-            name.style.borderColor = '#059669';
-            name.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
-            name.focus();
+            field.style.borderColor = '#059669';
+            field.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
+            if (!focused) { field.focus(); focused = true; }
         }
 
-        if (!email.value.trim() || !isValidEmail(email.value)) {
-            isValid = false;
-            email.style.borderColor = '#059669';
-            email.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
-            if (isValid) email.focus();
-        }
-
-        if (!message.value.trim()) {
-            isValid = false;
-            message.style.borderColor = '#059669';
-            message.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
-            if (isValid) message.focus();
-        }
+        if (!name.value.trim()) flag(name);
+        if (!email.value.trim() || !isValidEmail(email.value)) flag(email);
+        if (!message.value.trim()) flag(message);
 
         if (!isValid) {
             form.style.animation = 'shake 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -187,6 +301,8 @@ function initContactForm() {
                 message: message.value.trim(),
                 to_name: 'Farhan Khan',
             };
+            // TODO: hook up emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams) here
+            void templateParams;
 
             await new Promise(r => setTimeout(r, 800));
 
@@ -241,14 +357,11 @@ function isValidEmail(email) {
 // ========================================
 function initScrollEffects() {
     const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+    const update = () => navbar.classList.toggle('scrolled', window.scrollY > 30);
+    window.addEventListener('scroll', update, { passive: true });
+    update();
 }
 
 // ========================================
@@ -256,8 +369,10 @@ function initScrollEffects() {
 // ========================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 const navHeight = 74;
@@ -269,7 +384,7 @@ function initSmoothScroll() {
 }
 
 // ========================================
-// CARD GLOW EFFECT
+// CARD TILT EFFECT
 // ========================================
 function initCardGlow() {
     const cards = document.querySelectorAll('.skill-card, .project-card, .cert-card, .profile-card, .achievement-card, .stat-block');
@@ -279,14 +394,15 @@ function initCardGlow() {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 25;
-            const rotateY = (centerX - x) / 25;
+            const rotateX = (y - rect.height / 2) / 25;
+            const rotateY = (rect.width / 2 - x) / 25;
+            // Fast transition while tracking the cursor (prevents laggy tilt)
+            card.style.transition = 'transform 0.12s ease-out, border-color 0.4s ease, box-shadow 0.4s ease';
             card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         });
 
         card.addEventListener('mouseleave', () => {
+            card.style.transition = '';
             card.style.transform = '';
         });
     });
@@ -300,9 +416,12 @@ function initHeroReveal() {
         '.hero-split .reveal-left, .hero-split .reveal-right, .hero-tagline'
     );
 
-    setTimeout(() => {
-        heroElements.forEach(el => el.classList.add('revealed'));
-    }, 2200);
+    introDone.then(() => {
+        setTimeout(() => {
+            heroElements.forEach(el => el.classList.add('revealed'));
+            setTimeout(() => heroElements.forEach(el => el.classList.add('settled')), 1600);
+        }, 250);
+    });
 }
 
 // ========================================
@@ -311,10 +430,16 @@ function initHeroReveal() {
 function initScrollReveal() {
     const revealElements = document.querySelectorAll('.section .reveal-up');
 
+    function reveal(el) {
+        el.classList.add('revealed');
+        // Drop the stagger delay afterwards so hover transitions feel instant
+        setTimeout(() => el.classList.add('settled'), 1600);
+    }
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
+                reveal(entry.target);
                 observer.unobserve(entry.target);
             }
         });
@@ -324,13 +449,6 @@ function initScrollReveal() {
     });
 
     revealElements.forEach(el => observer.observe(el));
-
-    revealElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            setTimeout(() => el.classList.add('revealed'), 150);
-        }
-    });
 }
 
 // ========================================
@@ -377,7 +495,7 @@ function initTypedText() {
         }
     }
 
-    setTimeout(type, 2800);
+    introDone.then(() => setTimeout(type, 700));
 }
 
 // ========================================
@@ -387,9 +505,9 @@ function initCountUp() {
     const nums = document.querySelectorAll('.stat-num[data-count]');
     if (!nums.length) return;
 
-    setTimeout(() => {
-        nums.forEach(n => animateCount(n));
-    }, 2600);
+    introDone.then(() => {
+        setTimeout(() => nums.forEach(n => animateCount(n)), 450);
+    });
 }
 
 function animateCount(el) {
@@ -419,14 +537,7 @@ function initBackToTop() {
     let ticking = false;
 
     function updateButton() {
-        const scrollTop = window.pageYOffset;
-
-        if (scrollTop > 400) {
-            btn.classList.add('visible');
-        } else {
-            btn.classList.remove('visible');
-        }
-
+        btn.classList.toggle('visible', window.pageYOffset > 400);
         ticking = false;
     }
 
