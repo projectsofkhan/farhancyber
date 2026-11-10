@@ -1,5 +1,5 @@
 // ========================================
-// INTRO (Snake & Guava loading screen)
+// FAST CURTAIN REVEAL
 // ========================================
 let resolveIntro;
 const introDone = new Promise(r => { resolveIntro = r; });
@@ -15,109 +15,22 @@ const introDone = new Promise(r => { resolveIntro = r; });
 
     if (!intro) { finishSite(); return; }
 
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const DURATION = reduce ? 600 : 2800;
-
-    const path = intro.querySelector('#snakePath');
-    const body = intro.querySelector('.snake-body');
-    const head = intro.querySelector('#snakeHead');
-    const pctEl = intro.querySelector('#introPercent');
-    const barEl = intro.querySelector('#introBar');
-    const statusEl = intro.querySelector('#introStatus');
-    const fruitPos = [...intro.querySelectorAll('.fruit-pos')];
-
-    const L = path.getTotalLength();
-    body.setAttribute('stroke-dasharray', L);
-    body.setAttribute('stroke-dashoffset', L);
-
-    // Place guavas along the ring
-    const fruits = fruitPos.map(g => {
-        const at = parseFloat(g.dataset.at);
-        const pt = path.getPointAtLength(at * L);
-        g.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
-        return { at, el: g.querySelector('.fruit'), eaten: false, visible: false };
-    });
-
-    const messages = [
-        'Initializing environment',
-        'Enumerating targets',
-        'Escalating privileges',
-        'Capturing flags',
-        'Access granted'
-    ];
-    let msgIndex = -1;
-    function setStatus(i) {
-        if (i === msgIndex) return;
-        msgIndex = i;
-        statusEl.textContent = messages[i];
-    }
-
-    const ease = t => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-
-    function render(p) {
-        const d = p * L;
-        body.setAttribute('stroke-dashoffset', L - d);
-        const sw = 3 + 6 * p;
-        body.setAttribute('stroke-width', sw.toFixed(2));
-
-        const a = path.getPointAtLength(Math.min(d, L));
-        const ahead = d + 0.6 <= L ? d + 0.6 : d - 0.6;
-        const b = path.getPointAtLength(Math.max(0, ahead));
-        let angle = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-        if (d + 0.6 > L) angle += 180;
-        const scale = (sw / 2 + 0.9) / 4.2;
-        head.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${angle}) scale(${scale.toFixed(3)})`);
-
-        // ⚡ Guavas appear one-by-one as the snake approaches
-        fruits.forEach(f => {
-            // Show guava ~0.13 of the path before the snake reaches it
-            if (!f.visible && p >= f.at - 0.13) {
-                f.visible = true;
-                f.el.classList.add('visible');
-            }
-            // Eat guava right as snake touches it
-            if (!f.eaten && p >= f.at - 0.015) {
-                f.eaten = true;
-                f.el.classList.add('eaten');
-            }
-        });
-
-        pctEl.textContent = Math.round(p * 100);
-        barEl.style.transform = `scaleX(${p})`;
-        setStatus(p < 0.25 ? 0 : p < 0.5 ? 1 : p < 0.75 ? 2 : p < 1 ? 3 : 4);
-    }
-
-    let exited = false;
-    let raf;
-    function exit() {
-        if (exited) return;
-        exited = true;
-        cancelAnimationFrame(raf);
+    // Very fast — 200ms hold for the ambient glow to build, then curtains open
+    setTimeout(() => {
         intro.classList.add('exit');
-        setTimeout(finishSite, 350);
-        setTimeout(() => intro.remove(), 1600);
-    }
+        setTimeout(() => {
+            if (intro.parentNode) intro.remove();
+            finishSite();
+        }, 600);
+    }, 200);
 
-    const start = performance.now();
-    function frame(now) {
-        if (exited) return;
-        const t = Math.min((now - start) / DURATION, 1);
-        render(ease(t));
-        if (t < 1) {
-            raf = requestAnimationFrame(frame);
-        } else {
-            intro.classList.add('complete');
-            setTimeout(exit, reduce ? 100 : 550);
+    // Safety fallback in case something hangs
+    setTimeout(() => {
+        if (document.body.classList.contains('intro-active')) {
+            finishSite();
+            if (intro.parentNode) intro.remove();
         }
-    }
-
-    render(0);
-    raf = requestAnimationFrame(frame);
-
-    // Skip handlers + safety fallback
-    intro.addEventListener('click', exit);
-    window.addEventListener('keydown', exit, { once: true });
-    setTimeout(exit, 7000);
+    }, 3000);
 })();
 
 // ========================================
@@ -424,7 +337,7 @@ function initHeroReveal() {
         setTimeout(() => {
             heroElements.forEach(el => el.classList.add('revealed'));
             setTimeout(() => heroElements.forEach(el => el.classList.add('settled')), 1600);
-        }, 250);
+        }, 100);
     });
 }
 
@@ -498,7 +411,7 @@ function initTypedText() {
         }
     }
 
-    introDone.then(() => setTimeout(type, 700));
+    introDone.then(() => setTimeout(type, 500));
 }
 
 // ========================================
@@ -509,7 +422,7 @@ function initCountUp() {
     if (!nums.length) return;
 
     introDone.then(() => {
-        setTimeout(() => nums.forEach(n => animateCount(n)), 450);
+        setTimeout(() => nums.forEach(n => animateCount(n)), 250);
     });
 }
 
