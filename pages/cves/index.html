@@ -44,20 +44,19 @@
     }
     </script>
 
-    <!-- Main Style -->
+    <!-- MAIN STYLESHEET -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Page Specific Overrides -->
+    <!-- PAGE SPECIFIC OVERRIDES -->
     <style>
-        /* =========================================================
-           CVEs PAGE SPECIFIC STYLES
-           ========================================================= */
-        
         :root {
-            --sev-critical: #ff0015; /* VERY RED */
-            --sev-critical-glow: rgba(255, 0, 21, 0.4);
+            /* VERY RED for Critical */
+            --sev-critical: #ff0000;
+            --sev-critical-glow: rgba(255, 0, 0, 0.5);
+            
             --sev-high: #ff8a3d;
             --sev-high-glow: rgba(255, 138, 61, 0.3);
+            
             --sev-medium: #ffc93d;
             --sev-medium-glow: rgba(255, 201, 61, 0.3);
             
@@ -74,7 +73,6 @@
             --status-pending-border: rgba(164, 145, 255, 0.25);
         }
 
-        /* Background & Layout */
         .cves-page-section {
             position: relative;
             padding-top: 140px;
@@ -82,8 +80,66 @@
             overflow: hidden;
         }
 
-        /* Ensure specific text colors */
-        .cve-card .status-text {
+        .cve-card {
+            position: relative;
+            background: linear-gradient(135deg, rgba(5, 7, 10, 0.95), rgba(13, 17, 23, 0.9));
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            transition: all var(--transition-slow) var(--ease-out-smooth);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .cve-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cve-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 4px;
+            background: var(--sev-color);
+            box-shadow: 0 0 20px var(--sev-glow);
+            transition: all var(--transition-medium) ease;
+        }
+
+        .cve-card:hover {
+            border-color: var(--color-border-hover);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--sev-glow);
+        }
+
+        .cve-card:hover::before {
+            width: 6px;
+        }
+
+        .cve-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .cve-id {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            background: rgba(0, 229, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .status-text {
             font-family: var(--font-display);
             font-size: 0.65rem;
             font-weight: 700;
@@ -105,128 +161,24 @@
             box-shadow: 0 0 8px currentColor;
         }
 
-        /* Filter Bar */
-        .filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 48px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .filter-btn {
-            background: rgba(10, 12, 16, 0.65);
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-medium) var(--ease-smooth);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--color-border-hover);
-            color: var(--color-text);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background: var(--color-primary);
-            color: #0a0c10;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 20px var(--color-primary-glow);
-        }
-
-        /* CVE List & Cards */
-        .cve-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 1050px;
-            margin: 0 auto;
-        }
-
-        .cve-card {
-            position: relative;
-            background: linear-gradient(135deg, rgba(5, 7, 10, 0.95), rgba(13, 17, 23, 0.9));
-            border: 1px solid var(--color-border);
-            border-radius: 20px;
-            padding: 32px 36px;
-            transition: all var(--duration-slow) var(--ease-out-smooth);
-            backdrop-filter: blur(20px);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .cve-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cve-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; bottom: 0;
-            width: 4px;
-            background: var(--sev-color);
-            box-shadow: 0 0 20px var(--sev-glow);
-            transition: all var(--duration-medium) ease;
-        }
-
-        .cve-card:hover {
-            border-color: var(--color-border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--sev-glow);
-        }
-
-        .cve-card:hover::before {
-            width: 6px;
-        }
-
-        /* Card Header */
-        .cve-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .cve-id {
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--color-primary);
-            background: rgba(0, 229, 255, 0.08);
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 229, 255, 0.2);
-        }
-
-        .status-text.status-in-progress {
+        .status-in-progress {
             color: var(--status-in-progress);
             background: var(--status-in-progress-bg);
             border: 1px solid var(--status-in-progress-border);
         }
 
-        .status-text.status-disclosed {
+        .status-disclosed {
             color: var(--status-disclosed);
             background: var(--status-disclosed-bg);
             border: 1px solid var(--status-disclosed-border);
         }
 
-        .status-text.status-pending {
+        .status-pending {
             color: var(--status-pending);
             background: var(--status-pending-bg);
             border: 1px solid var(--status-pending-border);
         }
 
-        /* Card Body */
         .cve-body {
             display: grid;
             grid-template-columns: 1fr auto;
@@ -241,7 +193,7 @@
             color: var(--color-text);
             margin-bottom: 10px;
             line-height: 1.3;
-            transition: color var(--duration-medium) ease;
+            transition: color var(--transition-medium) ease;
         }
 
         .cve-card:hover .cve-content h3 {
@@ -255,12 +207,6 @@
             margin-bottom: 16px;
             font-size: 0.85rem;
             color: var(--color-text-muted);
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .cve-description {
@@ -288,7 +234,6 @@
             border: 1px solid rgba(0, 229, 255, 0.1);
         }
 
-        /* Gauge */
         .cve-gauge-wrap {
             display: flex;
             flex-direction: column;
@@ -365,39 +310,62 @@
             color: var(--sev-color);
         }
 
-        /* Responsive */
+        /* Filters */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .filter-btn {
+            background: rgba(10, 12, 16, 0.65);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-medium) var(--ease-smooth);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-border-hover);
+            color: var(--color-text);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: #0a0c10;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px var(--color-primary-glow);
+        }
+
         @media (max-width: 768px) {
             .cve-body {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
-
             .cve-gauge-wrap {
                 flex-direction: row;
                 justify-content: flex-start;
                 border-top: 1px solid var(--color-border);
                 padding-top: 20px;
             }
-
-            .gauge {
-                width: 70px;
-                height: 70px;
-            }
-
+            .gauge { width: 70px; height: 70px; }
             .gauge-num { font-size: 1rem; }
-            .gauge-lbl { font-size: 0.45rem; }
-
             .cve-content h3 { font-size: 1.1rem; }
             .cve-description { font-size: 0.85rem; }
         }
 
         @media (max-width: 480px) {
-            .cve-card {
-                padding: 24px 20px;
-            }
-            .cve-header {
-                gap: 8px;
-            }
+            .cve-card { padding: 24px 20px; }
+            .cve-header { gap: 8px; }
             .cve-id { font-size: 0.75rem; padding: 4px 10px; }
             .status-text { font-size: 0.6rem; padding: 4px 10px; }
         }
@@ -405,7 +373,9 @@
 </head>
 <body>
 
-    <!-- NAVBAR (Matched with main site + CVEs link) -->
+    <!-- ==========================================
+         NAVBAR (Exact copy from main site)
+         ========================================== -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
@@ -434,7 +404,7 @@
     <main>
         <section class="section cves-page-section">
             
-            <!-- Background elements (Waves, Grid, Orbs) -->
+            <!-- Background elements -->
             <div class="wavy-background">
                 <div class="wave wave-1"></div>
                 <div class="wave wave-2"></div>
@@ -445,27 +415,6 @@
 
             <div class="container">
                 
-                <!-- Hero -->
-                <div class="achievements-hero" style="display: flex; justify-content: center; margin-bottom: 40px;">
-                    <div class="hero-icon-wrap" style="width: 140px; height: 140px; position: relative; display: flex; align-items: center; justify-content: center; animation: heroFloat 6s ease-in-out infinite;">
-                        <svg width="90" height="90" viewBox="0 0 100 100" fill="none" style="filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));">
-                            <defs>
-                                <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#66f0ff"/>
-                                    <stop offset="100%" stop-color="#00b4d8"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M50 10 L85 25 V50 C85 70 70 85 50 92 C30 85 15 70 15 50 V25 L50 10 Z" stroke="url(#shieldGrad)" stroke-width="2.5" stroke-linejoin="round" fill="rgba(0,229,255,0.05)"/>
-                            <path d="M50 25 L73 35 V50 C73 63 63 73 50 78 C37 73 27 63 27 50 V35 L50 25 Z" stroke="url(#shieldGrad)" stroke-width="1.5" stroke-linejoin="round" fill="none" opacity="0.4"/>
-                            <path d="M38 50 L46 58 L64 40" stroke="url(#shieldGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="50" cy="50" r="10" stroke="#00e5ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.6" />
-                            <circle cx="50" cy="50" r="18" stroke="#00e5ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.3" />
-                        </svg>
-                        <div class="hero-ring" style="position: absolute; top: 50%; left: 50%; width: 160px; height: 160px; border: 1px solid rgba(0,229,255,0.2); border-radius: 50%; transform: translate(-50%, -50%); animation: ringPulse 4s ease-in-out infinite;"></div>
-                        <div class="hero-ring hero-ring-2" style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; border: 1px solid rgba(0,229,255,0.1); border-radius: 50%; transform: translate(-50%, -50%); animation: ringPulse 4s ease-in-out infinite; animation-delay: -2s;"></div>
-                    </div>
-                </div>
-
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
@@ -483,7 +432,7 @@
                 <!-- CVE List -->
                 <div class="cve-list">
 
-                    <!-- 1. CVE-2026-28417 (Critical) -->
+                    <!-- 1. CVE-2026-28417 (Critical - VERY RED) -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-28417</span>
@@ -497,7 +446,7 @@
                                     <span class="meta-item">Open-source Web App</span>
                                 </div>
                                 <p class="cve-description">
-                                    A time-based blind SQL injection was identified in the login flow of the target application. The vulnerability allows unauthenticated actors to enumerate the underlying database schema and potentially exfiltrate sensitive user credentials. The vendor was notified and a coordinated fix is currently under validation.
+                                    A time-based blind SQL injection was identified in the login flow. The vulnerability allows unauthenticated actors to enumerate the database schema and exfiltrate credentials. The vendor was notified and a coordinated fix is currently under validation.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">SQLi</span>
@@ -559,7 +508,7 @@
                         </div>
                     </div>
 
-                    <!-- 3. CVE-2025-47291 (High) - Pending/In Progress -->
+                    <!-- 3. CVE-2025-47291 (High) - Pending -->
                     <div class="cve-card reveal-achievement" data-status="pending" style="--sev-color: var(--sev-high); --sev-glow: var(--sev-high-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2025-47291</span>
@@ -597,7 +546,7 @@
                         </div>
                     </div>
 
-                    <!-- 4. New: GHSA-773r-585g-6vc3 (Moderate) -->
+                    <!-- 4. GHSA-773r-585g-6vc3 (Moderate) -->
                     <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-773r-585g-6vc3</span>
@@ -611,7 +560,7 @@
                                     <span class="meta-item">Authentication</span>
                                 </div>
                                 <p class="cve-description">
-                                    The login rate limit is applied per username exactly as provided. By changing the case of the username (e.g., "User" vs "user"), an attacker can bypass the per-account lockout mechanism and perform unlimited brute-force attempts. Published Nov 4, 2026.
+                                    The login rate limit is applied per username exactly as provided. By changing the case of the username, an attacker can bypass the per-account lockout mechanism and perform unlimited brute-force attempts.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Brute Force</span>
@@ -635,7 +584,7 @@
                         </div>
                     </div>
 
-                    <!-- 5. New: CVE-2026-121735 / GHSA-qp6g-7v4v-33r9 (Moderate) -->
+                    <!-- 5. CVE-2026-121735 / GHSA-qp6g-7v4v-33r9 (Moderate) -->
                     <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-121735</span>
@@ -649,7 +598,7 @@
                                     <span class="meta-item">Account Security</span>
                                 </div>
                                 <p class="cve-description">
-                                    Account confirmation tokens remain valid indefinitely. If a user's email is compromised long after registration, an attacker can use the stale confirmation token to activate the account. Published Nov 3, 2026. (GHSA-qp6g-7v4v-33r9)
+                                    Account confirmation tokens remain valid indefinitely. If a user's email is compromised long after registration, an attacker can use the stale confirmation token to activate the account. (GHSA-qp6g-7v4v-33r9)
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Token</span>
@@ -673,7 +622,7 @@
                         </div>
                     </div>
 
-                    <!-- 6. New: GHSA-fwgq-c3c6-p67j (Moderate) -->
+                    <!-- 6. GHSA-fwgq-c3c6-p67j (Moderate) -->
                     <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
                         <div class="cve-header">
                             <span class="cve-id">GHSA-fwgq-c3c6-p67j</span>
@@ -687,7 +636,7 @@
                                     <span class="meta-item">Password Reset</span>
                                 </div>
                                 <p class="cve-description">
-                                    The password reset endpoint returns different responses for valid vs. invalid email addresses, allowing attackers to enumerate registered users. Additionally, the rate limit can be bypassed by distributing requests. Published Nov 4, 2026.
+                                    The password reset endpoint returns different responses for valid vs. invalid email addresses, allowing attackers to enumerate registered users. Additionally, the rate limit can be bypassed by distributing requests.
                                 </p>
                                 <div class="cve-tags">
                                     <span class="cve-tag">Enumeration</span>
@@ -711,7 +660,7 @@
                         </div>
                     </div>
 
-                    <!-- 7. CVE-2026-11025 (Critical) -->
+                    <!-- 7. CVE-2026-11025 (Critical - VERY RED) -->
                     <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-critical); --sev-glow: var(--sev-critical-glow);">
                         <div class="cve-header">
                             <span class="cve-id">CVE-2026-11025</span>
@@ -792,12 +741,8 @@
         </section>
     </main>
 
-    <!-- BACK TO TOP -->
+    <!-- BACK TO TOP (Removed the SVG ring as requested) -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <svg class="btt-ring" viewBox="0 0 100 100" width="100%" height="100%">
-            <circle class="btt-ring-track" cx="50" cy="50" r="46" />
-            <circle class="btt-ring-progress" cx="50" cy="50" r="46" />
-        </svg>
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -806,7 +751,9 @@
         <span class="btt-glow"></span>
     </button>
 
-    <!-- FOOTER (Matched with main site) -->
+    <!-- ==========================================
+         FOOTER (Exact copy from main site)
+         ========================================== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -834,40 +781,20 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- MAIN SCRIPT -->
+    <script src="script.js"></script>
+    
+    <!-- PAGE SPECIFIC LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Navigation Mobile Toggle
-            const navToggle = document.querySelector('.nav-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (navToggle && navLinks) {
-                navToggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-                    navToggle.setAttribute('aria-expanded', !isOpen);
-                    navLinks.classList.toggle('open');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (navLinks.classList.contains('open')) {
-                        const nav = document.querySelector('.navbar');
-                        if (nav && !nav.contains(e.target)) {
-                            navLinks.classList.remove('open');
-                            navToggle.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-            }
-
-            // 2. Scroll Reveal for Cards
+            // 1. Scroll Reveal for Cards
             const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
                         const index = allCards.indexOf(entry.target);
-                        const delay = index >= 0 ? index * 100 : 0; // Stagger effect
+                        const delay = index >= 0 ? index * 100 : 0;
                         
                         setTimeout(() => {
                             entry.target.classList.add('revealed');
@@ -883,24 +810,21 @@
 
             revealElements.forEach(el => observer.observe(el));
 
-            // 3. Filter Logic
+            // 2. Filter Logic
             const filterBtns = document.querySelectorAll('.filter-btn');
             const cveCards = document.querySelectorAll('.cve-card');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Update active state
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
 
                     const filter = btn.getAttribute('data-filter');
 
-                    // Filter cards
                     cveCards.forEach(card => {
                         const status = card.getAttribute('data-status');
                         if (filter === 'all' || status === filter) {
                             card.style.display = 'block';
-                            // Slight delay to retrigger reveal animation if needed
                             setTimeout(() => card.classList.add('revealed'), 50);
                         } else {
                             card.style.display = 'none';
@@ -909,47 +833,6 @@
                     });
                 });
             });
-
-            // 4. Back to Top Button
-            const backToTopBtn = document.getElementById('backToTop');
-            if (backToTopBtn) {
-                const progress = backToTopBtn.querySelector('.btt-ring-progress');
-                const circumference = 2 * Math.PI * 46;
-
-                if (progress) {
-                    progress.style.strokeDasharray = circumference;
-                    progress.style.strokeDashoffset = circumference;
-                }
-
-                window.addEventListener('scroll', () => {
-                    const scrollTop = window.pageYOffset;
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
-
-                    if (scrollTop > 400) {
-                        backToTopBtn.classList.add('visible');
-                    } else {
-                        backToTopBtn.classList.remove('visible');
-                    }
-
-                    if (progress) {
-                        const offset = circumference * (1 - scrollPercent);
-                        progress.style.strokeDashoffset = offset;
-                    }
-                }, { passive: true });
-
-                backToTopBtn.addEventListener('click', () => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            }
-
-            // 5. Navbar scrolled state
-            const navbar = document.querySelector('.navbar');
-            if (navbar) {
-                window.addEventListener('scroll', () => {
-                    navbar.classList.toggle('scrolled', window.scrollY > 30);
-                });
-            }
         });
     </script>
 </body>
