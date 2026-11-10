@@ -94,6 +94,7 @@ body.intro-active .back-to-top {
     transition: opacity 0.6s ease 0.2s;
 }
 
+/* Shield Intro Styles */
 .shield-intro {
     position: fixed;
     inset: 0;
@@ -659,6 +660,7 @@ body.intro-active .back-to-top {
     100% { opacity: 0; filter: blur(20px); transform: scale(1.1); visibility: hidden; }
 }
 
+/* Rest of the CSS (Navigation, Hero, Sections, Footer) remains exactly as you provided */
 .container {
     max-width: var(--container-width);
     margin: 0 auto;
