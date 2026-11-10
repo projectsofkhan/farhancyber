@@ -83,16 +83,39 @@
                         <stop offset="100%" stop-color="#f59e0b"/>
                     </radialGradient>
                 </defs>
-                <!-- Track -->
-                <circle class="snake-track" cx="50" cy="50" r="40" />
-                <!-- Guavas -->
-                <circle class="guava g1" cx="50" cy="10" r="4" />
-                <circle class="guava g2" cx="90" cy="50" r="4" />
-                <circle class="guava g3" cx="50" cy="90" r="4" />
-                <circle class="guava g4" cx="10" cy="50" r="4" />
-                <!-- Snake Body & Head -->
-                <circle class="snake-body" cx="50" cy="50" r="40" />
-                <circle class="snake-head" cx="0" cy="0" r="4.5" />
+
+                <!-- Low Opacity Track -->
+                <circle class="snake-track" cx="50" cy="50" r="35" />
+
+                <!-- Snake Body -->
+                <circle class="snake-body" cx="50" cy="50" r="35" />
+
+                <!-- Guavas (Fruits) -->
+                <g class="fruit g1">
+                    <ellipse cx="50" cy="15" rx="3" ry="3.5" />
+                    <path d="M50 11 Q52 10 53 11" stroke="#65a30d" stroke-width="1" fill="none" />
+                </g>
+                <g class="fruit g2">
+                    <ellipse cx="85" cy="50" rx="3" ry="3.5" />
+                    <path d="M85 46 Q87 45 88 46" stroke="#65a30d" stroke-width="1" fill="none" />
+                </g>
+                <g class="fruit g3">
+                    <ellipse cx="50" cy="85" rx="3" ry="3.5" />
+                    <path d="M50 81 Q52 80 53 81" stroke="#65a30d" stroke-width="1" fill="none" />
+                </g>
+                <g class="fruit g4">
+                    <ellipse cx="15" cy="50" rx="3" ry="3.5" />
+                    <path d="M15 46 Q17 45 18 46" stroke="#65a30d" stroke-width="1" fill="none" />
+                </g>
+
+                <!-- Snake Head (with Eyes) -->
+                <g class="snake-head-group">
+                    <g class="head-scale">
+                        <circle class="snake-head" cx="0" cy="0" r="4" />
+                        <circle cx="2" cy="-1.5" r="1.2" fill="#ffffff" />
+                        <circle cx="2.5" cy="-1.5" r="0.6" fill="#0f172a" />
+                    </g>
+                </g>
             </svg>
         </div>
         <span class="loader-text">Loading</span>
