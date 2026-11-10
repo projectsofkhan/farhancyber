@@ -35,7 +35,7 @@ const introDone = new Promise(r => { resolveIntro = r; });
         const at = parseFloat(g.dataset.at);
         const pt = path.getPointAtLength(at * L);
         g.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
-        return { at, el: g.querySelector('.fruit'), eaten: false };
+        return { at, el: g.querySelector('.fruit'), eaten: false, visible: false };
     });
 
     const messages = [
@@ -68,7 +68,14 @@ const introDone = new Promise(r => { resolveIntro = r; });
         const scale = (sw / 2 + 0.9) / 4.2;
         head.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${angle}) scale(${scale.toFixed(3)})`);
 
+        // ⚡ Guavas appear one-by-one as the snake approaches
         fruits.forEach(f => {
+            // Show guava ~0.13 of the path before the snake reaches it
+            if (!f.visible && p >= f.at - 0.13) {
+                f.visible = true;
+                f.el.classList.add('visible');
+            }
+            // Eat guava right as snake touches it
             if (!f.eaten && p >= f.at - 0.015) {
                 f.eaten = true;
                 f.el.classList.add('eaten');
@@ -107,7 +114,7 @@ const introDone = new Promise(r => { resolveIntro = r; });
     render(0);
     raf = requestAnimationFrame(frame);
 
-    // Skip handlers + safety fallback (e.g. background tab throttling)
+    // Skip handlers + safety fallback
     intro.addEventListener('click', exit);
     window.addEventListener('keydown', exit, { once: true });
     setTimeout(exit, 7000);
@@ -194,7 +201,6 @@ function initDropdowns() {
         btn.setAttribute('aria-expanded', 'true');
         setLabel(btn, true);
 
-        // On small screens, bring the opened section into view
         setTimeout(() => {
             const r = content.getBoundingClientRect();
             if (r.bottom > window.innerHeight || r.top < 80) {
@@ -301,7 +307,6 @@ function initContactForm() {
                 message: message.value.trim(),
                 to_name: 'Farhan Khan',
             };
-            // TODO: hook up emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams) here
             void templateParams;
 
             await new Promise(r => setTimeout(r, 800));
@@ -396,7 +401,6 @@ function initCardGlow() {
             const y = e.clientY - rect.top;
             const rotateX = (y - rect.height / 2) / 25;
             const rotateY = (rect.width / 2 - x) / 25;
-            // Fast transition while tracking the cursor (prevents laggy tilt)
             card.style.transition = 'transform 0.12s ease-out, border-color 0.4s ease, box-shadow 0.4s ease';
             card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         });
@@ -432,7 +436,6 @@ function initScrollReveal() {
 
     function reveal(el) {
         el.classList.add('revealed');
-        // Drop the stagger delay afterwards so hover transitions feel instant
         setTimeout(() => el.classList.add('settled'), 1600);
     }
 
