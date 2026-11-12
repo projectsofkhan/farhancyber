@@ -1,5 +1,5 @@
 /* ============================================================
-   EMAILJS CONFIG
+   EMAILJS
    ============================================================ */
 const EMAILJS_SERVICE_ID = 'service_px36p6n';
 const EMAILJS_TEMPLATE_ID = 'template_g0hgzbm';
@@ -13,36 +13,11 @@ if (typeof emailjs !== 'undefined') {
    DATA
    ============================================================ */
 const EXPERIENCE = [
-    {
-        date: '2024 — Present',
-        title: 'Vulnerability Researcher',
-        subtitle: 'Independent · Bug Bounty',
-        body: 'Actively hunting vulnerabilities across open-source applications and APIs. 7 CVEs assigned and published — including a Critical RCE chain (CVSS 9.8). Responsible disclosure through coordinated maintainer communication.',
-    },
-    {
-        date: '2023 — Present',
-        title: 'CTF Player',
-        subtitle: 'TryHackMe · Top 1% Globally',
-        body: 'Solving capture-the-flag challenges across Active Directory attack paths, web exploitation, privilege escalation, and defensive fundamentals. Sustained top 1% ranking globally.',
-    },
-    {
-        date: '2024 — Present',
-        title: 'Technical Writer',
-        subtitle: 'Medium · Self-employed',
-        body: 'Publishing technical writeups covering web application vulnerabilities, Active Directory attacks, and mitigation strategies. Making complex security concepts accessible to practitioners.',
-    },
-    {
-        date: '2023 — Present',
-        title: 'Bug Hunter',
-        subtitle: 'HackerOne · Freelance',
-        body: 'Participating in bug bounty programs and responsibly disclosing vulnerabilities across various web applications and APIs.',
-    },
-    {
-        date: '2026',
-        title: 'Cyber Security Intern',
-        subtitle: 'Uttar Pradesh Police · Amroha',
-        body: '12-day intensive program with daily workshops led by industry experts. Gained hands-on exposure to cybercrime investigation workflows, digital evidence handling, and cybersecurity awareness initiatives.',
-    },
+    { date: '2024 — Present', title: 'Vulnerability Researcher', sub: 'Independent · Bug Bounty', body: 'Actively hunting vulnerabilities across open-source applications and APIs. 7 CVEs assigned and published — including a Critical RCE chain (CVSS 9.8). Responsible disclosure through coordinated maintainer communication.' },
+    { date: '2023 — Present', title: 'CTF Player', sub: 'TryHackMe · Top 1% Globally', body: 'Solving capture-the-flag challenges across Active Directory attack paths, web exploitation, privilege escalation, and defensive fundamentals. Sustained top 1% ranking globally.' },
+    { date: '2024 — Present', title: 'Technical Writer', sub: 'Medium · Self-employed', body: 'Publishing technical writeups covering web application vulnerabilities, Active Directory attacks, and mitigation strategies. Making complex security concepts accessible to practitioners.' },
+    { date: '2023 — Present', title: 'Bug Hunter', sub: 'HackerOne · Freelance', body: 'Participating in bug bounty programs and responsibly disclosing vulnerabilities across various web applications and APIs.' },
+    { date: '2026', title: 'Cyber Security Intern', sub: 'Uttar Pradesh Police · Amroha', body: '12-day intensive program with daily workshops led by industry experts. Gained hands-on exposure to cybercrime investigation workflows, digital evidence handling, and cybersecurity awareness initiatives.' },
 ];
 
 const CVES = [
@@ -52,64 +27,49 @@ const CVES = [
     { id: 'CVE-2026-122139', title: 'Account Enumeration via Password Reset', desc: 'Issue in password reset functionality exposes registered email addresses to unauthenticated attackers.', cvss: '6.9', sev: 'medium', status: 'disclosed' },
     { id: 'CVE-2026-122138', title: 'Login Rate-Limit Bypass via Case Variation', desc: 'Login rate limiting can be bypassed through username case variations, enabling brute-force attacks.', cvss: '6.3', sev: 'medium', status: 'disclosed' },
     { id: 'CVE-2026-121735', title: 'Non-Expiring Account Confirmation Tokens', desc: 'Account confirmation tokens remained valid beyond their intended expiration period.', cvss: '6.3', sev: 'medium', status: 'disclosed' },
-    { id: 'Pending', title: 'Unauthenticated Remote MariaDB Root Access', desc: 'Critical vulnerability allowing unauthenticated remote access to the MariaDB root account.', cvss: '9.8', sev: 'critical', status: 'pending' },
-    { id: 'Pending', title: 'Insufficient CSRF Protection in Backend Login', desc: 'Backend login endpoint lacks sufficient CSRF protections, potentially allowing cross-site request forgery.', cvss: '3.5', sev: 'low', status: 'pending' },
-    { id: 'Pending', title: 'Session Invalidation on 2FA Toggle', desc: 'Sessions are not properly invalidated when enabling or disabling 2FA, potentially allowing session hijacking.', cvss: '3.7', sev: 'low', status: 'pending' },
-    { id: 'Pending', title: 'PeerTube Video URL Validation Issue', desc: 'Inadequate URL validation in PeerTube\'s video import feature.', cvss: '5.4', sev: 'medium', status: 'pending' },
-    { id: 'Pending', title: 'Stored SVG XSS → Admin Takeover → RCE Chain', desc: 'Vulnerability chain involving stored SVG XSS bypass, administrator account takeover, and remote code execution via plugin installation.', cvss: '9.0', sev: 'critical', status: 'pending' },
-    { id: 'Pending', title: 'Stored CSS Injection & Account Weaknesses', desc: 'Stored CSS injection combined with multiple account security weaknesses involving email and password management.', cvss: 'TBD', sev: 'medium', status: 'pending' },
+    { id: 'PENDING', title: 'Unauthenticated Remote MariaDB Root Access', desc: 'Critical vulnerability allowing unauthenticated remote access to the MariaDB root account.', cvss: '9.8', sev: 'critical', status: 'pending' },
+    { id: 'PENDING', title: 'Insufficient CSRF Protection in Backend Login', desc: 'Backend login endpoint lacks sufficient CSRF protections, potentially allowing cross-site request forgery.', cvss: '3.5', sev: 'low', status: 'pending' },
+    { id: 'PENDING', title: 'Session Invalidation on 2FA Toggle', desc: 'Sessions are not properly invalidated when enabling or disabling 2FA, potentially allowing session hijacking.', cvss: '3.7', sev: 'low', status: 'pending' },
+    { id: 'PENDING', title: 'PeerTube Video URL Validation Issue', desc: 'Inadequate URL validation in PeerTube\'s video import feature.', cvss: '5.4', sev: 'medium', status: 'pending' },
+    { id: 'PENDING', title: 'Stored SVG XSS → Admin Takeover → RCE Chain', desc: 'Vulnerability chain involving stored SVG XSS bypass, administrator account takeover, and remote code execution via plugin installation.', cvss: '9.0', sev: 'critical', status: 'pending' },
+    { id: 'PENDING', title: 'Stored CSS Injection & Account Weaknesses', desc: 'Stored CSS injection combined with multiple account security weaknesses involving email and password management.', cvss: 'TBD', sev: 'medium', status: 'pending' },
 ];
 
 const ACHIEVEMENTS = [
-    { badge: '1st', title: 'Hackers Meetup — Indore Chapter', meta: 'CTF Winner · Indore, India' },
-    { badge: '1st Runner-Up', title: 'Sagar Fiesta 2026 — Logic Arena CTF', meta: 'SISTec Bhopal' },
-    { badge: '1st', title: 'VYUH CTF — Cybersecurity Challenge', meta: 'Hackers Meetup Indore' },
-    { badge: 'Top 1%', title: 'TryHackMe — Global Ranking', meta: 'Top 1% globally' },
-    { badge: '7x CVE', title: 'CVE Assignments', meta: 'Published security advisories' },
+    { badge: '1ST', title: 'Hackers Meetup — Indore Chapter', meta: 'CTF Winner · Indore, India' },
+    { badge: '1ST RUNNER-UP', title: 'Sagar Fiesta 2026 — Logic Arena CTF', meta: 'SISTec Bhopal' },
+    { badge: '1ST', title: 'VYUH CTF — Cybersecurity Challenge', meta: 'Hackers Meetup Indore' },
+    { badge: 'TOP 1%', title: 'TryHackMe — Global Ranking', meta: 'Top 1% globally' },
+    { badge: '7X CVE', title: 'CVE Assignments', meta: 'Published security advisories' },
     { badge: 'CVE', title: 'Critical CVE Published', meta: 'CVSS 9.8 severity' },
 ];
 
 const PROJECTS = [
     {
         title: 'Threat-Trace',
-        subtitle: 'Malicious Banking App Detector',
+        sub: 'Malicious Banking App Detector',
         desc: 'A cybersecurity-focused project to detect potentially malicious or fake banking applications using static and behavioral analysis techniques. Analyzes app behavior and patterns to identify phishing or malicious indicators.',
-        features: [
-            'Detects suspicious banking apps',
-            'Analyzes app behavior and patterns',
-            'Identifies phishing & malicious indicators',
-            'Lightweight and easy to use',
-        ],
+        features: ['Detects suspicious banking apps', 'Analyzes app behavior and patterns', 'Identifies phishing & malicious indicators', 'Lightweight and easy to use'],
         tech: ['Python', 'Android Analysis', 'Security Libraries'],
-        links: [
-            { label: 'GitHub', url: 'https://github.com/mr-farhankhan/threat-trace' },
-            { label: 'Demo', url: 'https://fakebankappdetector2.onrender.com/' },
-        ],
+        links: [{ label: 'GitHub', url: 'https://github.com/mr-farhankhan/threat-trace' }, { label: 'Demo', url: 'https://fakebankappdetector2.onrender.com/' }],
     },
     {
         title: '1Recon',
-        subtitle: 'Reconnaissance Automation Framework',
+        sub: 'Reconnaissance Automation Framework',
         desc: '1Recon is a Bash-based reconnaissance automation framework designed to streamline the initial information-gathering phase of penetration testing and bug bounty. Combines multiple tools into a single unified workflow.',
-        features: [
-            'Subdomain enumeration',
-            'DNS validation with dnsx',
-            'Port scanning with Nmap',
-            'Directory enumeration with Gobuster',
-        ],
+        features: ['Subdomain enumeration', 'DNS validation with dnsx', 'Port scanning with Nmap', 'Directory enumeration with Gobuster'],
         tech: ['Bash', 'Subfinder', 'Nmap', 'httpx', 'Gobuster', 'Katana'],
-        links: [
-            { label: 'GitHub', url: 'https://github.com/mr-farhankhan/1Recon' },
-        ],
+        links: [{ label: 'GitHub', url: 'https://github.com/mr-farhankhan/1Recon' }],
     },
 ];
 
 const WRITEUPS = [
-    { cat: 'Active Directory', title: 'Kerberos Authentication Workflow', desc: 'Deep dive into Kerberos authentication protocol — covering ticket granting, service tickets, PAC validation.', url: 'https://medium.com/@FarhanCyber/kerberos-explained-in-detail-c6016d72c4cd', read: '8 min' },
-    { cat: 'Web Security', title: 'XML External Entity (XXE) Injection', desc: 'Understanding XXE vulnerabilities from first principles and exploitation techniques.', url: 'https://medium.com/@FarhanCyber/xml-external-entity-xxe-injection-3cc958a6661a', read: '6 min' },
-    { cat: 'Portswigger', title: 'Broken Brute-Force Protection', desc: 'Bypassing brute-force protection mechanisms, IP rotation, and rate limit evasion.', url: 'https://medium.com/@FarhanCyber/porstwigger-lab-broken-brute-force-protection-ip-block-authentication-part-6-cdc4f6884f85', read: '7 min' },
-    { cat: 'Portswigger', title: 'JWT Authentication Bypass', desc: 'Unverified signature JWT exploitation — why this misconfiguration occurs in production.', url: 'https://medium.com/@FarhanCyber/portswigger-lab-jwt-authentication-bypass-via-unverified-signature-7e2272d1e644', read: '9 min' },
-    { cat: 'API Security', title: 'GraphQL API Security', desc: 'Comprehensive guide to GraphQL API security testing — introspection, complexity attacks, IDOR.', url: 'https://medium.com/@FarhanCyber/graphql-api-by-farhan-khan-8ce92b1f0a16', read: '10 min' },
-    { cat: 'TryHackMe', title: 'Operation Endgame (Hard)', desc: 'Full walkthrough of the hard AD room — SMB enumeration, AS-REP roasting, Kerberoasting, SYSTEM escalation.', url: 'https://medium.com/@FarhanCyber/operation-endgame-hard-tryhackme-walkthrough-by-farhan-khan-958e67c1d251', read: '15 min' },
+    { cat: 'Active Directory', title: 'Kerberos Authentication Workflow', desc: 'Deep dive into Kerberos authentication protocol — ticket granting, service tickets, PAC validation.', url: 'https://medium.com/@FarhanCyber/kerberos-explained-in-detail-c6016d72c4cd', read: '8 MIN' },
+    { cat: 'Web Security', title: 'XML External Entity (XXE) Injection', desc: 'Understanding XXE vulnerabilities from first principles and exploitation techniques.', url: 'https://medium.com/@FarhanCyber/xml-external-entity-xxe-injection-3cc958a6661a', read: '6 MIN' },
+    { cat: 'Portswigger', title: 'Broken Brute-Force Protection', desc: 'Bypassing brute-force protection mechanisms, IP rotation, and rate limit evasion.', url: 'https://medium.com/@FarhanCyber/porstwigger-lab-broken-brute-force-protection-ip-block-authentication-part-6-cdc4f6884f85', read: '7 MIN' },
+    { cat: 'Portswigger', title: 'JWT Authentication Bypass', desc: 'Unverified signature JWT exploitation — why this misconfiguration occurs in production.', url: 'https://medium.com/@FarhanCyber/portswigger-lab-jwt-authentication-bypass-via-unverified-signature-7e2272d1e644', read: '9 MIN' },
+    { cat: 'API Security', title: 'GraphQL API Security', desc: 'Comprehensive guide to GraphQL API security testing — introspection, complexity attacks, IDOR.', url: 'https://medium.com/@FarhanCyber/graphql-api-by-farhan-khan-8ce92b1f0a16', read: '10 MIN' },
+    { cat: 'TryHackMe', title: 'Operation Endgame (Hard)', desc: 'Full walkthrough of the hard AD room — SMB enumeration, AS-REP roasting, Kerberoasting, SYSTEM escalation.', url: 'https://medium.com/@FarhanCyber/operation-endgame-hard-tryhackme-walkthrough-by-farhan-khan-958e67c1d251', read: '15 MIN' },
 ];
 
 const CERTIFICATIONS = [
@@ -149,322 +109,271 @@ const routes = {
 };
 
 function getRoute() {
-    const hash = window.location.hash.slice(1) || '/';
-    return hash.startsWith('/') ? hash : '/' + hash;
+    const h = window.location.hash.slice(1) || '/';
+    return h.startsWith('/') ? h : '/' + h;
 }
 
 function navigate() {
     const route = getRoute();
-    const render = routes[route] || renderNotFound;
-    const app = document.getElementById('app');
-    app.innerHTML = render();
-    app.classList.remove('fade-in');
-    void app.offsetWidth;
-    app.classList.add('fade-in');
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        const href = link.getAttribute('href');
-        link.classList.toggle('active', href === '#' + route);
+    const render = routes[route] || renderHome;
+    document.getElementById('app').innerHTML = render();
+    document.querySelectorAll('.nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + route);
     });
-
-    closeSidebar();
+    closeNav();
     window.scrollTo({ top: 0, behavior: 'instant' });
-
     if (route === '/cves') initCVEFilters();
     if (route === '/contact') initContactForm();
+    if (route === '/') initLiveFeed();
+    initProjectTilt();
 }
 
-function renderFooter() {
+/* ============================================================
+   HOME
+   ============================================================ */
+function renderHome() {
     return `
-        <div class="content-footer">
-            <span>&copy; 2026 Farhan Khan</span>
-            <span>
-                <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener">GitHub</a> ·
-                <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener">LinkedIn</a> ·
-                <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener">Medium</a>
-            </span>
+        <div class="page">
+            <div class="hero">
+                <div>
+                    <span class="page-tag">Available for engagements</span>
+                    <h1 class="hero-title">
+                        Farhan Khan<br>
+                        <span class="gradient">Security Researcher</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Penetration tester and vulnerability researcher focused on offensive security,
+                        web application security, and Active Directory. Top 1% globally on TryHackMe,
+                        with 7 CVEs assigned — including a Critical RCE (CVSS 9.8).
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#cves" data-link class="btn btn-primary">View CVEs</a>
+                        <a href="farhankhanresume.pdf" download class="btn btn-secondary">${ICONS.download} Resume</a>
+                        <a href="#contact" data-link class="btn btn-ghost">Get in touch</a>
+                    </div>
+                </div>
+                <div class="cve-feed" id="cveFeed">
+                    <div class="feed-head">
+                        <span><span class="dot"></span>LIVE CVE FEED</span>
+                        <span>STREAM · ACTIVE</span>
+                    </div>
+                    <div class="feed-line"><span class="time">[2026-01]</span><span class="id">CVE-2026-126812</span><span class="sev-critical">CRITICAL 9.8</span></div>
+                    <div class="feed-line"><span class="time">[2026-01]</span><span class="id">CVE-2026-126814</span><span class="sev-medium">MEDIUM 4.8</span></div>
+                    <div class="feed-line"><span class="time">[2025-12]</span><span class="id">CVE-2026-126659</span><span class="sev-high">HIGH 8.7</span></div>
+                    <div class="feed-line"><span class="time">[2025-12]</span><span class="id">CVE-2026-122139</span><span class="sev-medium">MEDIUM 6.9</span></div>
+                    <div class="feed-line"><span class="time">[2025-12]</span><span class="id">CVE-2026-122138</span><span class="sev-medium">MEDIUM 6.3</span></div>
+                    <div class="feed-line"><span class="time">[2025-11]</span><span class="id">CVE-2026-121735</span><span class="sev-medium">MEDIUM 6.3</span></div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">CVEs Assigned</div></div>
+                <div class="stat-card"><div class="stat-num">TOP 1%</div><div class="stat-label">TryHackMe</div></div>
+                <div class="stat-card"><div class="stat-num">5+</div><div class="stat-label">CTF Wins</div></div>
+                <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Pending</div></div>
+            </div>
+
+            <h2 class="section-h">FOCUS AREAS</h2>
+            <div class="hex-grid">
+                <div class="hex-card">
+                    <div class="hex-title">Web Application Security</div>
+                    <div class="hex-body">Manual testing and exploitation of web applications — authentication, injection, access control, and business logic flaws.</div>
+                </div>
+                <div class="hex-card">
+                    <div class="hex-title">Vulnerability Research</div>
+                    <div class="hex-body">Systematic identification, validation, and responsible disclosure of security vulnerabilities in open-source software.</div>
+                </div>
+                <div class="hex-card">
+                    <div class="hex-title">Active Directory</div>
+                    <div class="hex-body">AD attack paths, Kerberoasting, AS-REP roasting, LLMNR poisoning, and privilege escalation in Windows environments.</div>
+                </div>
+                <div class="hex-card">
+                    <div class="hex-title">Penetration Testing</div>
+                    <div class="hex-body">Full-scope engagements — recon to post-exploitation — with reproducible PoCs and remediation-focused reporting.</div>
+                </div>
+            </div>
         </div>
     `;
 }
 
 /* ============================================================
-   PAGES
+   EXPERIENCE
    ============================================================ */
-function renderHome() {
-    return `
-        <div class="content-wrap">
-            <div class="hero-section">
-                <span class="page-eyebrow">Available for engagements</span>
-                <h1 class="hero-title">
-                    Farhan Khan — <span class="accent">Security Researcher</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Penetration tester and vulnerability researcher focused on offensive security, web application
-                    security, and Active Directory. Top 1% globally on TryHackMe, with 7 CVEs assigned —
-                    including a Critical RCE (CVSS 9.8).
-                </p>
-                <div class="hero-actions">
-                    <a href="#cves" data-link class="btn btn-primary">View CVEs ${ICONS.arrow}</a>
-                    <a href="farhankhanresume.pdf" download class="btn btn-secondary">${ICONS.download} Resume</a>
-                    <a href="#contact" data-link class="btn btn-ghost">Get in touch</a>
-                </div>
-                <div class="meta-grid">
-                    <div class="meta-item">
-                        <div class="meta-item-label">CVEs</div>
-                        <div class="meta-item-value">7 assigned</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-item-label">TryHackMe</div>
-                        <div class="meta-item-value">Top 1%</div>
-                    </div>
-                    <div class="meta-item">
-                        <div class="meta-item-label">Location</div>
-                        <div class="meta-item-value">Bhopal, IN</div>
-                    </div>
-                </div>
-            </div>
-
-            <h2 class="section-title">Overview</h2>
-            <p>
-                I'm a cybersecurity enthusiast and penetration tester based in Bhopal, India. My focus is on
-                <strong>offensive security</strong> — finding vulnerabilities before malicious actors do, and
-                helping organizations strengthen their defenses through responsible disclosure.
-            </p>
-            <p>
-                Over the past year, I've published <strong>7 CVEs</strong> across open-source applications,
-                ranging from medium-severity authentication flaws to a <strong>Critical RCE chain</strong>.
-                I maintain a <strong>Top 1% global ranking</strong> on TryHackMe, have won multiple CTF
-                competitions, and publish technical writeups on Medium covering Active Directory attacks,
-                web exploitation, and API security.
-            </p>
-
-            <h2 class="section-title">Focus Areas</h2>
-            <div class="card">
-                <div class="card-title">Web Application Security</div>
-                <div class="card-body">Manual testing and exploitation of web applications — authentication, injection, access control, and business logic flaws.</div>
-                <div class="card-tags"><span class="tag">OWASP Top 10</span><span class="tag">API Security</span><span class="tag">GraphQL</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">Vulnerability Research</div>
-                <div class="card-body">Systematic identification, validation, and responsible disclosure of security vulnerabilities in open-source software.</div>
-                <div class="card-tags"><span class="tag">CVE</span><span class="tag">GHSA</span><span class="tag">Coordinated Disclosure</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">Active Directory</div>
-                <div class="card-body">AD attack paths, Kerberoasting, AS-REP roasting, LLMNR poisoning, and privilege escalation in Windows enterprise environments.</div>
-                <div class="card-tags"><span class="tag">AD</span><span class="tag">Kerberos</span><span class="tag">PrivEsc</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">Penetration Testing</div>
-                <div class="card-body">Full-scope engagements — recon to post-exploitation — with reproducible PoCs, business-impact mapping, and remediation-focused reporting.</div>
-                <div class="card-tags"><span class="tag">VAPT</span><span class="tag">Recon</span><span class="tag">Reporting</span></div>
-            </div>
-
-            ${renderFooter()}
-        </div>
-    `;
-}
-
 function renderExperience() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Career</span>
+        <div class="page">
+            <span class="page-tag">Career</span>
             <h1 class="page-title">Experience</h1>
             <p class="page-lead">
                 Roles, research, and engagements across security research, offensive security, and technical writing.
             </p>
-
-            <div class="timeline">
+            <div class="hex-grid">
                 ${EXPERIENCE.map(e => `
-                    <div class="timeline-item">
-                        <div class="timeline-date">${e.date}</div>
-                        <div class="timeline-title">${e.title}</div>
-                        <div class="timeline-subtitle">${e.subtitle}</div>
-                        <div class="timeline-body">${e.body}</div>
+                    <div class="hex-card">
+                        <div class="hex-date">${e.date}</div>
+                        <div class="hex-title">${e.title}</div>
+                        <div class="hex-sub">${e.sub}</div>
+                        <div class="hex-body">${e.body}</div>
                     </div>
                 `).join('')}
             </div>
-
-            ${renderFooter()}
         </div>
     `;
 }
 
+/* ============================================================
+   CVES
+   ============================================================ */
 function renderCVEs() {
-    const stats = {
-        total: CVES.length,
-        disclosed: CVES.filter(c => c.status === 'disclosed').length,
-        critical: CVES.filter(c => c.sev === 'critical').length,
-        pending: CVES.filter(c => c.status === 'pending').length,
-    };
-
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Security Research</span>
+        <div class="page">
+            <span class="page-tag">Security Research</span>
             <h1 class="page-title">CVEs &amp; Advisories</h1>
             <p class="page-lead">
                 Published vulnerabilities and ongoing responsible disclosures. Filter by severity or status.
             </p>
 
-            <div class="cve-stats">
-                <div class="cve-stat">
-                    <div class="cve-stat-num">${stats.total}</div>
-                    <div class="cve-stat-label">Total</div>
-                </div>
-                <div class="cve-stat">
-                    <div class="cve-stat-num">${stats.disclosed}</div>
-                    <div class="cve-stat-label">Disclosed</div>
-                </div>
-                <div class="cve-stat">
-                    <div class="cve-stat-num">${stats.critical}</div>
-                    <div class="cve-stat-label">Critical</div>
-                </div>
-                <div class="cve-stat">
-                    <div class="cve-stat-num">${stats.pending}</div>
-                    <div class="cve-stat-label">Pending</div>
-                </div>
-            </div>
-
             <div class="cve-filters">
-                <button class="cve-filter active" data-filter="all">All</button>
-                <button class="cve-filter" data-filter="critical">Critical</button>
-                <button class="cve-filter" data-filter="high">High</button>
-                <button class="cve-filter" data-filter="medium">Medium</button>
-                <button class="cve-filter" data-filter="low">Low</button>
-                <button class="cve-filter" data-filter="pending">Pending</button>
+                <button class="cve-filter active" data-filter="all">ALL</button>
+                <button class="cve-filter" data-filter="critical">CRITICAL</button>
+                <button class="cve-filter" data-filter="high">HIGH</button>
+                <button class="cve-filter" data-filter="medium">MEDIUM</button>
+                <button class="cve-filter" data-filter="low">LOW</button>
+                <button class="cve-filter" data-filter="pending">PENDING</button>
             </div>
 
-            <div class="cve-list" id="cveList">
+            <div class="cve-list">
                 ${CVES.map(c => `
-                    <div class="cve-item" data-sev="${c.sev}" data-status="${c.status}">
-                        <div class="cve-item-head">
+                    <div class="cve-card sev-${c.sev}" data-sev="${c.sev}" data-status="${c.status}">
+                        <div class="cve-top">
                             <span class="cve-id">${c.id}</span>
-                            <span class="cve-sev ${c.sev}">${c.sev}</span>
+                            <span class="cve-sev">${c.sev}</span>
                         </div>
-                        <div class="cve-title">${c.title}</div>
+                        <div class="cve-card-title">${c.title}</div>
                         <div class="cve-desc">${c.desc}</div>
                         <div class="cve-foot">
-                            <span class="cve-cvss">CVSS ${c.cvss}</span>
-                            <span>·</span>
-                            <span class="cve-status ${c.status}">${c.status}</span>
+                            <span>CVSS ${c.cvss}</span>
+                            <span class="status ${c.status}">${c.status}</span>
                         </div>
                     </div>
                 `).join('')}
             </div>
-
-            ${renderFooter()}
         </div>
     `;
 }
 
+/* ============================================================
+   ACHIEVEMENTS
+   ============================================================ */
 function renderAchievements() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Milestones</span>
+        <div class="page">
+            <span class="page-tag">Milestones</span>
             <h1 class="page-title">Achievements</h1>
             <p class="page-lead">
                 CTF wins, platform rankings, and recognition in the security research community.
             </p>
-
-            <div class="ach-list">
+            <div class="hex-grid">
                 ${ACHIEVEMENTS.map(a => `
-                    <div class="ach-item">
-                        <span class="ach-badge">${a.badge}</span>
-                        <div class="ach-info">
-                            <div class="ach-title">${a.title}</div>
-                            <div class="ach-meta">${a.meta}</div>
-                        </div>
+                    <div class="hex-card">
+                        <div class="hex-date">${a.badge}</div>
+                        <div class="hex-title">${a.title}</div>
+                        <div class="hex-body">${a.meta}</div>
                     </div>
                 `).join('')}
             </div>
-
-            ${renderFooter()}
         </div>
     `;
 }
 
+/* ============================================================
+   PROJECTS
+   ============================================================ */
 function renderProjects() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Open Source</span>
+        <div class="page">
+            <span class="page-tag">Open Source</span>
             <h1 class="page-title">Projects</h1>
             <p class="page-lead">
                 Offensive security tooling, reconnaissance frameworks, and analysis tools I've built and maintain.
             </p>
-
-            ${PROJECTS.map(p => `
-                <div class="project-item">
-                    <div class="project-head">
-                        <div>
-                            <div class="project-title">${p.title}</div>
-                            <div class="project-subtitle">${p.subtitle}</div>
+            <div class="project-grid">
+                ${PROJECTS.map(p => `
+                    <div class="project-card">
+                        <div class="project-head">
+                            <div>
+                                <div class="project-title">${p.title}</div>
+                                <div class="project-sub">${p.sub}</div>
+                            </div>
+                            <div class="project-links">
+                                ${p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="project-link">${l.label} ↗</a>`).join('')}
+                            </div>
                         </div>
-                        <div class="project-links">
-                            ${p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" class="project-link">${l.label} →</a>`).join('')}
-                        </div>
-                    </div>
-                    <p class="project-desc">${p.desc}</p>
-                    <div class="project-features">
-                        <div>
-                            <div class="project-feat-label">Features</div>
-                            <ul class="project-feat-list">
-                                ${p.features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="project-feat-label">Tech Stack</div>
-                            <div class="card-tags">
-                                ${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}
+                        <p class="project-desc">${p.desc}</p>
+                        <div class="project-features">
+                            <div>
+                                <div class="feat-label">Features</div>
+                                <ul class="feat-list">
+                                    ${p.features.map(f => `<li>${f}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="feat-label">Tech Stack</div>
+                                <div class="tech-tags">
+                                    ${p.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `).join('')}
-
-            ${renderFooter()}
+                `).join('')}
+            </div>
         </div>
     `;
 }
 
+/* ============================================================
+   WRITEUPS
+   ============================================================ */
 function renderWriteups() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Research</span>
+        <div class="page">
+            <span class="page-tag">Research</span>
             <h1 class="page-title">Writeups</h1>
             <p class="page-lead">
                 Technical articles and walkthroughs covering Active Directory, web exploitation, and API security.
             </p>
-
-            <div class="writeup-list">
-                ${WRITEUPS.map(w => `
+            <div class="writeup-grid">
+                ${WRITEUPS.map((w, i) => `
                     <a href="${w.url}" target="_blank" rel="noopener" class="writeup-item">
-                        <div class="writeup-head">
-                            <span class="writeup-cat">${w.cat}</span>
-                            <span class="writeup-meta">· ${w.read} read</span>
+                        <span class="writeup-num">0${i + 1}</span>
+                        <div class="writeup-info">
+                            <div class="writeup-cat">${w.cat}</div>
+                            <div class="writeup-title">${w.title}</div>
+                            <div class="writeup-desc">${w.desc}</div>
                         </div>
-                        <div class="writeup-title">${w.title}</div>
-                        <div class="writeup-desc">${w.desc}</div>
+                        <span class="writeup-read">${w.read} ↗</span>
                     </a>
                 `).join('')}
             </div>
-
-            ${renderFooter()}
         </div>
     `;
 }
 
+/* ============================================================
+   CERTIFICATIONS
+   ============================================================ */
 function renderCertifications() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Credentials</span>
+        <div class="page">
+            <span class="page-tag">Credentials</span>
             <h1 class="page-title">Certifications</h1>
             <p class="page-lead">
-                Hands-on, exam-based credentials and program completions from security training platforms.
+                Hands-on, exam-based credentials and program completions.
             </p>
-
-            <div class="cert-list">
+            <div class="cert-grid">
                 ${CERTIFICATIONS.map(c => `
-                    <div class="cert-item">
+                    <div class="cert-card">
+                        <div class="cert-icon">✓</div>
                         <div class="cert-info">
                             <div class="cert-title">${c.title}</div>
                             <div class="cert-org">${c.org}</div>
@@ -472,68 +381,51 @@ function renderCertifications() {
                     </div>
                 `).join('')}
             </div>
-
-            ${renderFooter()}
         </div>
     `;
 }
 
+/* ============================================================
+   CONTACT
+   ============================================================ */
 function renderContact() {
     return `
-        <div class="content-wrap">
-            <span class="page-eyebrow">Let's Talk</span>
+        <div class="page">
+            <span class="page-tag">Let's Talk</span>
             <h1 class="page-title">Contact</h1>
             <p class="page-lead">
                 Interested in collaborating on security research, bug bounty, or penetration testing engagements?
-                Drop a message and I'll get back to you.
             </p>
 
             <div class="contact-grid">
-                <div class="contact-info">
+                <div class="contact-left">
                     <h3>Direct channels</h3>
-                    <p>
-                        I take on web and API assessments, network and Active Directory engagements, and
-                        LLM red teaming. Reach out through any of these channels:
-                    </p>
-                    <div class="contact-socials">
-                        <a href="mailto:farhan.cybersec@gmail.com" class="contact-social">${ICONS.mail} Email</a>
-                        <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener" class="contact-social">${ICONS.linkedin} LinkedIn</a>
-                        <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener" class="contact-social">${ICONS.github} GitHub</a>
-                        <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener" class="contact-social">${ICONS.medium} Medium</a>
-                        <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener" class="contact-social">${ICONS.tryhackme} TryHackMe</a>
+                    <p>I take on web and API assessments, network and Active Directory engagements, and LLM red teaming. Reach out through any of these:</p>
+                    <div class="social-row">
+                        <a href="mailto:farhan.cybersec@gmail.com" class="social-item">${ICONS.mail} EMAIL</a>
+                        <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener" class="social-item">${ICONS.linkedin} LINKEDIN</a>
+                        <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener" class="social-item">${ICONS.github} GITHUB</a>
+                        <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener" class="social-item">${ICONS.medium} MEDIUM</a>
+                        <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener" class="social-item">${ICONS.tryhackme} THM</a>
                     </div>
                 </div>
 
                 <form class="contact-form" id="contactForm" novalidate>
-                    <div class="form-group">
-                        <label for="contactName">Name</label>
+                    <div class="form-field">
+                        <label for="contactName">NAME</label>
                         <input type="text" id="contactName" placeholder="Your name" required />
                     </div>
-                    <div class="form-group">
-                        <label for="contactEmail">Email</label>
+                    <div class="form-field">
+                        <label for="contactEmail">EMAIL</label>
                         <input type="email" id="contactEmail" placeholder="you@example.com" required />
                     </div>
-                    <div class="form-group">
-                        <label for="contactMessage">Message</label>
-                        <textarea id="contactMessage" placeholder="Tell me about your project or inquiry..." rows="5" required></textarea>
+                    <div class="form-field">
+                        <label for="contactMessage">MESSAGE</label>
+                        <textarea id="contactMessage" placeholder="Tell me about your project..." rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="form-submit" id="contactSubmit">
-                        Send message ${ICONS.arrow}
-                    </button>
+                    <button type="submit" class="form-submit" id="contactSubmit">SEND MESSAGE →</button>
                 </form>
             </div>
-
-            ${renderFooter()}
-        </div>
-    `;
-}
-
-function renderNotFound() {
-    return `
-        <div class="content-wrap">
-            <h1 class="page-title">404 — Not Found</h1>
-            <p class="page-lead">The page you're looking for doesn't exist.</p>
-            <a href="#/" data-link class="btn btn-primary">Back to home ${ICONS.arrow}</a>
         </div>
     `;
 }
@@ -542,33 +434,27 @@ function renderNotFound() {
    CVE FILTERS
    ============================================================ */
 function initCVEFilters() {
-    const buttons = document.querySelectorAll('.cve-filter');
-    const items = document.querySelectorAll('.cve-item');
+    const btns = document.querySelectorAll('.cve-filter');
+    const cards = document.querySelectorAll('.cve-card');
 
-    buttons.forEach(btn => {
+    btns.forEach(btn => {
         btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
+            btns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
             const filter = btn.dataset.filter;
 
-            items.forEach(item => {
-                const sev = item.dataset.sev;
-                const status = item.dataset.status;
-
-                let show = false;
-                if (filter === 'all') show = true;
-                else if (filter === 'pending') show = status === 'pending';
-                else show = sev === filter;
-
-                item.style.display = show ? '' : 'none';
+            cards.forEach(card => {
+                const sev = card.dataset.sev;
+                const status = card.dataset.status;
+                let show = filter === 'all' || (filter === 'pending' ? status === 'pending' : sev === filter);
+                card.style.display = show ? '' : 'none';
             });
         });
     });
 }
 
 /* ============================================================
-   CONTACT FORM (EmailJS)
+   CONTACT FORM
    ============================================================ */
 function initContactForm() {
     const form = document.getElementById('contactForm');
@@ -576,29 +462,24 @@ function initContactForm() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const name = document.getElementById('contactName');
         const email = document.getElementById('contactEmail');
         const message = document.getElementById('contactMessage');
         const btn = document.getElementById('contactSubmit');
 
         let valid = true;
-        [name, email, message].forEach(field => {
-            field.style.borderColor = '';
-            if (!field.value.trim()) {
-                field.style.borderColor = 'var(--red)';
-                valid = false;
-            }
+        [name, email, message].forEach(f => {
+            f.style.borderColor = '';
+            if (!f.value.trim()) { f.style.borderColor = 'var(--red)'; valid = false; }
         });
         if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-            email.style.borderColor = 'var(--red)';
-            valid = false;
+            email.style.borderColor = 'var(--red)'; valid = false;
         }
         if (!valid) return;
 
-        const original = btn.innerHTML;
+        const orig = btn.textContent;
         btn.disabled = true;
-        btn.textContent = 'Sending...';
+        btn.textContent = 'SENDING...';
 
         try {
             await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
@@ -607,62 +488,79 @@ function initContactForm() {
                 message: message.value.trim(),
                 to_name: 'Farhan Khan',
             });
-
             btn.classList.add('success');
-            btn.textContent = '✓ Message sent';
+            btn.textContent = '✓ SENT';
             form.reset();
-
-            setTimeout(() => {
-                btn.classList.remove('success');
-                btn.innerHTML = original;
-                btn.disabled = false;
-            }, 3000);
+            setTimeout(() => { btn.classList.remove('success'); btn.textContent = orig; btn.disabled = false; }, 3000);
         } catch (err) {
             console.error(err);
             btn.classList.add('error');
-            btn.textContent = '✕ Failed — try again';
-
-            setTimeout(() => {
-                btn.classList.remove('error');
-                btn.innerHTML = original;
-                btn.disabled = false;
-            }, 3000);
+            btn.textContent = '✕ FAILED';
+            setTimeout(() => { btn.classList.remove('error'); btn.textContent = orig; btn.disabled = false; }, 3000);
         }
     });
 }
 
 /* ============================================================
-   SIDEBAR
+   LIVE FEED ANIMATION
    ============================================================ */
-function openSidebar() {
-    document.getElementById('sidebar').classList.add('open');
-    document.getElementById('sidebarBackdrop').classList.add('visible');
-}
+function initLiveFeed() {
+    const feed = document.getElementById('cveFeed');
+    if (!feed) return;
 
-function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('sidebarBackdrop').classList.remove('visible');
-}
-
-function initSidebar() {
-    const menuBtn = document.getElementById('menuBtn');
-    const backdrop = document.getElementById('sidebarBackdrop');
-
-    if (menuBtn) {
-        menuBtn.addEventListener('click', openSidebar);
-    }
-    if (backdrop) {
-        backdrop.addEventListener('click', closeSidebar);
-    }
+    const lines = feed.querySelectorAll('.feed-line');
+    lines.forEach((line, i) => {
+        line.style.opacity = '0';
+        line.style.transform = 'translateX(-8px)';
+        setTimeout(() => {
+            line.style.transition = 'all 0.4s ease';
+            line.style.opacity = '1';
+            line.style.transform = 'translateX(0)';
+        }, 100 + i * 120);
+    });
 }
 
 /* ============================================================
-   INIT
+   PROJECT TILT
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-    initSidebar();
+function initProjectTilt() {
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+            card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+        });
+    });
+}
 
-    // Handle all data-link clicks
+/* ============================================================
+   NAV
+   ============================================================ */
+function closeNav() {
+    const nav = document.getElementById('nav');
+    const toggle = document.getElementById('navToggle');
+    if (nav) nav.classList.remove('open');
+    if (toggle) toggle.classList.remove('active');
+}
+
+function initNav() {
+    const toggle = document.getElementById('navToggle');
+    const nav = document.getElementById('nav');
+
+    if (toggle && nav) {
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nav.classList.toggle('open');
+            toggle.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (nav.classList.contains('open') && !nav.contains(e.target) && e.target !== toggle) {
+                closeNav();
+            }
+        });
+    }
+
     document.addEventListener('click', (e) => {
         const link = e.target.closest('a[data-link]');
         if (link) {
@@ -673,7 +571,107 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+}
 
+/* ============================================================
+   CANVAS BACKGROUND
+   ============================================================ */
+function initCanvas() {
+    const canvas = document.getElementById('bgCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let particles = [];
+
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+
+    function Particle() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = (Math.random() - 0.5) * 0.3;
+        this.size = Math.random() * 1.8 + 0.4;
+        this.alpha = Math.random() * 0.5 + 0.1;
+    }
+
+    Particle.prototype.update = function () {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0) this.x = w;
+        if (this.x > w) this.x = 0;
+        if (this.y < 0) this.y = h;
+        if (this.y > h) this.y = 0;
+    };
+
+    Particle.prototype.draw = function () {
+        ctx.fillStyle = `rgba(34, 211, 238, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    };
+
+    function initParticles() {
+        particles = [];
+        const count = Math.min(80, Math.floor((w * h) / 20000));
+        for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    function drawLines() {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 130) {
+                    ctx.strokeStyle = `rgba(34, 211, 238, ${0.15 * (1 - dist / 130)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => { p.update(); p.draw(); });
+        drawLines();
+        requestAnimationFrame(animate);
+    }
+
+    resize();
+    initParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+        resize();
+        initParticles();
+    });
+}
+
+/* ============================================================
+   SCROLL EFFECT
+   ============================================================ */
+function initScroll() {
+    const topbar = document.querySelector('.topbar');
+    window.addEventListener('scroll', () => {
+        topbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    initNav();
+    initCanvas();
+    initScroll();
     window.addEventListener('hashchange', navigate);
     navigate();
 });
