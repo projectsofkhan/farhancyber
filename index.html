@@ -1,273 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farhan Khan — Security Researcher</title>
-    <meta name="description" content="Farhan Khan — Penetration tester and vulnerability researcher. 7x CVE researcher, Top 1% on TryHackMe." />
-    <meta name="theme-color" content="#08080d" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farhan Khan — Security Researcher & Penetration Tester</title>
+  <meta name="description" content="Farhan Khan — security researcher and penetration tester. 7x CVE researcher, Top 1% on TryHackMe. Web application security, Active Directory, API security." />
+  <meta name="theme-color" content="#06060a" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <div class="cursor-glow" id="cursorGlow"></div>
+  <!-- Cursor glow -->
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-    <!-- Nav -->
-    <nav class="nav">
-        <div class="nav-inner">
-            <a href="#home" class="logo">
-                <span class="logo-dot"></span>
-                Farhan Khan
-            </a>
-            <div class="nav-links" id="navLinks">
-                <a href="#cves">CVEs</a>
-                <a href="#projects">Projects</a>
-                <a href="#experience">Experience</a>
-                <a href="#writing">Writing</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span>
-            </button>
-        </div>
-    </nav>
+  <!-- Ambient background -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+    <div class="bg-grid"></div>
+  </div>
 
-    <main>
-        <!-- HERO -->
-        <section id="home" class="hero">
-            <div class="hero-bg" aria-hidden="true">
-                <div class="orb orb-1"></div>
-                <div class="orb orb-2"></div>
-                <div class="orb orb-3"></div>
-            </div>
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-shell">
+      <a href="/" class="brand" data-link>
+        <span class="brand-mark"></span>
+        <span class="brand-text">Farhan Khan</span>
+      </a>
 
-            <div class="hero-inner">
-                <div class="hero-badge" data-reveal>
-                    <span class="badge-dot"></span>
-                    Available for security engagements
-                </div>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="/" data-link data-route="/">Home</a>
+        <a href="/cves" data-link data-route="/cves">CVEs</a>
+        <a href="/projects" data-link data-route="/projects">Projects</a>
+        <a href="/experience" data-link data-route="/experience">Experience</a>
+        <a href="/writing" data-link data-route="/writing">Writing</a>
+        <a href="/contact" data-link data-route="/contact">Contact</a>
+      </nav>
 
-                <h1 class="hero-title" data-reveal style="--d: 0.05s">
-                    <span>I'm</span>
-                    <span class="gradient">Farhan Khan</span>
-                </h1>
+      <div class="nav-actions">
+        <a href="/contact" class="nav-cta" data-link>Let’s talk</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-                <p class="hero-subtitle" data-reveal style="--d: 0.15s">
-                    Security researcher &amp; penetration tester.
-                    <span class="typed-wrap">
-                        I <span id="typedText" class="typed-text"></span><span class="typed-cursor">|</span>
-                    </span>
-                </p>
+  <!-- Page outlet -->
+  <main id="app" class="app-main" role="main"></main>
 
-                <div class="hero-actions" data-reveal style="--d: 0.25s">
-                    <a href="#cves" class="btn btn-primary" data-magnetic>
-                        View my work
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
-                    </a>
-                    <a href="farhankhanresume.pdf" download class="btn btn-ghost" data-magnetic>
-                        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10M10 13l-4-4M10 13l4-4M4 17h12"/></svg>
-                        Resume
-                    </a>
-                </div>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="brand" data-link>
+          <span class="brand-mark"></span>
+          <span class="brand-text">Farhan Khan</span>
+        </a>
+        <p class="footer-desc">
+          Security researcher and penetration tester. I find what automated scanners miss,
+          document it clearly, and help teams ship safer software.
+        </p>
+      </div>
 
-                <div class="hero-stats" data-reveal style="--d: 0.35s">
-                    <div class="stat">
-                        <span class="stat-num" data-count="7">0</span>
-                        <span class="stat-label">CVEs Published</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-num" data-count="1" data-suffix="%">0</span>
-                        <span class="stat-label">TryHackMe Global</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-num" data-count="12">0</span>
-                        <span class="stat-label">Total Advisories</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-num" data-count="6">0</span>
-                        <span class="stat-label">CTF Wins</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="/cves" data-link>CVEs</a>
+        <a href="/projects" data-link>Projects</a>
+        <a href="/experience" data-link>Experience</a>
+        <a href="/writing" data-link>Writing</a>
+      </div>
 
-        <!-- CVES -->
-        <section id="cves" class="section">
-            <div class="section-inner">
-                <div class="section-head" data-reveal>
-                    <div class="section-tag">Security Research</div>
-                    <h2 class="section-title">CVEs &amp; Advisories</h2>
-                    <p class="section-desc">Published vulnerabilities and ongoing responsible disclosures.</p>
-                </div>
+      <div class="footer-col">
+        <h4>Elsewhere</h4>
+        <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener">Medium</a>
+        <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener">TryHackMe</a>
+      </div>
+    </div>
 
-                <div class="filters" data-reveal>
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="critical">Critical</button>
-                    <button class="filter-btn" data-filter="high">High</button>
-                    <button class="filter-btn" data-filter="medium">Medium</button>
-                    <button class="filter-btn" data-filter="low">Low</button>
-                    <button class="filter-btn" data-filter="pending">Pending</button>
-                </div>
+    <div class="container footer-bottom">
+      <span>© 2026 Farhan Khan. All rights reserved.</span>
+      <span class="footer-note">Built with intent.</span>
+    </div>
+  </footer>
 
-                <div class="cve-grid" id="cveGrid"></div>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects" class="section">
-            <div class="section-inner">
-                <div class="section-head" data-reveal>
-                    <div class="section-tag">Open Source</div>
-                    <h2 class="section-title">Projects</h2>
-                    <p class="section-desc">Offensive security tooling and reconnaissance frameworks.</p>
-                </div>
-
-                <div class="project-grid">
-                    <div class="project-card" data-reveal data-tilt>
-                        <div class="project-glow"></div>
-                        <div class="project-head">
-                            <div class="project-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/mr-farhankhan/threat-trace" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
-                                <a href="https://fakebankappdetector2.onrender.com/" target="_blank" rel="noopener" class="project-link">Demo ↗</a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">Threat-Trace</h3>
-                        <p class="project-sub">Malicious Banking App Detector</p>
-                        <p class="project-desc">Detects potentially malicious or fake banking apps using static and behavioral analysis. Identifies phishing and malicious indicators before users interact.</p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>Android</span>
-                            <span>Security</span>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-reveal data-tilt style="--d: 0.1s">
-                        <div class="project-glow"></div>
-                        <div class="project-head">
-                            <div class="project-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://github.com/mr-farhankhan/1Recon" target="_blank" rel="noopener" class="project-link">GitHub ↗</a>
-                            </div>
-                        </div>
-                        <h3 class="project-title">1Recon</h3>
-                        <p class="project-sub">Reconnaissance Automation Framework</p>
-                        <p class="project-desc">Bash-based framework that streamlines reconnaissance. Combines subdomain enumeration, DNS validation, port scanning, and more into one unified workflow.</p>
-                        <div class="project-tags">
-                            <span>Bash</span>
-                            <span>Recon</span>
-                            <span>Automation</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- EXPERIENCE -->
-        <section id="experience" class="section">
-            <div class="section-inner">
-                <div class="section-head" data-reveal>
-                    <div class="section-tag">Career</div>
-                    <h2 class="section-title">Experience</h2>
-                    <p class="section-desc">Roles, research, and engagements.</p>
-                </div>
-
-                <div class="timeline" id="timeline"></div>
-
-                <div class="section-head section-head--sub" data-reveal>
-                    <div class="section-tag">Milestones</div>
-                    <h2 class="section-title">Achievements</h2>
-                </div>
-
-                <div class="achievement-grid" id="achievementGrid"></div>
-            </div>
-        </section>
-
-        <!-- WRITING -->
-        <section id="writing" class="section">
-            <div class="section-inner">
-                <div class="section-head" data-reveal>
-                    <div class="section-tag">Research</div>
-                    <h2 class="section-title">Writing</h2>
-                    <p class="section-desc">Technical articles on Active Directory, web exploitation, and APIs.</p>
-                </div>
-                <div class="writing-list" id="writingList"></div>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="section">
-            <div class="section-inner">
-                <div class="section-head" data-reveal>
-                    <div class="section-tag">Contact</div>
-                    <h2 class="section-title">Let's work together</h2>
-                    <p class="section-desc">Reach out for collaborations or security engagements.</p>
-                </div>
-
-                <div class="contact-grid">
-                    <div class="contact-info" data-reveal>
-                        <a href="mailto:farhan.cybersec@gmail.com" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
-                            <span>farhan.cybersec@gmail.com</span>
-                        </a>
-                        <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                            <span>github.com/mr-farhankhan</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            <span>linkedin.com/in/farhancyber</span>
-                        </a>
-                        <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.846 6.887c.03-.295-.083-.586-.303-.784l-2.24-2.7v-.403h6.958l5.378 11.795 4.728-11.795h6.633v.403l-1.916 1.837c-.165.126-.247.333-.213.53v13.222c-.034.197.048.404.213.53l1.87 1.837v.403h-9.412v-.403l1.937-1.881c.19-.19.19-.246.19-.53v-10.7l-5.387 13.683h-.728l-6.274-13.683v9.174c-.052.385.076.774.347 1.053l2.52 3.058v.403h-7.146v-.403l2.52-3.058c.27-.279.39-.67.325-1.053v-10.608z"/></svg>
-                            <span>medium.com/@Farhancyber</span>
-                        </a>
-                        <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener" class="social-link">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L3 6V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V6L12 2ZM12 11H19C18.56 14.91 15.71 18.4 12 19.92V11H5V7.3L12 4.19V11Z"/></svg>
-                            <span>tryhackme.com/p/Farhankhann</span>
-                        </a>
-                    </div>
-
-                    <form class="contact-form" data-reveal id="contactForm" novalidate>
-                        <div class="form-group">
-                            <label for="contactName">Name</label>
-                            <input type="text" id="contactName" placeholder="Your name" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="contactEmail">Email</label>
-                            <input type="email" id="contactEmail" placeholder="you@example.com" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="contactMessage">Message</label>
-                            <textarea id="contactMessage" placeholder="Tell me about your project..." rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full" id="contactSubmit" data-magnetic>
-                            Send message
-                            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-inner">
-            <p>&copy; 2026 Farhan Khan. All rights reserved.</p>
-            <p class="footer-note">Built with precision &amp; passion.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
