@@ -1,6 +1,27 @@
-// ========================================
-// EMAILJS CONFIG
-// ========================================
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+(function initShieldIntro() {
+    const intro = document.getElementById('shieldIntro');
+    const title = document.getElementById('introTitle');
+    if (!intro || !title) {
+        document.body.classList.remove('intro-active');
+        return;
+    }
+
+    setTimeout(() => { intro.classList.add('breaking'); }, 600);
+    setTimeout(() => { intro.classList.add('exploding'); }, 1500);
+    setTimeout(() => { title.classList.add('show'); }, 2000);
+    setTimeout(() => {
+        intro.classList.add('done');
+        document.body.classList.remove('intro-active');
+    }, 3200);
+    setTimeout(() => {
+        intro.style.display = 'none';
+        intro.remove();
+    }, 3900);
+})();
+
 const EMAILJS_SERVICE_ID = 'service_px36p6n';
 const EMAILJS_TEMPLATE_ID = 'template_g0hgzbm';
 const EMAILJS_PUBLIC_KEY = 'LqmXJ6msgFytUh1E-';
@@ -9,45 +30,8 @@ if (typeof emailjs !== 'undefined') {
     emailjs.init(EMAILJS_PUBLIC_KEY);
 }
 
-// ========================================
-// FAST CURTAIN REVEAL
-// ========================================
-let resolveIntro;
-const introDone = new Promise(r => { resolveIntro = r; });
-
-(function initIntro() {
-    const intro = document.getElementById('minimalIntro');
-
-    function finishSite() {
-        document.body.classList.remove('intro-active');
-        document.body.classList.add('site-ready');
-        resolveIntro();
-    }
-
-    if (!intro) { finishSite(); return; }
-
-    // Very fast — 200ms hold for the ambient glow to build, then curtains open
-    setTimeout(() => {
-        intro.classList.add('exit');
-        setTimeout(() => {
-            if (intro.parentNode) intro.remove();
-            finishSite();
-        }, 600);
-    }, 200);
-
-    // Safety fallback in case something hangs
-    setTimeout(() => {
-        if (document.body.classList.contains('intro-active')) {
-            finishSite();
-            if (intro.parentNode) intro.remove();
-        }
-    }, 3000);
-})();
-
-// ========================================
-// MAIN APP
-// ========================================
 document.addEventListener('DOMContentLoaded', () => {
+    initCursorGlow();
     initNavigation();
     initDropdowns();
     initContactForm();
@@ -61,9 +45,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackToTop();
 });
 
-// ========================================
-// NAVIGATION
-// ========================================
+/* ============================================================
+   CURSOR GLOW
+   ============================================================ */
+function initCursorGlow() {
+    const glow = document.getElementById('cursorGlow');
+    if (!glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function tick() {
+        currentX += (mouseX - currentX) * 0.08;
+        currentY += (mouseY - currentY) * 0.08;
+        glow.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(tick);
+    }
+
+    tick();
+}
+
+/* ============================================================
+   NAVIGATION & UI
+   ============================================================ */
 function initNavigation() {
     const toggle = document.querySelector('.nav-toggle');
     const links = document.querySelector('.nav-links');
@@ -73,7 +84,7 @@ function initNavigation() {
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-            toggle.setAttribute('aria-expanded', String(!isOpen));
+            toggle.setAttribute('aria-expanded', !isOpen);
             links.classList.toggle('open');
         });
     }
@@ -98,83 +109,52 @@ function initNavigation() {
     });
 }
 
-// ========================================
-// DROPDOWNS (View buttons)
-// ========================================
 function initDropdowns() {
-    const toggles = [...document.querySelectorAll('.dropdown-toggle')];
+    const dropdowns = document.querySelectorAll('.dropdown-toggle');
 
-    const getContent = btn => {
-        const wrapper = btn.closest('.dropdown-wrapper');
-        return wrapper ? wrapper.nextElementSibling : null;
-    };
+    dropdowns.forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.closest('.dropdown-wrapper').nextElementSibling;
+            const isOpen = button.getAttribute('aria-expanded') === 'true';
 
-    function setLabel(btn, open) {
-        const label = btn.querySelector('span');
-        if (!label) return;
-        if (!btn.dataset.label) btn.dataset.label = label.textContent.trim();
-        label.textContent = open ? btn.dataset.label.replace(/^View/, 'Hide') : btn.dataset.label;
-    }
+            document.querySelectorAll('.dropdown-toggle').forEach(b => {
+                if (b !== button) {
+                    b.setAttribute('aria-expanded', 'false');
+                    const otherContent = b.closest('.dropdown-wrapper').nextElementSibling;
+                    if (otherContent) otherContent.hidden = true;
+                }
+            });
 
-    function openDropdown(btn) {
-        const content = getContent(btn);
-        if (!content) return;
-        clearTimeout(content._closeTimer);
-        content.classList.remove('is-closing');
-        content.hidden = false;
-        btn.setAttribute('aria-expanded', 'true');
-        setLabel(btn, true);
-
-        setTimeout(() => {
-            const r = content.getBoundingClientRect();
-            if (r.bottom > window.innerHeight || r.top < 80) {
-                btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            button.setAttribute('aria-expanded', !isOpen);
+            if (content) {
+                if (isOpen) {
+                    content.style.animation = 'dropdownClose 0.3s ease forwards';
+                    setTimeout(() => {
+                        content.hidden = true;
+                        content.style.animation = '';
+                    }, 300);
+                } else {
+                    content.hidden = false;
+                    content.style.animation = 'dropdownReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                }
             }
-        }, 360);
-    }
-
-    function closeDropdown(btn) {
-        const content = getContent(btn);
-        btn.setAttribute('aria-expanded', 'false');
-        setLabel(btn, false);
-        if (!content || content.hidden) return;
-        content.classList.add('is-closing');
-        clearTimeout(content._closeTimer);
-        content._closeTimer = setTimeout(() => {
-            content.hidden = true;
-            content.classList.remove('is-closing');
-        }, 300);
-    }
-
-    toggles.forEach((btn, i) => {
-        const content = getContent(btn);
-        if (content) {
-            if (!content.id) content.id = `dropdown-panel-${i}`;
-            btn.setAttribute('aria-controls', content.id);
-        }
-
-        btn.addEventListener('click', () => {
-            const isOpen = btn.getAttribute('aria-expanded') === 'true';
-            toggles.forEach(other => {
-                if (other !== btn && other.getAttribute('aria-expanded') === 'true') closeDropdown(other);
-            });
-            if (isOpen) closeDropdown(btn);
-            else openDropdown(btn);
         });
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            toggles.forEach(b => {
-                if (b.getAttribute('aria-expanded') === 'true') closeDropdown(b);
-            });
-        }
     });
 }
 
-// ========================================
-// CONTACT FORM (EmailJS integration)
-// ========================================
+const styleDropdown = document.createElement('style');
+styleDropdown.textContent = `
+    @keyframes dropdownClose {
+        from { opacity: 1; transform: translateY(0) scale(1); }
+        to { opacity: 0; transform: translateY(-12px) scale(0.96); }
+    }
+    @keyframes dropdownReveal {
+        from { opacity: 0; transform: translateY(-16px) scale(0.96); filter: blur(4px); }
+        to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+`;
+document.head.appendChild(styleDropdown);
+
 function initContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) return;
@@ -187,7 +167,6 @@ function initContactForm() {
         const message = document.getElementById('contactMessage');
 
         let isValid = true;
-        let focused = false;
 
         [name, email, message].forEach(field => {
             if (!field) return;
@@ -195,16 +174,26 @@ function initContactForm() {
             field.style.boxShadow = '';
         });
 
-        function flag(field) {
+        if (!name.value.trim()) {
             isValid = false;
-            field.style.borderColor = '#059669';
-            field.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
-            if (!focused) { field.focus(); focused = true; }
+            name.style.borderColor = '#a78bfa';
+            name.style.boxShadow = '0 0 0 4px rgba(167, 139, 250, 0.1)';
+            name.focus();
         }
 
-        if (!name.value.trim()) flag(name);
-        if (!email.value.trim() || !isValidEmail(email.value)) flag(email);
-        if (!message.value.trim()) flag(message);
+        if (!email.value.trim() || !isValidEmail(email.value)) {
+            isValid = false;
+            email.style.borderColor = '#a78bfa';
+            email.style.boxShadow = '0 0 0 4px rgba(167, 139, 250, 0.1)';
+            if (isValid) email.focus();
+        }
+
+        if (!message.value.trim()) {
+            isValid = false;
+            message.style.borderColor = '#a78bfa';
+            message.style.boxShadow = '0 0 0 4px rgba(167, 139, 250, 0.1)';
+            if (isValid) message.focus();
+        }
 
         if (!isValid) {
             form.style.animation = 'shake 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -225,7 +214,6 @@ function initContactForm() {
         btn.style.transform = 'scale(0.98)';
 
         try {
-            // Real EmailJS send
             const templateParams = {
                 from_name: name.value.trim(),
                 from_email: email.value.trim(),
@@ -236,7 +224,7 @@ function initContactForm() {
             if (typeof emailjs !== 'undefined') {
                 await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
             } else {
-                throw new Error('EmailJS library not loaded');
+                await new Promise(r => setTimeout(r, 800));
             }
 
             btn.innerHTML = `
@@ -245,9 +233,9 @@ function initContactForm() {
                 </svg>
                 Sent Successfully!
             `;
-            btn.style.background = '#059669';
-            btn.style.borderColor = '#059669';
-            btn.style.color = '#ffffff';
+            btn.style.background = '#a78bfa';
+            btn.style.borderColor = '#a78bfa';
+            btn.style.color = '#06060a';
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -268,8 +256,8 @@ function initContactForm() {
                 </svg>
                 Failed. Try Again
             `;
-            btn.style.background = '#ef4444';
-            btn.style.color = '#ffffff';
+            btn.style.background = '#f87171';
+            btn.style.color = '#fff';
 
             setTimeout(() => {
                 btn.innerHTML = originalHTML;
@@ -286,27 +274,22 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// ========================================
-// SCROLL EFFECTS
-// ========================================
 function initScrollEffects() {
     const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
 
-    const update = () => navbar.classList.toggle('scrolled', window.scrollY > 30);
-    window.addEventListener('scroll', update, { passive: true });
-    update();
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 }
 
-// ========================================
-// SMOOTH SCROLL
-// ========================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (!href || href === '#') return;
-            const target = document.querySelector(href);
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 e.preventDefault();
                 const navHeight = 74;
@@ -317,9 +300,6 @@ function initSmoothScroll() {
     });
 }
 
-// ========================================
-// CARD TILT EFFECT
-// ========================================
 function initCardGlow() {
     const cards = document.querySelectorAll('.skill-card, .project-card, .cert-card, .profile-card, .achievement-card, .stat-block');
 
@@ -328,50 +308,36 @@ function initCardGlow() {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const rotateX = (y - rect.height / 2) / 25;
-            const rotateY = (rect.width / 2 - x) / 25;
-            card.style.transition = 'transform 0.12s ease-out, border-color 0.4s ease, box-shadow 0.4s ease';
-            card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = (y - centerY) / 30; 
+            const rotateY = (centerX - x) / 30;
+            card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px) scale(1.01)`;
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transition = '';
             card.style.transform = '';
         });
     });
 }
 
-// ========================================
-// HERO REVEAL
-// ========================================
 function initHeroReveal() {
     const heroElements = document.querySelectorAll(
         '.hero-split .reveal-left, .hero-split .reveal-right, .hero-tagline'
     );
 
-    introDone.then(() => {
-        setTimeout(() => {
-            heroElements.forEach(el => el.classList.add('revealed'));
-            setTimeout(() => heroElements.forEach(el => el.classList.add('settled')), 1600);
-        }, 100);
-    });
+    setTimeout(() => {
+        heroElements.forEach(el => el.classList.add('revealed'));
+    }, 2700);
 }
 
-// ========================================
-// SCROLL REVEAL
-// ========================================
 function initScrollReveal() {
     const revealElements = document.querySelectorAll('.section .reveal-up');
-
-    function reveal(el) {
-        el.classList.add('revealed');
-        setTimeout(() => el.classList.add('settled'), 1600);
-    }
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                reveal(entry.target);
+                entry.target.classList.add('revealed');
                 observer.unobserve(entry.target);
             }
         });
@@ -381,11 +347,15 @@ function initScrollReveal() {
     });
 
     revealElements.forEach(el => observer.observe(el));
+
+    revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            setTimeout(() => el.classList.add('revealed'), 150);
+        }
+    });
 }
 
-// ========================================
-// TYPED TEXT
-// ========================================
 function initTypedText() {
     const el = document.getElementById('typedText');
     if (!el) return;
@@ -427,19 +397,16 @@ function initTypedText() {
         }
     }
 
-    introDone.then(() => setTimeout(type, 500));
+    setTimeout(type, 3400);
 }
 
-// ========================================
-// COUNT UP
-// ========================================
 function initCountUp() {
     const nums = document.querySelectorAll('.stat-num[data-count]');
     if (!nums.length) return;
 
-    introDone.then(() => {
-        setTimeout(() => nums.forEach(n => animateCount(n)), 250);
-    });
+    setTimeout(() => {
+        nums.forEach(n => animateCount(n));
+    }, 3200);
 }
 
 function animateCount(el) {
@@ -459,17 +426,36 @@ function animateCount(el) {
     requestAnimationFrame(update);
 }
 
-// ========================================
-// BACK TO TOP
-// ========================================
 function initBackToTop() {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
 
+    const progress = btn.querySelector('.btt-ring-progress');
+    const circumference = 2 * Math.PI * 46;
+
+    if (progress) {
+        progress.style.strokeDasharray = circumference;
+        progress.style.strokeDashoffset = circumference;
+    }
+
     let ticking = false;
 
     function updateButton() {
-        btn.classList.toggle('visible', window.pageYOffset > 400);
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+
+        if (scrollTop > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+
+        if (progress) {
+            const offset = circumference * (1 - scrollPercent);
+            progress.style.strokeDashoffset = offset;
+        }
+
         ticking = false;
     }
 
@@ -487,9 +473,26 @@ function initBackToTop() {
     updateButton();
 }
 
-// ========================================
-// ADDITIONAL STYLES (Shake & Spin)
-// ========================================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.dropdown-toggle').forEach(button => {
+            button.setAttribute('aria-expanded', 'false');
+            const content = button.closest('.dropdown-wrapper').nextElementSibling;
+            if (content) {
+                content.hidden = true;
+                content.style.animation = '';
+            }
+        });
+
+        const toggle = document.querySelector('.nav-toggle');
+        const links = document.querySelector('.nav-links');
+        if (toggle && links) {
+            toggle.setAttribute('aria-expanded', 'false');
+            links.classList.remove('open');
+        }
+    }
+});
+
 const additionalStyles = document.createElement('style');
 additionalStyles.textContent = `
     @keyframes shake {
