@@ -16,60 +16,34 @@
 </head>
 <body>
 
-    <!-- Mobile top bar -->
-    <header class="mobile-bar">
-        <button class="menu-btn" id="menuBtn" aria-label="Menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <line x1="3" y1="12" x2="21" y2="12"/>
-                <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-        </button>
-        <span>Farhan Khan</span>
-    </header>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#/" data-link class="logo">Farhan Khan</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#about" data-link>About</a>
+                <a href="#work" data-link>Work</a>
+                <a href="#writing" data-link>Writing</a>
+                <a href="#contact" data-link>Contact</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-inner">
-            <a href="#/" data-link class="brand">Farhan Khan</a>
+    <main id="app"></main>
 
-            <nav class="nav-group">
-                <div class="nav-label">Overview</div>
-                <a href="#/" data-link class="nav-link">Introduction</a>
-            </nav>
-
-            <nav class="nav-group">
-                <div class="nav-label">Work</div>
-                <a href="#experience" data-link class="nav-link">Experience</a>
-                <a href="#cves" data-link class="nav-link">CVEs &amp; Advisories</a>
-                <a href="#achievements" data-link class="nav-link">Achievements</a>
-                <a href="#projects" data-link class="nav-link">Projects</a>
-            </nav>
-
-            <nav class="nav-group">
-                <div class="nav-label">Research</div>
-                <a href="#writeups" data-link class="nav-link">Writeups</a>
-                <a href="#certifications" data-link class="nav-link">Certifications</a>
-            </nav>
-
-            <nav class="nav-group">
-                <div class="nav-label">Connect</div>
-                <a href="#contact" data-link class="nav-link">Contact</a>
-            </nav>
-
-            <div class="sidebar-footer">
+    <footer class="footer">
+        <div class="footer-inner">
+            <p>&copy; 2026 Farhan Khan</p>
+            <div class="footer-links">
                 <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener">LinkedIn</a>
                 <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener">Medium</a>
-                <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener">TryHackMe</a>
             </div>
         </div>
-    </aside>
-
-    <div class="backdrop" id="backdrop"></div>
-
-    <!-- Content -->
-    <main id="app"></main>
+    </footer>
 
     <script src="script.js"></script>
 </body>
