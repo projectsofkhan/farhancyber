@@ -1,4 +1,15 @@
 // ========================================
+// EMAILJS CONFIG
+// ========================================
+const EMAILJS_SERVICE_ID = 'service_px36p6n';
+const EMAILJS_TEMPLATE_ID = 'template_g0hgzbm';
+const EMAILJS_PUBLIC_KEY = 'LqmXJ6msgFytUh1E-';
+
+if (typeof emailjs !== 'undefined') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
+// ========================================
 // FAST CURTAIN REVEAL
 // ========================================
 let resolveIntro;
@@ -162,7 +173,7 @@ function initDropdowns() {
 }
 
 // ========================================
-// CONTACT FORM
+// CONTACT FORM (EmailJS integration)
 // ========================================
 function initContactForm() {
     const form = document.getElementById('contactForm');
@@ -214,15 +225,19 @@ function initContactForm() {
         btn.style.transform = 'scale(0.98)';
 
         try {
+            // Real EmailJS send
             const templateParams = {
                 from_name: name.value.trim(),
                 from_email: email.value.trim(),
                 message: message.value.trim(),
                 to_name: 'Farhan Khan',
             };
-            void templateParams;
 
-            await new Promise(r => setTimeout(r, 800));
+            if (typeof emailjs !== 'undefined') {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+            } else {
+                throw new Error('EmailJS library not loaded');
+            }
 
             btn.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -245,6 +260,7 @@ function initContactForm() {
             }, 3000);
 
         } catch (error) {
+            console.error('EmailJS error:', error);
             btn.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
