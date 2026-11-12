@@ -3,66 +3,73 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farhan Khan — Vulnerability Research</title>
+    <title>Farhan Khan — Security Researcher</title>
     <meta name="description" content="Farhan Khan — Penetration tester and vulnerability researcher. 7x CVE researcher, Top 1% on TryHackMe." />
-    <meta name="theme-color" content="#05070a" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <!-- Animated background canvas -->
-    <canvas id="bgCanvas" class="bg-canvas"></canvas>
-    <div class="bg-scanline"></div>
-
-    <!-- Top Nav -->
-    <header class="topbar">
-        <div class="topbar-inner">
-            <a href="#/" data-link class="brand">
-                <span class="brand-hex"></span>
-                <span class="brand-name">FARHAN<span class="brand-dot">.</span>KHAN</span>
-                <span class="brand-tag">v2.0</span>
-            </a>
-
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
-
-            <nav class="nav" id="nav">
-                <a href="#/" data-link>HOME</a>
-                <a href="#experience" data-link>EXPERIENCE</a>
-                <a href="#cves" data-link>CVES</a>
-                <a href="#achievements" data-link>ACHIEVEMENTS</a>
-                <a href="#projects" data-link>PROJECTS</a>
-                <a href="#writeups" data-link>WRITEUPS</a>
-                <a href="#certifications" data-link>CERTS</a>
-                <a href="#contact" data-link>CONTACT</a>
-            </nav>
-        </div>
+    <!-- Mobile top bar -->
+    <header class="mobile-bar">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
+        <span>Farhan Khan</span>
     </header>
 
-    <!-- Main Content -->
-    <main id="app"></main>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <a href="#/" data-link class="brand">Farhan Khan</a>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-line">
-                <span class="footer-prompt">$</span>
-                <span class="footer-text">echo "Farhan Khan — Vulnerability Research"</span>
-            </div>
-            <div class="footer-meta">
-                <span>© 2026 · All rights reserved</span>
-                <span class="footer-divider">·</span>
-                <span>Built with precision</span>
+            <nav class="nav-group">
+                <div class="nav-label">Overview</div>
+                <a href="#/" data-link class="nav-link">Introduction</a>
+            </nav>
+
+            <nav class="nav-group">
+                <div class="nav-label">Work</div>
+                <a href="#experience" data-link class="nav-link">Experience</a>
+                <a href="#cves" data-link class="nav-link">CVEs &amp; Advisories</a>
+                <a href="#achievements" data-link class="nav-link">Achievements</a>
+                <a href="#projects" data-link class="nav-link">Projects</a>
+            </nav>
+
+            <nav class="nav-group">
+                <div class="nav-label">Research</div>
+                <a href="#writeups" data-link class="nav-link">Writeups</a>
+                <a href="#certifications" data-link class="nav-link">Certifications</a>
+            </nav>
+
+            <nav class="nav-group">
+                <div class="nav-label">Connect</div>
+                <a href="#contact" data-link class="nav-link">Contact</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="https://github.com/mr-farhankhan" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/farhancyber" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://medium.com/@Farhancyber" target="_blank" rel="noopener">Medium</a>
+                <a href="https://tryhackme.com/p/Farhankhann" target="_blank" rel="noopener">TryHackMe</a>
             </div>
         </div>
-    </footer>
+    </aside>
+
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- Content -->
+    <main id="app"></main>
 
     <script src="script.js"></script>
 </body>
