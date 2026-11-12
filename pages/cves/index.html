@@ -48,19 +48,29 @@
 
     <style>
         :root {
+            --sev-critical: #dc2626;
+            --sev-critical-bg: rgba(220, 38, 38, 0.08);
+            --sev-critical-border: rgba(220, 38, 38, 0.2);
+
             --sev-high: #ea580c;
-            --sev-high-glow: rgba(234, 88, 12, 0.2);
+            --sev-high-bg: rgba(234, 88, 12, 0.08);
+            --sev-high-border: rgba(234, 88, 12, 0.2);
 
             --sev-medium: #ca8a04;
-            --sev-medium-glow: rgba(202, 138, 4, 0.2);
+            --sev-medium-bg: rgba(202, 138, 4, 0.08);
+            --sev-medium-border: rgba(202, 138, 4, 0.2);
+
+            --sev-low: #0891b2;
+            --sev-low-bg: rgba(8, 145, 178, 0.08);
+            --sev-low-border: rgba(8, 145, 178, 0.2);
 
             --status-disclosed: #059669;
             --status-disclosed-bg: rgba(5, 150, 105, 0.08);
-            --status-disclosed-border: rgba(5, 150, 105, 0.25);
+            --status-disclosed-border: rgba(5, 150, 105, 0.2);
 
-            --status-in-progress: #d97706;
-            --status-in-progress-bg: rgba(217, 119, 6, 0.08);
-            --status-in-progress-border: rgba(217, 119, 6, 0.25);
+            --status-pending: #d97706;
+            --status-pending-bg: rgba(217, 119, 6, 0.08);
+            --status-pending-border: rgba(217, 119, 6, 0.2);
         }
 
         body {
@@ -70,32 +80,75 @@
 
         .cves-page-section {
             position: relative;
-            padding-top: 140px;
+            padding-top: 130px;
+            padding-bottom: 80px;
             min-height: 100vh;
-            overflow: hidden;
         }
 
+        /* ---- Stats bar ---- */
+        .cve-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 900px;
+            margin: 0 auto 48px;
+        }
+
+        .cve-stat {
+            position: relative;
+            padding: 20px 16px;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            text-align: center;
+            transition: all 0.35s var(--transition-bounce);
+            box-shadow: var(--shadow-card);
+        }
+
+        .cve-stat:hover {
+            border-color: var(--color-border-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
+        }
+
+        .cve-stat-num {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--color-primary);
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .cve-stat-label {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+        }
+
+        /* ---- Filters ---- */
         .filters-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 48px;
-            position: relative;
-            z-index: 2;
+            gap: 10px;
+            margin-bottom: 40px;
         }
 
         .filter-btn {
             background: #ffffff;
             border: 1px solid var(--color-border);
             color: var(--color-text-muted);
-            padding: 10px 24px;
+            padding: 9px 20px;
             border-radius: 50px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform;
+            transition: all 0.3s ease;
             box-shadow: var(--shadow-card);
         }
 
@@ -109,312 +162,266 @@
             background: var(--color-primary);
             color: #ffffff;
             border-color: var(--color-primary);
-            box-shadow: 0 4px 16px rgba(5, 150, 105, 0.25);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
         }
 
-        .cve-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 1050px;
+        /* ---- CVE Grid ---- */
+        .cve-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            max-width: 1100px;
             margin: 0 auto;
-            min-height: 400px;
         }
 
+        /* ---- CVE Card (compact) ---- */
         .cve-card {
             position: relative;
             background: var(--color-bg-card);
             border: 1px solid var(--color-border);
-            border-radius: 20px;
-            padding: 32px 36px;
+            border-radius: 14px;
+            padding: 18px 20px;
+            transition:
+                transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
             overflow: hidden;
-            width: 100%;
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.3s ease,
-                        box-shadow 0.3s ease;
-            will-change: opacity, transform;
             opacity: 0;
-            transform: translate3d(0, 30px, 0);
+            transform: translateY(20px);
             box-shadow: var(--shadow-card);
         }
 
         .cve-card.revealed {
             opacity: 1;
-            transform: translate3d(0, 0, 0);
+            transform: translateY(0);
         }
 
         .cve-card.filtered-out {
-            opacity: 0 !important;
-            transform: translate3d(0, 10px, 0) scale(0.98) !important;
-            pointer-events: none;
-        }
-
-        .cve-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; bottom: 0;
-            width: 4px;
-            background: var(--sev-color);
-            transition: width 0.3s ease, box-shadow 0.3s ease;
+            display: none;
         }
 
         .cve-card:hover {
+            transform: translateY(-4px);
             border-color: var(--color-border-hover);
-            transform: translate3d(0, -6px, 0);
-            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1), 0 0 40px var(--sev-glow);
+            box-shadow: 0 12px 32px rgba(5, 150, 105, 0.12);
+        }
+
+        /* Left accent bar */
+        .cve-card::before {
+            content: '';
+            position: absolute;
+            top: 16px; bottom: 16px; left: 0;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: var(--sev-color);
+            transition: all 0.3s ease;
         }
 
         .cve-card:hover::before {
-            width: 6px;
+            width: 4px;
         }
 
-        .cve-header {
+        /* Severity accent colors */
+        .cve-card.sev-critical { --sev-color: var(--sev-critical); --sev-bg: var(--sev-critical-bg); --sev-border: var(--sev-critical-border); }
+        .cve-card.sev-high     { --sev-color: var(--sev-high);     --sev-bg: var(--sev-high-bg);     --sev-border: var(--sev-high-border); }
+        .cve-card.sev-medium   { --sev-color: var(--sev-medium);   --sev-bg: var(--sev-medium-bg);   --sev-border: var(--sev-medium-border); }
+        .cve-card.sev-low      { --sev-color: var(--sev-low);      --sev-bg: var(--sev-low-bg);      --sev-border: var(--sev-low-border); }
+
+        /* Top row: ID + severity pill */
+        .cve-top {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .cve-id {
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--color-primary);
-            background: rgba(5, 150, 105, 0.08);
-            padding: 6px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(5, 150, 105, 0.2);
-            transition: background-color 0.3s ease;
+            font-family: var(--font-mono, 'JetBrains Mono', monospace);
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--color-text);
+            letter-spacing: 0.2px;
+            background: var(--color-bg-elevated);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
         }
 
-        .status-text {
-            font-family: var(--font-display);
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 6px 14px;
-            border-radius: 50px;
+        .cve-sev {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
+            font-family: var(--font-display);
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--sev-color);
+            background: var(--sev-bg);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--sev-border);
+            white-space: nowrap;
         }
 
-        .status-text::before {
+        .cve-sev::before {
             content: '';
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             background: currentColor;
         }
 
-        .status-in-progress {
-            color: var(--status-in-progress);
-            background: var(--status-in-progress-bg);
-            border: 1px solid var(--status-in-progress-border);
+        /* Title */
+        .cve-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+            line-height: 1.35;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+            transition: color 0.3s ease;
         }
 
-        .status-disclosed {
+        .cve-card:hover .cve-title {
+            color: var(--sev-color);
+        }
+
+        /* Description (1 line, truncate) */
+        .cve-desc {
+            font-size: 0.84rem;
+            color: var(--color-text-muted);
+            line-height: 1.55;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Bottom row: CVSS + status + tags */
+        .cve-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .cve-cvss {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--sev-color);
+        }
+
+        .cve-cvss svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+        }
+
+        .cve-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 3px 9px;
+            border-radius: 12px;
+        }
+
+        .cve-status.disclosed {
             color: var(--status-disclosed);
             background: var(--status-disclosed-bg);
             border: 1px solid var(--status-disclosed-border);
         }
 
-        .cve-body {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 32px;
-            align-items: center;
+        .cve-status.pending {
+            color: var(--status-pending);
+            background: var(--status-pending-bg);
+            border: 1px solid var(--status-pending-border);
         }
 
-        .cve-content h3 {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--color-text);
-            margin-bottom: 10px;
-            line-height: 1.3;
-            transition: color 0.3s ease;
+        .cve-status::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulseDot 2s ease-in-out infinite;
         }
 
-        .cve-card:hover .cve-content h3 {
-            color: var(--sev-color);
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
-        .cve-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 16px;
-            font-size: 0.85rem;
+        /* ---- Empty state ---- */
+        .cve-empty {
+            text-align: center;
+            padding: 60px 20px;
             color: var(--color-text-muted);
+            grid-column: 1 / -1;
         }
 
-        .cve-description {
-            font-size: 0.92rem;
-            color: var(--color-text-muted);
-            line-height: 1.7;
-            margin-bottom: 20px;
-            padding-left: 16px;
-            border-left: 2px solid var(--color-border);
-            transition: border-color 0.3s ease;
-        }
-
-        .cve-card:hover .cve-description {
-            border-left-color: var(--sev-color);
-        }
-
-        .cve-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .cve-tag {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--color-primary);
-            background: rgba(5, 150, 105, 0.06);
-            padding: 4px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(5, 150, 105, 0.15);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .cve-card:hover .cve-tag {
-            background: rgba(5, 150, 105, 0.1);
-            border-color: rgba(5, 150, 105, 0.25);
-        }
-
-        .cve-gauge-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            min-width: 110px;
-        }
-
-        .gauge {
-            width: 100px;
-            height: 100px;
-            position: relative;
-        }
-
-        .gauge svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .gauge-track {
-            fill: none;
-            stroke: var(--color-border);
-            stroke-width: 6;
-        }
-
-        .gauge-fill {
-            fill: none;
-            stroke: var(--sev-color);
-            stroke-width: 6;
-            stroke-linecap: round;
-            stroke-dasharray: 264;
-            stroke-dashoffset: 264;
-            transition: stroke-dashoffset 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
-        }
-
-        .cve-card.revealed .gauge-fill {
-            stroke-dashoffset: var(--offset);
-        }
-
-        .gauge-text {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gauge-num {
+        .cve-empty h3 {
             font-family: var(--font-display);
-            font-size: 1.25rem;
-            font-weight: 800;
+            font-size: 1.1rem;
             color: var(--color-text);
-            line-height: 1;
+            margin-bottom: 6px;
         }
 
-        .gauge-lbl {
-            font-size: 0.55rem;
-            font-weight: 700;
-            color: var(--sev-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        .sev-label {
-            font-family: var(--font-display);
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--sev-color);
-        }
-
-        @media (max-width: 768px) {
-            .cve-body {
+        /* ---- Responsive ---- */
+        @media (max-width: 900px) {
+            .cve-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
             }
-
-            .cve-gauge-wrap {
-                flex-direction: row;
-                justify-content: flex-start;
-                border-top: 1px solid var(--color-border);
-                padding-top: 20px;
-            }
-
-            .gauge {
-                width: 70px;
-                height: 70px;
-            }
-
-            .gauge-num { font-size: 1rem; }
-            .gauge-lbl { font-size: 0.45rem; }
-
-            .cve-content h3 { font-size: 1.1rem; }
-            .cve-description { font-size: 0.85rem; }
         }
 
-        @media (max-width: 480px) {
-            .cve-card {
-                padding: 24px 20px;
-            }
-            .cve-header {
+        @media (max-width: 640px) {
+            .cve-stats {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
+                margin-bottom: 32px;
             }
-            .cve-id { font-size: 0.75rem; padding: 4px 10px; }
-            .status-text { font-size: 0.6rem; padding: 4px 10px; }
+            .cve-stat { padding: 14px 10px; }
+            .cve-stat-num { font-size: 1.4rem; }
+            .cve-stat-label { font-size: 0.6rem; letter-spacing: 1px; }
+
+            .cve-card { padding: 16px; }
+            .cve-title { font-size: 0.92rem; }
+            .cve-desc { font-size: 0.8rem; }
+
+            .filters-container { gap: 6px; margin-bottom: 28px; }
+            .filter-btn { padding: 7px 14px; font-size: 0.75rem; }
+
+            .cve-bottom { gap: 8px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
                 <a href="../../index.html"><span>Farhan Khan</span></a>
             </div>
-
             <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-
             <ul class="nav-links">
                 <li><a href="../../index.html">Home</a></li>
                 <li><a href="../experience/index.html">Experience</a></li>
@@ -430,143 +437,242 @@
 
     <main>
         <section class="section cves-page-section">
-
-            <div class="wavy-background">
-                <div class="wave wave-1"></div>
-                <div class="wave wave-2"></div>
-                <div class="wave wave-3"></div>
-                <div class="wave wave-4"></div>
-            </div>
-            <div class="grid-overlay"></div>
-
             <div class="container">
 
+                <!-- Header -->
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
-                    <p>Documented vulnerabilities, responsible disclosures &amp; ongoing security research</p>
+                    <p>Published vulnerabilities, responsible disclosures &amp; ongoing research</p>
                 </div>
 
+                <!-- Stats -->
+                <div class="cve-stats reveal-on-scroll">
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">6</div>
+                        <span class="cve-stat-label">CVEs Assigned</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">5</div>
+                        <span class="cve-stat-label">Advisories</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">2</div>
+                        <span class="cve-stat-label">Critical</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">3</div>
+                        <span class="cve-stat-label">Pending</span>
+                    </div>
+                </div>
+
+                <!-- Filters -->
                 <div class="filters-container reveal-on-scroll">
-                    <button class="filter-btn active" data-filter="all">All Advisories</button>
-                    <button class="filter-btn" data-filter="disclosed">Disclosed</button>
-                    <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="critical">Critical</button>
+                    <button class="filter-btn" data-filter="high">High</button>
+                    <button class="filter-btn" data-filter="medium">Medium</button>
+                    <button class="filter-btn" data-filter="low">Low</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
                 </div>
 
-                <div class="cve-list">
+                <!-- CVE Grid -->
+                <div class="cve-grid">
 
-                    <!-- 1. GHSA-773r-585g-6vc3 (Moderate) - In Progress -->
-                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">GHSA-773r-585g-6vc3</span>
-                            <span class="status-text status-in-progress">In Progress</span>
+                    <!-- 1. CVE-2026-126812 — Critical, CVSS 9.8 -->
+                    <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="disclosed">
+                        <div class="cve-top">
+                            <span class="cve-id">CVE-2026-126812</span>
+                            <span class="cve-sev">Critical</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Per-Account Login Rate Limit Bypass via Username Case Variation</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">Rate Limit Bypass</span>
-                                    <span class="meta-item">Authentication</span>
-                                </div>
-                                <p class="cve-description">
-                                    The login rate limit is applied per username exactly as provided. By changing the case of the username (e.g., "User" vs "user"), an attacker can bypass the per-account lockout mechanism and perform unlimited brute-force attempts. Published Nov 4, 2026.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Brute Force</span>
-                                    <span class="cve-tag">Rate Limit</span>
-                                    <span class="cve-tag">Auth</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 92.4;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">6.5</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Moderate</span>
-                            </div>
+                        <h3 class="cve-title">Remote Code Execution via Plugin Installation</h3>
+                        <p class="cve-desc">
+                            Chain of stored SVG XSS + admin account takeover leading to full RCE through plugin installation. My first Critical CVE.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                9.8 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 2. CVE-2026-121735 (Moderate) - Disclosed -->
-                    <div class="cve-card reveal-achievement" data-status="disclosed" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
-                        <div class="cve-header">
+                    <!-- 2. CVE-2026-126814 — Medium, CVSS 4.8 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
+                            <span class="cve-id">CVE-2026-126814</span>
+                            <span class="cve-sev">Medium</span>
+                        </div>
+                        <h3 class="cve-title">Insufficient Validation in User Input Handling</h3>
+                        <p class="cve-desc">
+                            Medium-severity vulnerability affecting user-controlled input validation. Fixed in a coordinated release with VulnCheck.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                4.8 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. CVE-2026-126659 — High, CVSS 8.7 -->
+                    <div class="cve-card sev-high reveal-achievement" data-sev="high" data-status="disclosed">
+                        <div class="cve-top">
+                            <span class="cve-id">CVE-2026-126659</span>
+                            <span class="cve-sev">High</span>
+                        </div>
+                        <h3 class="cve-title">Storage Exhaustion via Anonymous Blueprints</h3>
+                        <p class="cve-desc">
+                            Unauthenticated users can exhaust server storage by repeatedly creating anonymous blueprints, causing denial of service.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                8.7 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. CVE-2026-122139 — Medium, CVSS 6.9 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
+                            <span class="cve-id">CVE-2026-122139</span>
+                            <span class="cve-sev">Medium</span>
+                        </div>
+                        <h3 class="cve-title">Account Enumeration via Password Reset</h3>
+                        <p class="cve-desc">
+                            Issue in password reset functionality exposes registered email addresses to unauthenticated attackers.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.9 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. CVE-2026-122138 — Medium, CVSS 6.3 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
+                            <span class="cve-id">CVE-2026-122138</span>
+                            <span class="cve-sev">Medium</span>
+                        </div>
+                        <h3 class="cve-title">Login Rate-Limit Bypass via Case Variation</h3>
+                        <p class="cve-desc">
+                            Login rate limiting can be bypassed through username case variations, enabling brute-force attacks.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.3 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. CVE-2026-121735 — Medium, CVSS 6.3 / 3.7 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-121735</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Account Confirmation Tokens Have No Expiry Window</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">CWE-613</span>
-                                    <span class="meta-item">Token Expiry</span>
-                                </div>
-                                <p class="cve-description">
-                                    When someone registers, a confirmation token is generated and emailed to them. The code only verifies that the token matches and the account isn't already confirmed, but never checks how old the token is. The token stays valid forever, allowing anyone with an old confirmation email to activate an account that was never meant to be active.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Token</span>
-                                    <span class="cve-tag">Expiry</span>
-                                    <span class="cve-tag">Account Security</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 150.48;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">4.3</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Moderate</span>
-                            </div>
+                        <h3 class="cve-title">Non-Expiring Account Confirmation Tokens</h3>
+                        <p class="cve-desc">
+                            Account confirmation tokens remained valid beyond their intended expiration period, allowing indefinite account activation.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.3 / 3.7 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 3. GHSA-fwgq-c3c6-p67j (Moderate) - In Progress -->
-                    <div class="cve-card reveal-achievement" data-status="in-progress" style="--sev-color: var(--sev-medium); --sev-glow: var(--sev-medium-glow);">
-                        <div class="cve-header">
-                            <span class="cve-id">GHSA-fwgq-c3c6-p67j</span>
-                            <span class="status-text status-in-progress">In Progress</span>
+                    <!-- 7. MariaDB Root Access — Critical, CVSS 9.8 (CVE pending) -->
+                    <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Critical</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Account Email Enumeration and Improper Rate-Limit Enforcement in Password Reset</h3>
-                                <div class="cve-meta">
-                                    <span class="meta-item">Enumeration</span>
-                                    <span class="meta-item">Password Reset</span>
-                                </div>
-                                <p class="cve-description">
-                                    The password reset endpoint returns different responses for valid vs. invalid email addresses, allowing attackers to enumerate registered users. Additionally, the rate limit can be bypassed by distributing requests. Published Nov 4, 2026.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Enumeration</span>
-                                    <span class="cve-tag">Rate Limit</span>
-                                    <span class="cve-tag">Reset</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"/>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 124.08;"/>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">5.3</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Moderate</span>
-                            </div>
+                        <h3 class="cve-title">Unauthenticated Remote MariaDB Root Access</h3>
+                        <p class="cve-desc">
+                            Critical vulnerability allowing unauthenticated remote access to the MariaDB root account. CVE ID pending assignment.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                9.8 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
                         </div>
+                    </div>
+
+                    <!-- 8. CSRF Protection — Low, CVSS 3.5 (CVE pending) -->
+                    <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Low</span>
+                        </div>
+                        <h3 class="cve-title">Insufficient CSRF Protection in Backend Login</h3>
+                        <p class="cve-desc">
+                            Backend login endpoint lacks sufficient CSRF protections, potentially allowing cross-site request forgery attacks.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                3.5 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 9. Session Invalidation — Low, CVSS 3.7 (CVE pending) -->
+                    <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Low</span>
+                        </div>
+                        <h3 class="cve-title">Session Invalidation on 2FA Toggle</h3>
+                        <p class="cve-desc">
+                            Sessions are not properly invalidated when enabling or disabling 2FA, potentially allowing session hijacking.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                3.7 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- 10. PeerTube URL Validation — Medium, CVSS 5.4 (CVE pending) -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Medium</span>
+                        </div>
+                        <h3 class="cve-title">PeerTube Video URL Validation Issue</h3>
+                        <p class="cve-desc">
+                            Inadequate URL validation in PeerTube's video import feature. CVE ID pending.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                5.4 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- Empty state -->
+                    <div class="cve-empty" id="cveEmpty" hidden>
+                        <h3>No advisories found</h3>
+                        <p>Try a different filter.</p>
                     </div>
 
                 </div>
@@ -574,6 +680,7 @@
         </section>
     </main>
 
+    <!-- BACK TO TOP -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -583,6 +690,7 @@
         <span class="btt-glow"></span>
     </button>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -590,7 +698,6 @@
                     <a href="../../index.html"><span>Farhan Khan</span></a>
                     <p>Cyber Security Enthusiast &amp; Engineer</p>
                 </div>
-
                 <nav class="footer-nav" aria-label="Footer navigation">
                     <a href="../../index.html">Home</a>
                     <a href="../experience/index.html">Experience</a>
@@ -601,7 +708,6 @@
                     <a href="../certifications/index.html">Certifications</a>
                     <a href="../profiles/index.html">Profiles</a>
                 </nav>
-
                 <div class="footer-bottom">
                     <p>&copy; 2026 Farhan Khan. All rights reserved.</p>
                     <p>Built with precision &amp; passion</p>
@@ -612,8 +718,10 @@
 
     <script src="../../script.js"></script>
 
+    <!-- PAGE SPECIFIC LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Staggered reveal
             const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
 
             const observer = new IntersectionObserver((entries) => {
@@ -621,7 +729,7 @@
                     if (entry.isIntersecting) {
                         const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
                         const index = allCards.indexOf(entry.target);
-                        const delay = index >= 0 ? index * 80 : 0;
+                        const delay = index >= 0 ? index * 60 : 0;
 
                         setTimeout(() => {
                             entry.target.classList.add('revealed');
@@ -637,8 +745,10 @@
 
             revealElements.forEach(el => observer.observe(el));
 
+            // Filters
             const filterBtns = document.querySelectorAll('.filter-btn');
             const cveCards = document.querySelectorAll('.cve-card');
+            const emptyState = document.getElementById('cveEmpty');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -646,31 +756,27 @@
                     btn.classList.add('active');
 
                     const filter = btn.getAttribute('data-filter');
+                    let visibleCount = 0;
 
                     cveCards.forEach(card => {
+                        const sev = card.getAttribute('data-sev');
                         const status = card.getAttribute('data-status');
-                        const matches = filter === 'all' || status === filter;
+
+                        let matches = false;
+                        if (filter === 'all') matches = true;
+                        else if (filter === 'pending') matches = status === 'pending';
+                        else matches = sev === filter;
 
                         if (matches) {
-                            if (card.style.display === 'none') {
-                                card.style.display = 'block';
-                                card.classList.remove('filtered-out');
-                                void card.offsetWidth; 
-                                setTimeout(() => card.classList.add('revealed'), 50);
-                            } else {
-                                card.classList.remove('filtered-out');
-                                card.classList.add('revealed');
-                            }
+                            card.classList.remove('filtered-out');
+                            card.classList.add('revealed');
+                            visibleCount++;
                         } else {
                             card.classList.add('filtered-out');
-                            card.classList.remove('revealed');
-                            setTimeout(() => {
-                                if (card.classList.contains('filtered-out')) {
-                                    card.style.display = 'none';
-                                }
-                            }, 400);
                         }
                     });
+
+                    if (emptyState) emptyState.hidden = visibleCount > 0;
                 });
             });
         });
