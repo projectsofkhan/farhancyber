@@ -11,7 +11,7 @@
     <meta name="keywords" content="Farhan Khan CVEs, Security Advisories, Vulnerability Research, CVE Assignment, Responsible Disclosure, Web Security, API Security, Open Source Security" />
     <meta name="author" content="Farhan Khan" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#f8fafc" />
+    <meta name="theme-color" content="#08080d" />
     <link rel="canonical" href="https://farhancyber.vercel.app/pages/cves/index.html" />
 
     <meta name="google-site-verification" content="HPqX77JCVCDljvpo2hwEBUbDxG0lb0wrPHe-5Ck4r94" />
@@ -49,369 +49,93 @@
     <style>
         :root {
             --sev-critical: #dc2626;
-            --sev-critical-bg: rgba(220, 38, 38, 0.08);
-            --sev-critical-border: rgba(220, 38, 38, 0.2);
+            --sev-critical-bg: rgba(220, 38, 38, 0.1);
+            --sev-critical-border: rgba(220, 38, 38, 0.3);
 
             --sev-high: #ea580c;
-            --sev-high-bg: rgba(234, 88, 12, 0.08);
-            --sev-high-border: rgba(234, 88, 12, 0.2);
+            --sev-high-bg: rgba(234, 88, 12, 0.1);
+            --sev-high-border: rgba(234, 88, 12, 0.3);
 
             --sev-medium: #ca8a04;
-            --sev-medium-bg: rgba(202, 138, 4, 0.08);
-            --sev-medium-border: rgba(202, 138, 4, 0.2);
+            --sev-medium-bg: rgba(202, 138, 4, 0.1);
+            --sev-medium-border: rgba(202, 138, 4, 0.3);
 
             --sev-low: #0891b2;
-            --sev-low-bg: rgba(8, 145, 178, 0.08);
-            --sev-low-border: rgba(8, 145, 178, 0.2);
+            --sev-low-bg: rgba(8, 145, 178, 0.1);
+            --sev-low-border: rgba(8, 145, 178, 0.3);
 
-            --status-disclosed: #059669;
-            --status-disclosed-bg: rgba(5, 150, 105, 0.08);
-            --status-disclosed-border: rgba(5, 150, 105, 0.2);
+            --status-disclosed: #a855f7;
+            --status-disclosed-bg: rgba(168, 85, 247, 0.1);
+            --status-disclosed-border: rgba(168, 85, 247, 0.3);
 
-            --status-pending: #d97706;
-            --status-pending-bg: rgba(217, 119, 6, 0.08);
-            --status-pending-border: rgba(217, 119, 6, 0.2);
+            --status-pending: #22d3ee;
+            --status-pending-bg: rgba(34, 211, 238, 0.1);
+            --status-pending-border: rgba(34, 211, 238, 0.3);
         }
 
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+        .cves-page-section { position: relative; padding-top: 130px; padding-bottom: 80px; min-height: 100vh; }
+        .cve-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 900px; margin: 0 auto 48px; }
+        .cve-stat { position: relative; padding: 20px 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 14px; text-align: center; transition: all 0.35s var(--transition-bounce); box-shadow: var(--shadow-card); }
+        .cve-stat:hover { border-color: var(--color-border-hover); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15); }
+        .cve-stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--color-primary); line-height: 1; letter-spacing: -0.02em; }
+        .cve-stat-label { display: block; margin-top: 6px; font-size: 0.68rem; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--color-text-muted); }
 
-        .cves-page-section {
-            position: relative;
-            padding-top: 130px;
-            padding-bottom: 80px;
-            min-height: 100vh;
-        }
+        .filters-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .filter-btn { background: var(--color-bg-card); border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-card); }
+        .filter-btn:hover { border-color: var(--color-primary); color: var(--color-primary); transform: translateY(-2px); }
+        .filter-btn.active { background: var(--color-primary); color: #08080d; border-color: var(--color-primary); box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3); }
 
-        /* ---- Stats bar ---- */
-        .cve-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            max-width: 900px;
-            margin: 0 auto 48px;
-        }
+        .cve-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
+        .cve-card { position: relative; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 14px; padding: 18px 20px; transition: transform 0.35s var(--transition-bounce), border-color 0.3s ease, box-shadow 0.3s ease; overflow: hidden; opacity: 0; transform: translateY(20px); box-shadow: var(--shadow-card); }
+        .cve-card.revealed { opacity: 1; transform: translateY(0); }
+        .cve-card.filtered-out { display: none; }
+        .cve-card:hover { transform: translateY(-4px); border-color: var(--color-border-hover); box-shadow: 0 12px 32px rgba(168, 85, 247, 0.15); }
+        .cve-card::before { content: ''; position: absolute; top: 16px; bottom: 16px; left: 0; width: 3px; border-radius: 0 3px 3px 0; background: var(--sev-color); transition: all 0.3s ease; }
+        .cve-card:hover::before { width: 4px; }
 
-        .cve-stat {
-            position: relative;
-            padding: 20px 16px;
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 14px;
-            text-align: center;
-            transition: all 0.35s var(--transition-bounce);
-            box-shadow: var(--shadow-card);
-        }
-
-        .cve-stat:hover {
-            border-color: var(--color-border-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.1);
-        }
-
-        .cve-stat-num {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--color-primary);
-            line-height: 1;
-            letter-spacing: -0.02em;
-        }
-
-        .cve-stat-label {
-            display: block;
-            margin-top: 6px;
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-        }
-
-        /* ---- Filters ---- */
-        .filters-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
-
-        .filter-btn {
-            background: #ffffff;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 9px 20px;
-            border-radius: 50px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-card);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--color-primary);
-            color: var(--color-primary);
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background: var(--color-primary);
-            color: #ffffff;
-            border-color: var(--color-primary);
-            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
-        }
-
-        /* ---- CVE Grid ---- */
-        .cve-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        /* ---- CVE Card (compact) ---- */
-        .cve-card {
-            position: relative;
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 14px;
-            padding: 18px 20px;
-            transition:
-                transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            box-shadow: var(--shadow-card);
-        }
-
-        .cve-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cve-card.filtered-out {
-            display: none;
-        }
-
-        .cve-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--color-border-hover);
-            box-shadow: 0 12px 32px rgba(5, 150, 105, 0.12);
-        }
-
-        /* Left accent bar */
-        .cve-card::before {
-            content: '';
-            position: absolute;
-            top: 16px; bottom: 16px; left: 0;
-            width: 3px;
-            border-radius: 0 3px 3px 0;
-            background: var(--sev-color);
-            transition: all 0.3s ease;
-        }
-
-        .cve-card:hover::before {
-            width: 4px;
-        }
-
-        /* Severity accent colors */
         .cve-card.sev-critical { --sev-color: var(--sev-critical); --sev-bg: var(--sev-critical-bg); --sev-border: var(--sev-critical-border); }
         .cve-card.sev-high     { --sev-color: var(--sev-high);     --sev-bg: var(--sev-high-bg);     --sev-border: var(--sev-high-border); }
         .cve-card.sev-medium   { --sev-color: var(--sev-medium);   --sev-bg: var(--sev-medium-bg);   --sev-border: var(--sev-medium-border); }
         .cve-card.sev-low      { --sev-color: var(--sev-low);      --sev-bg: var(--sev-low-bg);      --sev-border: var(--sev-low-border); }
 
-        /* Top row: ID + severity pill */
-        .cve-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
+        .cve-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+        .cve-id { font-family: var(--font-display); font-size: 0.76rem; font-weight: 700; color: var(--color-text); letter-spacing: 0.2px; background: var(--color-bg-elevated); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--color-border); }
+        .cve-sev { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-display); font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--sev-color); background: var(--sev-bg); padding: 4px 10px; border-radius: 20px; border: 1px solid var(--sev-border); white-space: nowrap; }
+        .cve-sev::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
-        .cve-id {
-            font-family: var(--font-mono, 'JetBrains Mono', monospace);
-            font-size: 0.76rem;
-            font-weight: 700;
-            color: var(--color-text);
-            letter-spacing: 0.2px;
-            background: var(--color-bg-elevated);
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--color-border);
-        }
+        .cve-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--color-text); line-height: 1.35; margin-bottom: 10px; letter-spacing: -0.01em; transition: color 0.3s ease; }
+        .cve-card:hover .cve-title { color: var(--sev-color); }
+        .cve-desc { font-size: 0.84rem; color: var(--color-text-muted); line-height: 1.55; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-        .cve-sev {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-family: var(--font-display);
-            font-size: 0.6rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--sev-color);
-            background: var(--sev-bg);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--sev-border);
-            white-space: nowrap;
-        }
+        .cve-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--color-border); }
+        .cve-cvss { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: var(--sev-color); }
+        .cve-cvss svg { width: 14px; height: 14px; opacity: 0.7; }
+        .cve-status { display: inline-flex; align-items: center; gap: 5px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 9px; border-radius: 12px; }
+        .cve-status.disclosed { color: var(--status-disclosed); background: var(--status-disclosed-bg); border: 1px solid var(--status-disclosed-border); }
+        .cve-status.pending { color: var(--status-pending); background: var(--status-pending-bg); border: 1px solid var(--status-pending-border); }
+        .cve-status::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: currentColor; animation: pulseDot 2s ease-in-out infinite; }
 
-        .cve-sev::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: currentColor;
-        }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .cve-empty { text-align: center; padding: 60px 20px; color: var(--color-text-muted); grid-column: 1 / -1; }
+        .cve-empty h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--color-text); margin-bottom: 6px; }
 
-        /* Title */
-        .cve-title {
-            font-family: var(--font-display);
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--color-text);
-            line-height: 1.35;
-            margin-bottom: 10px;
-            letter-spacing: -0.01em;
-            transition: color 0.3s ease;
-        }
-
-        .cve-card:hover .cve-title {
-            color: var(--sev-color);
-        }
-
-        /* Description (1 line, truncate) */
-        .cve-desc {
-            font-size: 0.84rem;
-            color: var(--color-text-muted);
-            line-height: 1.55;
-            margin-bottom: 14px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Bottom row: CVSS + status + tags */
-        .cve-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            padding-top: 10px;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .cve-cvss {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: var(--font-display);
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--sev-color);
-        }
-
-        .cve-cvss svg {
-            width: 14px;
-            height: 14px;
-            opacity: 0.7;
-        }
-
-        .cve-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 3px 9px;
-            border-radius: 12px;
-        }
-
-        .cve-status.disclosed {
-            color: var(--status-disclosed);
-            background: var(--status-disclosed-bg);
-            border: 1px solid var(--status-disclosed-border);
-        }
-
-        .cve-status.pending {
-            color: var(--status-pending);
-            background: var(--status-pending-bg);
-            border: 1px solid var(--status-pending-border);
-        }
-
-        .cve-status::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: currentColor;
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* ---- Empty state ---- */
-        .cve-empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--color-text-muted);
-            grid-column: 1 / -1;
-        }
-
-        .cve-empty h3 {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            color: var(--color-text);
-            margin-bottom: 6px;
-        }
-
-        /* ---- Responsive ---- */
-        @media (max-width: 900px) {
-            .cve-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        @media (max-width: 900px) { .cve-grid { grid-template-columns: 1fr; } }
         @media (max-width: 640px) {
-            .cve-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                margin-bottom: 32px;
-            }
+            .cve-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 32px; }
             .cve-stat { padding: 14px 10px; }
             .cve-stat-num { font-size: 1.4rem; }
             .cve-stat-label { font-size: 0.6rem; letter-spacing: 1px; }
-
             .cve-card { padding: 16px; }
             .cve-title { font-size: 0.92rem; }
             .cve-desc { font-size: 0.8rem; }
-
             .filters-container { gap: 6px; margin-bottom: 28px; }
             .filter-btn { padding: 7px 14px; font-size: 0.75rem; }
-
             .cve-bottom { gap: 8px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <div class="nav-brand">
@@ -439,14 +163,12 @@
         <section class="section cves-page-section">
             <div class="container">
 
-                <!-- Header -->
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
                     <p>Published vulnerabilities, responsible disclosures &amp; ongoing research</p>
                 </div>
 
-                <!-- Stats -->
                 <div class="cve-stats reveal-on-scroll">
                     <div class="cve-stat">
                         <div class="cve-stat-num">6</div>
@@ -466,7 +188,6 @@
                     </div>
                 </div>
 
-                <!-- Filters -->
                 <div class="filters-container reveal-on-scroll">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="critical">Critical</button>
@@ -476,10 +197,8 @@
                     <button class="filter-btn" data-filter="pending">Pending</button>
                 </div>
 
-                <!-- CVE Grid -->
                 <div class="cve-grid">
 
-                    <!-- 1. CVE-2026-126812 — Critical, CVSS 9.8 -->
                     <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-126812</span>
@@ -498,7 +217,6 @@
                         </div>
                     </div>
 
-                    <!-- 2. CVE-2026-126814 — Medium, CVSS 4.8 -->
                     <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-126814</span>
@@ -517,7 +235,6 @@
                         </div>
                     </div>
 
-                    <!-- 3. CVE-2026-126659 — High, CVSS 8.7 -->
                     <div class="cve-card sev-high reveal-achievement" data-sev="high" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-126659</span>
@@ -536,7 +253,6 @@
                         </div>
                     </div>
 
-                    <!-- 4. CVE-2026-122139 — Medium, CVSS 6.9 -->
                     <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-122139</span>
@@ -555,7 +271,6 @@
                         </div>
                     </div>
 
-                    <!-- 5. CVE-2026-122138 — Medium, CVSS 6.3 -->
                     <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-122138</span>
@@ -574,7 +289,6 @@
                         </div>
                     </div>
 
-                    <!-- 6. CVE-2026-121735 — Medium, CVSS 6.3 / 3.7 -->
                     <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
                         <div class="cve-top">
                             <span class="cve-id">CVE-2026-121735</span>
@@ -593,7 +307,6 @@
                         </div>
                     </div>
 
-                    <!-- 7. MariaDB Root Access — Critical, CVSS 9.8 (CVE pending) -->
                     <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="pending">
                         <div class="cve-top">
                             <span class="cve-id">GHSA-Pending</span>
@@ -612,7 +325,6 @@
                         </div>
                     </div>
 
-                    <!-- 8. CSRF Protection — Low, CVSS 3.5 (CVE pending) -->
                     <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
                         <div class="cve-top">
                             <span class="cve-id">GHSA-Pending</span>
@@ -631,7 +343,6 @@
                         </div>
                     </div>
 
-                    <!-- 9. Session Invalidation — Low, CVSS 3.7 (CVE pending) -->
                     <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
                         <div class="cve-top">
                             <span class="cve-id">GHSA-Pending</span>
@@ -650,7 +361,6 @@
                         </div>
                     </div>
 
-                    <!-- 10. PeerTube URL Validation — Medium, CVSS 5.4 (CVE pending) -->
                     <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="pending">
                         <div class="cve-top">
                             <span class="cve-id">GHSA-Pending</span>
@@ -669,7 +379,6 @@
                         </div>
                     </div>
 
-                    <!-- Empty state -->
                     <div class="cve-empty" id="cveEmpty" hidden>
                         <h3>No advisories found</h3>
                         <p>Try a different filter.</p>
@@ -680,7 +389,6 @@
         </section>
     </main>
 
-    <!-- BACK TO TOP -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <span class="btt-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -690,7 +398,6 @@
         <span class="btt-glow"></span>
     </button>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -718,10 +425,8 @@
 
     <script src="../../script.js"></script>
 
-    <!-- PAGE SPECIFIC LOGIC -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Staggered reveal
             const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
 
             const observer = new IntersectionObserver((entries) => {
@@ -745,7 +450,6 @@
 
             revealElements.forEach(el => observer.observe(el));
 
-            // Filters
             const filterBtns = document.querySelectorAll('.filter-btn');
             const cveCards = document.querySelectorAll('.cve-card');
             const emptyState = document.getElementById('cveEmpty');
