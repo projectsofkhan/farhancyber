@@ -1,5 +1,5 @@
 /* =========================================================
-   CERTIFICATIONS PAGE SPECIFIC STYLES
+   CERTIFICATIONS PAGE SPECIFIC STYLES (Original Animations)
    ========================================================= */
 
 .certs-page-section {
@@ -23,7 +23,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: 20px 24px;
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
     width: 100%;
     align-items: center;
     position: relative;
@@ -39,7 +39,7 @@
     height: 100%;
     background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
     pointer-events: none;
     border-radius: 50%;
 }
@@ -68,7 +68,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.7s ease;
 }
 
 .cert-row:hover .cert-row-image img { transform: scale(1.06); }
@@ -82,7 +82,7 @@
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
 }
 
 .cert-row:hover .cert-row-overlay { opacity: 1; }
@@ -119,7 +119,7 @@
     background: rgba(168, 85, 247, 0.05);
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-border);
-    transition: all 0.5s ease;
+    transition: all 0.7s ease;
 }
 
 .cert-row-no-image:hover .cert-row-icon {
@@ -128,7 +128,7 @@
 }
 
 .cert-row-no-image .cert-row-icon svg {
-    transition: transform 0.5s ease;
+    transition: transform 0.7s ease;
 }
 
 .cert-row-no-image:hover .cert-row-icon svg {
@@ -143,7 +143,7 @@
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: 3px;
-    transition: color 0.5s ease;
+    transition: color 0.7s ease;
 }
 
 .cert-row:hover .cert-row-info h3 { color: var(--color-primary); }
@@ -174,7 +174,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     flex-wrap: wrap;
-    transition: all 0.5s ease;
+    transition: all 0.7s ease;
     box-shadow: var(--shadow-card);
 }
 
@@ -253,7 +253,7 @@
     flex-direction: column;
     transform: scale(0.9) translateY(30px);
     opacity: 0;
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
 }
 
 .cert-modal.active .cert-modal-content {
@@ -305,7 +305,7 @@
     box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
     opacity: 0;
     transform: scale(0.95);
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
 }
 
 .cert-modal.active .cert-modal-img {
