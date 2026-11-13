@@ -11,7 +11,7 @@
     <meta name="keywords" content="Farhan Khan Certifications, TryHackMe Certifications, APIsec Certified Practitioner, C-JWAPT, Pre Security, Cyber Security 101, Advent of Cyber, Web Fundamentals, Ethical Hacking Certifications" />
     <meta name="author" content="Farhan Khan" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#f8fafc" />
+    <meta name="theme-color" content="#08080d" />
     <link rel="canonical" href="https://farhancyber.vercel.app/pages/certifications/index.html" />
 
     <meta name="google-site-verification" content="HPqX77JCVCDljvpo2hwEBUbDxG0lb0wrPHe-5Ck4r94" />
@@ -51,7 +51,77 @@
     }
     </script>
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../style.css" />
+
+    <style>
+        .certs-page-section { padding-top: 140px; min-height: 100vh; }
+        .certs-list { display: flex; flex-direction: column; gap: 24px; max-width: 940px; margin: 0 auto; width: 100%; }
+        .cert-row { display: flex; gap: 28px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 20px 24px; transition: all 0.5s var(--transition-bounce); width: 100%; align-items: center; position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
+        .cert-row .cert-glow { position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; border-radius: 50%; }
+        .cert-row:hover { border-color: var(--color-border-hover); box-shadow: var(--shadow-hover); transform: translateX(8px); }
+        .cert-row:hover .cert-glow { opacity: 1; }
+        
+        .cert-row-image { position: relative; width: 160px; height: 110px; flex-shrink: 0; overflow: hidden; border-radius: var(--border-radius-sm); background: var(--color-bg-elevated); cursor: pointer; }
+        .cert-row-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .cert-row:hover .cert-row-image img { transform: scale(1.06); }
+        .cert-row-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8, 8, 13, 0.7); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.5s ease; }
+        .cert-row:hover .cert-row-overlay { opacity: 1; }
+        .cert-view-btn { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: #fff; padding: 8px 20px; border: 2px solid var(--color-primary); border-radius: 50px; background: rgba(168, 85, 247, 0.2); transition: all 0.4s ease; cursor: pointer; }
+        .cert-view-btn:hover { background: var(--color-primary); color: #08080d; transform: scale(1.06); }
+
+        .cert-row-no-image .cert-row-icon { width: 160px; height: 110px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(168, 85, 247, 0.05); border-radius: var(--border-radius-sm); border: 1px solid var(--color-border); transition: all 0.5s ease; }
+        .cert-row-no-image:hover .cert-row-icon { border-color: var(--color-primary); background: rgba(168, 85, 247, 0.1); }
+        .cert-row-no-image .cert-row-icon svg { transition: transform 0.5s ease; }
+        .cert-row-no-image:hover .cert-row-icon svg { transform: scale(1.08) rotate(-4deg); }
+
+        .cert-row-info { flex: 1; min-width: 0; }
+        .cert-row-info h3 { font-size: 1.15rem; font-weight: 700; color: var(--color-text); margin-bottom: 3px; transition: color 0.5s ease; }
+        .cert-row:hover .cert-row-info h3 { color: var(--color-primary); }
+        .cert-org { font-size: 0.9rem; color: var(--color-text-muted); font-weight: 500; }
+        .cert-id { font-size: 0.8rem; color: var(--color-text-dim); margin: 4px 0 12px; }
+        .cert-row-info .btn { margin-top: 2px; }
+
+        .certs-stats { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 64px; padding: 32px 48px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); flex-wrap: wrap; transition: all 0.5s ease; box-shadow: var(--shadow-card); }
+        .certs-stats:hover { border-color: var(--color-border-hover); box-shadow: var(--shadow-hover); }
+        .stat-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .stat-number-large { font-family: var(--font-display); font-size: 2.6rem; font-weight: 900; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; }
+        .stat-label-large { font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500; margin-top: 2px; }
+        .stat-divider { width: 1px; height: 44px; background: var(--color-border); }
+
+        .cert-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: visibility 0.5s ease, opacity 0.5s ease; padding: 20px; }
+        .cert-modal.active { visibility: visible; opacity: 1; }
+        .cert-modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(8, 8, 13, 0.85); backdrop-filter: blur(16px); }
+        .cert-modal-content { position: relative; max-width: 850px; width: 100%; max-height: 90vh; background: var(--color-bg-card); border-radius: var(--border-radius); border: 1px solid var(--color-border); overflow: hidden; display: flex; flex-direction: column; transform: scale(0.9) translateY(30px); opacity: 0; transition: all 0.5s var(--transition-bounce); }
+        .cert-modal.active .cert-modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .cert-modal-close { position: absolute; top: 16px; right: 16px; z-index: 10; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text); transition: all 0.4s ease; backdrop-filter: blur(8px); }
+        .cert-modal-close:hover { border-color: var(--color-primary); color: var(--color-primary); transform: rotate(90deg) scale(1.05); background: rgba(168, 85, 247, 0.1); }
+        .cert-modal-image-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--color-bg-elevated); min-height: 350px; }
+        .cert-modal-img { max-width: 100%; max-height: 60vh; object-fit: contain; border-radius: var(--border-radius-sm); box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5); opacity: 0; transform: scale(0.95); transition: all 0.5s var(--transition-bounce); }
+        .cert-modal.active .cert-modal-img { opacity: 1; transform: scale(1); }
+        .cert-modal-info { padding: 20px 28px 24px; background: var(--color-bg-card); border-top: 1px solid var(--color-border); }
+        .cert-modal-info h3 { font-size: 1.15rem; font-weight: 700; color: var(--color-text); }
+        .cert-modal-info p { font-size: 0.9rem; color: var(--color-text-muted); }
+
+        @media (max-width: 768px) {
+            .cert-row { flex-direction: column; align-items: stretch; padding: 16px; gap: 16px; }
+            .cert-row-image { width: 100%; height: 180px; }
+            .cert-row-no-image .cert-row-icon { width: 100%; height: 120px; }
+            .cert-row-info { text-align: center; }
+            .cert-row-info .btn { width: 100%; justify-content: center; }
+            .certs-stats { flex-direction: column; gap: 16px; padding: 24px 20px; }
+            .stat-divider { width: 60px; height: 1px; }
+            .cert-modal-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+        }
+        @media (max-width: 480px) {
+            .certs-page-section { padding-top: 100px; }
+            .cert-row-image { height: 140px; }
+            .cert-row-no-image .cert-row-icon { height: 100px; }
+            .cert-row-info h3 { font-size: 1rem; }
+            .stat-number-large { font-size: 2rem; }
+            .cert-modal-image-wrap { padding: 12px; min-height: 160px; }
+            .cert-modal-img { max-height: 35vh; }
+        }
+    </style>
 </head>
 <body>
 
@@ -83,7 +153,7 @@
     <main>
         <section class="section certs-page-section">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal-up">
                     <span class="section-tag">Credentials</span>
                     <h2>Certifications</h2>
                     <p>Hands-on, exam-based credentials and program completions</p>
@@ -91,7 +161,7 @@
 
                 <div class="certs-list">
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.05s">
                         <div class="cert-row-image">
                             <img src="web-fundamentals.jpg" alt="Web Fundamentals" />
                             <div class="cert-row-overlay">
@@ -118,7 +188,7 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.1s">
                         <div class="cert-row-image">
                             <img src="pre-security-thm.jpg" alt="Pre Security THM" />
                             <div class="cert-row-overlay">
@@ -145,7 +215,7 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.15s">
                         <div class="cert-row-image">
                             <img src="cyber-security-101.jpg" alt="Cyber Security 101" />
                             <div class="cert-row-overlay">
@@ -172,7 +242,7 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.2s">
                         <div class="cert-row-image">
                             <img src="internship-certificate.jpg" alt="Internship Certificate" />
                             <div class="cert-row-overlay">
@@ -199,7 +269,7 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.25s">
                         <div class="cert-row-image">
                             <img src="advent-of-cyber.jpg" alt="Advent Of Cyber 2025" />
                             <div class="cert-row-overlay">
@@ -226,7 +296,7 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row">
+                    <div class="cert-row reveal-up" style="--d: 0.3s">
                         <div class="cert-row-image">
                             <img src="certificate.png" alt="IP Addressing and Subnetting" />
                             <div class="cert-row-overlay">
@@ -252,13 +322,13 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row cert-row-no-image">
+                    <div class="cert-row cert-row-no-image reveal-up" style="--d: 0.35s">
                         <div class="cert-row-icon">
                             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                <rect x="4" y="4" width="40" height="40" rx="8" stroke="#059669" stroke-width="2"/>
-                                <path d="M16 16L32 32M16 32L32 16" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="16" cy="16" r="3" fill="#059669"/>
-                                <circle cx="32" cy="32" r="3" fill="#059669"/>
+                                <rect x="4" y="4" width="40" height="40" rx="8" stroke="#a855f7" stroke-width="2"/>
+                                <path d="M16 16L32 32M16 32L32 16" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="16" cy="16" r="3" fill="#a855f7"/>
+                                <circle cx="32" cy="32" r="3" fill="#a855f7"/>
                             </svg>
                         </div>
                         <div class="cert-row-info">
@@ -275,13 +345,13 @@
                         <div class="cert-glow"></div>
                     </div>
 
-                    <div class="cert-row cert-row-no-image">
+                    <div class="cert-row cert-row-no-image reveal-up" style="--d: 0.4s">
                         <div class="cert-row-icon">
                             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                <rect x="4" y="4" width="40" height="40" rx="8" stroke="#059669" stroke-width="2"/>
-                                <path d="M16 16L32 32M16 32L32 16" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="16" cy="16" r="3" fill="#059669"/>
-                                <circle cx="32" cy="32" r="3" fill="#059669"/>
+                                <rect x="4" y="4" width="40" height="40" rx="8" stroke="#a855f7" stroke-width="2"/>
+                                <path d="M16 16L32 32M16 32L32 16" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="16" cy="16" r="3" fill="#a855f7"/>
+                                <circle cx="32" cy="32" r="3" fill="#a855f7"/>
                             </svg>
                         </div>
                         <div class="cert-row-info">
@@ -300,7 +370,7 @@
 
                 </div>
 
-                <div class="certs-stats">
+                <div class="certs-stats reveal-up" style="--d: 0.45s">
                     <div class="stat-item">
                         <span class="stat-number-large">8</span>
                         <span class="stat-label-large">Certifications</span>
@@ -370,6 +440,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../../script.js"></script>
 </body>
 </html>
