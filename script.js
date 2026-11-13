@@ -242,7 +242,6 @@ function initContactForm() {
                 </svg>
                 Sent Successfully!
             `;
-            // Updated Success Colors to Violet
             btn.style.background = '#a855f7';
             btn.style.borderColor = '#a855f7';
             btn.style.color = '#ffffff';
