@@ -63,22 +63,22 @@ function initContactForm() {
 
         if (!name.value.trim()) {
             isValid = false;
-            name.style.borderColor = '#059669';
-            name.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
+            name.style.borderColor = '#a855f7';
+            name.style.boxShadow = '0 0 0 4px rgba(168, 85, 247, 0.1)';
             name.focus();
         }
 
         if (!email.value.trim() || !isValidEmail(email.value)) {
             isValid = false;
-            email.style.borderColor = '#059669';
-            email.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
+            email.style.borderColor = '#a855f7';
+            email.style.boxShadow = '0 0 0 4px rgba(168, 85, 247, 0.1)';
             if (isValid) email.focus();
         }
 
         if (!message.value.trim()) {
             isValid = false;
-            message.style.borderColor = '#059669';
-            message.style.boxShadow = '0 0 0 4px rgba(5, 150, 105, 0.1)';
+            message.style.borderColor = '#a855f7';
+            message.style.boxShadow = '0 0 0 4px rgba(168, 85, 247, 0.1)';
             if (isValid) message.focus();
         }
 
@@ -96,8 +96,8 @@ function initContactForm() {
             </svg>
             Sent Successfully!
         `;
-        btn.style.background = '#059669';
-        btn.style.borderColor = '#059669';
+        btn.style.background = '#a855f7'; /* UPDATED COLOR */
+        btn.style.borderColor = '#a855f7'; /* UPDATED COLOR */
         btn.style.color = '#ffffff';
         btn.disabled = true;
         btn.style.transform = 'scale(0.98)';
