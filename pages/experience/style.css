@@ -1,5 +1,5 @@
 /* =========================================================
-   EXPERIENCE PAGE SPECIFIC STYLES
+   EXPERIENCE PAGE SPECIFIC STYLES (Original Animations)
    ========================================================= */
 
 .experience-page-section {
@@ -21,7 +21,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: 28px 32px;
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
     overflow: hidden;
     display: block;
     width: 100%;
@@ -36,7 +36,7 @@
     height: 100%;
     background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
     pointer-events: none;
     border-radius: 50%;
 }
@@ -67,7 +67,7 @@
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-border);
     padding: 8px;
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
 }
 
 .experience-card-large:hover .exp-logo {
@@ -84,7 +84,7 @@
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: 2px;
-    transition: color 0.5s ease;
+    transition: color 0.7s ease;
 }
 
 .experience-card-large:hover .exp-details h3 { color: var(--color-primary); }
@@ -140,7 +140,7 @@
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: 32px 36px;
-    transition: all 0.5s var(--transition-bounce);
+    transition: all 0.7s var(--transition-bounce);
     overflow: hidden;
     max-width: 900px;
     margin: 0 auto;
@@ -156,7 +156,7 @@
     height: 100%;
     background: radial-gradient(circle, rgba(168, 85, 247, 0.06), transparent 70%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
     pointer-events: none;
     border-radius: 50%;
 }
@@ -181,7 +181,7 @@
     flex-shrink: 0;
     color: var(--color-primary);
     padding-top: 4px;
-    transition: transform 0.5s var(--transition-bounce);
+    transition: transform 0.7s var(--transition-bounce);
 }
 
 .education-card-large:hover .edu-icon-large {
@@ -194,7 +194,7 @@
     font-size: 1.3rem;
     font-weight: 700;
     color: var(--color-text);
-    transition: color 0.5s ease;
+    transition: color 0.7s ease;
 }
 
 .education-card-large:hover .edu-details h3 { color: var(--color-primary); }
