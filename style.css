@@ -19,8 +19,9 @@
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     --font-display: 'Orbitron', 'Inter', monospace;
 
+    /* Restored your original bounce curves */
     --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --transition-slow: 0.8s;
+    --transition-slow: 0.7s;
     --transition-medium: 0.4s;
 
     --container-width: 1200px;
@@ -214,7 +215,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 }
 
 /* =========================================================
-   SHINING BUTTONS
+   SHINING BUTTONS (Your original layout + new smooth shine)
    ========================================================= */
 .btn {
     display: inline-flex;
@@ -245,6 +246,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
         color 0.3s ease;
 }
 
+/* The smooth shine effect */
 .btn::before {
     content: '';
     position: absolute;
@@ -413,6 +415,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .tagline-text { font-family: var(--font-display); font-size: 0.82rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--color-text); white-space: nowrap; }
 .tagline-text .gradient-text { font-weight: 900; }
 
+/* Restored Original Reveal Animations */
 .reveal-left { opacity: 0; transform: translateX(-40px) scale(0.92); transition: opacity 1s var(--transition-bounce), transform 1s var(--transition-bounce); transition-delay: var(--d, 0s); }
 .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s var(--transition-bounce), transform 0.9s var(--transition-bounce); transition-delay: var(--d, 0s); }
 .reveal-up { opacity: 0; transform: translateY(35px); transition: opacity 0.9s var(--transition-bounce), transform 0.9s var(--transition-bounce); transition-delay: var(--d, 0s); }
@@ -420,7 +423,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .reveal-left.settled, .reveal-right.settled, .reveal-up.settled { transition-delay: 0s !important; }
 
 /* =========================================================
-   SKILLS
+   SKILLS (Restored Original Animations)
    ========================================================= */
 .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
 .skill-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 36px 28px; text-align: center; transition: all 0.5s var(--transition-bounce); position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
@@ -433,7 +436,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .skill-card p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.7; }
 
 /* =========================================================
-   DROPDOWNS & EXPERIENCE
+   DROPDOWNS & EXPERIENCE (Restored Original Animations)
    ========================================================= */
 .dropdown-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .dropdown-toggle { margin: 0; display: inline-flex; justify-content: center; align-items: center; gap: 12px; }
@@ -464,7 +467,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .experience-card:hover .exp-details li::before { opacity: 1; transform: scale(1.2); }
 
 /* =========================================================
-   ACHIEVEMENTS
+   ACHIEVEMENTS (Restored Original Animations)
    ========================================================= */
 .achievement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
 .achievement-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 28px 24px; text-align: center; transition: all 0.5s var(--transition-bounce); position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
@@ -476,7 +479,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .achievement-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; }
 
 /* =========================================================
-   EDUCATION
+   EDUCATION (Restored Original Animations)
    ========================================================= */
 .education-box { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 44px 52px; display: flex; gap: 36px; align-items: flex-start; transition: all 0.5s var(--transition-bounce); max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; width: 100%; box-shadow: var(--shadow-card); }
 .education-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); opacity: 0; transition: opacity 0.5s ease; }
@@ -492,7 +495,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .edu-description { color: var(--color-text-muted); line-height: 1.8; font-size: 0.95rem; }
 
 /* =========================================================
-   PROJECTS
+   PROJECTS (Restored Original Animations)
    ========================================================= */
 .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
 .project-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; transition: all 0.5s var(--transition-bounce); width: 100%; box-shadow: var(--shadow-card); }
@@ -510,7 +513,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .project-meta { display: flex; gap: 18px; font-size: 0.8rem; color: var(--color-text-muted); }
 
 /* =========================================================
-   WRITEUPS & CERTS
+   WRITEUPS & CERTS (Restored Original Animations)
    ========================================================= */
 .writeups-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
 .writeup-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 22px 28px; display: flex; gap: 18px; align-items: center; transition: all 0.5s var(--transition-bounce); width: 100%; box-shadow: var(--shadow-card); }
@@ -529,7 +532,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .cert-info p { font-size: 0.85rem; color: var(--color-text-muted); }
 
 /* =========================================================
-   PROFILES
+   PROFILES (Restored Original Animations)
    ========================================================= */
 .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
 .profile-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 32px 20px; text-align: center; text-decoration: none; color: var(--color-text); transition: all 0.5s var(--transition-bounce); display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; overflow: hidden; width: 100%; box-shadow: var(--shadow-card); }
@@ -544,7 +547,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .profile-card:hover .profile-followers { color: var(--color-text); }
 
 /* =========================================================
-   CONTACT
+   CONTACT (Restored Original Animations)
    ========================================================= */
 .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; width: 100%; }
 .contact-info { display: flex; flex-direction: column; gap: 18px; }
