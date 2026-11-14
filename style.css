@@ -219,7 +219,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 }
 
 /* =========================================================
-   SHINING BUTTONS (Smoothness injected here)
+   SHINING BUTTONS
    ========================================================= */
 .btn {
     display: inline-flex;
@@ -316,7 +316,7 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 .section-action { text-align: center; margin-top: 40px; }
 
 /* =========================================================
-   NAVBAR
+   NAVBAR (Updated to match subpages)
    ========================================================= */
 .navbar {
     position: fixed;
@@ -348,8 +348,30 @@ body.intro-active .back-to-top { opacity: 0; pointer-events: none; }
 
 .nav-links { display: flex; list-style: none; gap: 4px; }
 .nav-links a { color: var(--color-text-muted); text-decoration: none; padding: 8px 18px; border-radius: 50px; font-size: 0.88rem; font-weight: 500; transition: all var(--transition-medium) ease; position: relative; white-space: nowrap; }
-.nav-links a:hover { color: var(--color-text); background: rgba(255, 255, 255, 0.05); }
-.nav-links a.active { color: #08080d; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); font-weight: 600; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.3); }
+
+/* The ::after underline indicator */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 50%;
+    width: 0; height: 2px;
+    background: var(--color-primary);
+    transition: all var(--transition-medium) ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.nav-links a:hover { color: var(--color-primary); background: rgba(168, 85, 247, 0.04); }
+.nav-links a:hover::after { width: 50%; }
+
+/* ACTIVE STATE: Matching the subpages exactly */
+.nav-links a.active { 
+    color: var(--color-primary); 
+    background: rgba(168, 85, 247, 0.08); 
+    font-weight: 500; /* Back to 500 to match subpages */
+    box-shadow: none; /* Remove the big glow */
+}
+.nav-links a.active::after { width: 50%; }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; border-radius: var(--border-radius-sm); transition: all var(--transition-medium) ease; }
 .nav-toggle:hover { background: rgba(255, 255, 255, 0.05); }
@@ -589,6 +611,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .nav-links { display: none; flex-direction: column; position: absolute; top: 74px; left: 0; right: 0; background: rgba(8, 8, 13, 0.98); backdrop-filter: blur(20px); padding: 16px 24px; border-bottom: 1px solid var(--color-border); gap: 2px; width: 100%; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
     .nav-links.open { display: flex; }
     .nav-links a { padding: 14px 18px; width: 100%; border-radius: 8px; white-space: normal; }
+    .nav-links a::after { display: none; }
     .nav-toggle { display: flex; }
     .hero-split { padding: 100px 20px 50px; min-height: auto; }
     .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
