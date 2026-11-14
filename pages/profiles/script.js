@@ -1,3 +1,11 @@
+const EMAILJS_SERVICE_ID = 'service_px36p6n';
+const EMAILJS_TEMPLATE_ID = 'template_g0hgzbm';
+const EMAILJS_PUBLIC_KEY = 'LqmXJ6msgFytUh1E-';
+
+if (typeof emailjs !== 'undefined') {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initContactForm();
@@ -44,7 +52,7 @@ function initContactForm() {
     const form = document.getElementById('profileContactForm');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const name = document.getElementById('profileName');
@@ -90,27 +98,70 @@ function initContactForm() {
 
         const btn = form.querySelector('button[type="submit"]');
         const originalHTML = btn.innerHTML;
+        
         btn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="animation: spin 1s linear infinite;">
+                <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="2" stroke-dasharray="15 10" stroke-linecap="round"/>
             </svg>
-            Sent Successfully!
+            Sending...
         `;
-        btn.style.background = '#a855f7';
-        btn.style.borderColor = '#a855f7';
-        btn.style.color = '#ffffff';
         btn.disabled = true;
         btn.style.transform = 'scale(0.98)';
 
-        setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.style.background = '';
-            btn.style.borderColor = '';
-            btn.style.color = '';
-            btn.disabled = false;
-            btn.style.transform = '';
-            form.reset();
-        }, 3000);
+        try {
+            const templateParams = {
+                from_name: name.value.trim(),
+                from_email: email.value.trim(),
+                message: message.value.trim(),
+                to_name: 'Farhan Khan',
+            };
+
+            if (typeof emailjs !== 'undefined') {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+            } else {
+                throw new Error('EmailJS library not loaded');
+            }
+
+            btn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10L8 14L16 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Sent Successfully!
+            `;
+            btn.style.background = '#a855f7';
+            btn.style.borderColor = '#a855f7';
+            btn.style.color = '#ffffff';
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                btn.disabled = false;
+                btn.style.transform = '';
+                form.reset();
+            }, 3000);
+
+        } catch (error) {
+            console.error('EmailJS error:', error);
+            btn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M10 6V11M10 14H10.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Failed. Try Again
+            `;
+            btn.style.background = '#ef4444';
+            btn.style.color = '#ffffff';
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.disabled = false;
+                btn.style.transform = '';
+            }, 3000);
+        }
     });
 }
 
@@ -207,6 +258,9 @@ shakeStyle.textContent = `
         45% { transform: translateX(-6px); }
         60% { transform: translateX(6px); }
         80% { transform: translateX(-3px); }
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 `;
 document.head.appendChild(shakeStyle);
