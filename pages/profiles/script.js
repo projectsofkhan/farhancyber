@@ -96,8 +96,8 @@ function initContactForm() {
             </svg>
             Sent Successfully!
         `;
-        btn.style.background = '#a855f7'; /* UPDATED COLOR */
-        btn.style.borderColor = '#a855f7'; /* UPDATED COLOR */
+        btn.style.background = '#a855f7';
+        btn.style.borderColor = '#a855f7';
         btn.style.color = '#ffffff';
         btn.disabled = true;
         btn.style.transform = 'scale(0.98)';
