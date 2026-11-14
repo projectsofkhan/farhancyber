@@ -45,6 +45,34 @@
     </script>
 
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+        :root {
+            --sev-critical: #dc2626;
+            --sev-critical-bg: rgba(220, 38, 38, 0.08);
+            --sev-critical-border: rgba(220, 38, 38, 0.2);
+
+            --sev-high: #ea580c;
+            --sev-high-bg: rgba(234, 88, 12, 0.08);
+            --sev-high-border: rgba(234, 88, 12, 0.2);
+
+            --sev-medium: #ca8a04;
+            --sev-medium-bg: rgba(202, 138, 4, 0.08);
+            --sev-medium-border: rgba(202, 138, 4, 0.2);
+
+            --sev-low: #0891b2;
+            --sev-low-bg: rgba(8, 145, 178, 0.08);
+            --sev-low-border: rgba(8, 145, 178, 0.2);
+
+            --status-disclosed: #a855f7;
+            --status-disclosed-bg: rgba(168, 85, 247, 0.08);
+            --status-disclosed-border: rgba(168, 85, 247, 0.2);
+
+            --status-pending: #fbbf24;
+            --status-pending-bg: rgba(251, 191, 36, 0.08);
+            --status-pending-border: rgba(251, 191, 36, 0.2);
+        }
+    </style>
 </head>
 <body>
 
@@ -74,33 +102,36 @@
 
     <main>
         <section class="section cves-page-section">
-            <div class="wavy-background">
-                <div class="wave wave-1"></div>
-                <div class="wave wave-2"></div>
-                <div class="wave wave-3"></div>
-                <div class="wave wave-4"></div>
-                <div class="wave wave-5"></div>
-            </div>
-
-            <div class="particles-container">
-                <div class="particle p1"></div>
-                <div class="particle p2"></div>
-                <div class="particle p3"></div>
-                <div class="particle p4"></div>
-                <div class="particle p5"></div>
-                <div class="particle p6"></div>
-            </div>
-
-            <div class="grid-overlay"></div>
-
             <div class="container">
 
+                <!-- Header -->
                 <div class="section-header reveal-on-scroll">
                     <span class="section-tag">Security Research</span>
                     <h2>CVEs &amp; Advisories</h2>
                     <p>Published vulnerabilities, responsible disclosures &amp; ongoing research</p>
                 </div>
 
+                <!-- Stats -->
+                <div class="cve-stats reveal-on-scroll">
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">6</div>
+                        <span class="cve-stat-label">CVEs Assigned</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">5</div>
+                        <span class="cve-stat-label">Advisories</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">2</div>
+                        <span class="cve-stat-label">Critical</span>
+                    </div>
+                    <div class="cve-stat">
+                        <div class="cve-stat-num">3</div>
+                        <span class="cve-stat-label">Pending</span>
+                    </div>
+                </div>
+
+                <!-- Filters -->
                 <div class="filters-container reveal-on-scroll">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="critical">Critical</button>
@@ -110,387 +141,203 @@
                     <button class="filter-btn" data-filter="pending">Pending</button>
                 </div>
 
-                <div class="cve-list">
+                <!-- CVE Grid -->
+                <div class="cve-grid">
 
-                    <!-- 1. Critical -->
-                    <div class="cve-card reveal-achievement" data-sev="critical" data-status="disclosed" style="--sev-color: #dc2626; --sev-glow: rgba(220, 38, 38, 0.15);">
-                        <div class="cve-header">
+                    <!-- 1. CVE-2026-126812 — Critical, CVSS 9.8 -->
+                    <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-126812</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Critical</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Remote Code Execution via Plugin Installation</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 9.8</span>
-                                    <span>·</span>
-                                    <span>Critical</span>
-                                </div>
-                                <p class="cve-description">
-                                    Chain of stored SVG XSS + admin account takeover leading to full RCE through plugin installation. My first Critical CVE.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">RCE</span>
-                                    <span class="cve-tag">XSS</span>
-                                    <span class="cve-tag">Privilege Escalation</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 10;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">9.8</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Critical</span>
-                            </div>
+                        <h3 class="cve-title">Remote Code Execution via Plugin Installation</h3>
+                        <p class="cve-desc">
+                            Chain of stored SVG XSS + admin account takeover leading to full RCE through plugin installation. My first Critical CVE.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                9.8 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 2. Medium -->
-                    <div class="cve-card reveal-achievement" data-sev="medium" data-status="disclosed" style="--sev-color: #ca8a04; --sev-glow: rgba(202, 138, 4, 0.15);">
-                        <div class="cve-header">
+                    <!-- 2. CVE-2026-126814 — Medium, CVSS 4.8 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-126814</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Insufficient Validation in User Input Handling</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 4.8</span>
-                                    <span>·</span>
-                                    <span>Medium</span>
-                                </div>
-                                <p class="cve-description">
-                                    Medium-severity vulnerability affecting user-controlled input validation. Fixed in a coordinated release with VulnCheck.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Input Validation</span>
-                                    <span class="cve-tag">VulnCheck</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 137;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">4.8</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
-                            </div>
+                        <h3 class="cve-title">Insufficient Validation in User Input Handling</h3>
+                        <p class="cve-desc">
+                            Medium-severity vulnerability affecting user-controlled input validation. Fixed in a coordinated release with VulnCheck.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                4.8 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 3. High -->
-                    <div class="cve-card reveal-achievement" data-sev="high" data-status="disclosed" style="--sev-color: #ea580c; --sev-glow: rgba(234, 88, 12, 0.15);">
-                        <div class="cve-header">
+                    <!-- 3. CVE-2026-126659 — High, CVSS 8.7 -->
+                    <div class="cve-card sev-high reveal-achievement" data-sev="high" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-126659</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">High</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Storage Exhaustion via Anonymous Blueprints</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 8.7</span>
-                                    <span>·</span>
-                                    <span>High</span>
-                                </div>
-                                <p class="cve-description">
-                                    Unauthenticated users can exhaust server storage by repeatedly creating anonymous blueprints, causing denial of service.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">DoS</span>
-                                    <span class="cve-tag">Storage</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 34;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">8.7</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">High</span>
-                            </div>
+                        <h3 class="cve-title">Storage Exhaustion via Anonymous Blueprints</h3>
+                        <p class="cve-desc">
+                            Unauthenticated users can exhaust server storage by repeatedly creating anonymous blueprints, causing denial of service.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                8.7 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 4. Medium -->
-                    <div class="cve-card reveal-achievement" data-sev="medium" data-status="disclosed" style="--sev-color: #ca8a04; --sev-glow: rgba(202, 138, 4, 0.15);">
-                        <div class="cve-header">
+                    <!-- 4. CVE-2026-122139 — Medium, CVSS 6.9 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-122139</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Account Enumeration via Password Reset</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 6.9</span>
-                                    <span>·</span>
-                                    <span>Medium</span>
-                                </div>
-                                <p class="cve-description">
-                                    Issue in password reset functionality exposes registered email addresses to unauthenticated attackers.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Enumeration</span>
-                                    <span class="cve-tag">Auth</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 82;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">6.9</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
-                            </div>
+                        <h3 class="cve-title">Account Enumeration via Password Reset</h3>
+                        <p class="cve-desc">
+                            Issue in password reset functionality exposes registered email addresses to unauthenticated attackers.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.9 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 5. Medium -->
-                    <div class="cve-card reveal-achievement" data-sev="medium" data-status="disclosed" style="--sev-color: #ca8a04; --sev-glow: rgba(202, 138, 4, 0.15);">
-                        <div class="cve-header">
+                    <!-- 5. CVE-2026-122138 — Medium, CVSS 6.3 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-122138</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Login Rate-Limit Bypass via Case Variation</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 6.3</span>
-                                    <span>·</span>
-                                    <span>Medium</span>
-                                </div>
-                                <p class="cve-description">
-                                    Login rate limiting can be bypassed through username case variations, enabling brute-force attacks.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Brute Force</span>
-                                    <span class="cve-tag">Rate Limit</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 98;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">6.3</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
-                            </div>
+                        <h3 class="cve-title">Login Rate-Limit Bypass via Case Variation</h3>
+                        <p class="cve-desc">
+                            Login rate limiting can be bypassed through username case variations, enabling brute-force attacks.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.3 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 6. Medium -->
-                    <div class="cve-card reveal-achievement" data-sev="medium" data-status="disclosed" style="--sev-color: #ca8a04; --sev-glow: rgba(202, 138, 4, 0.15);">
-                        <div class="cve-header">
+                    <!-- 6. CVE-2026-121735 — Medium, CVSS 6.3 / 3.7 -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="disclosed">
+                        <div class="cve-top">
                             <span class="cve-id">CVE-2026-121735</span>
-                            <span class="status-text status-disclosed">Disclosed</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Non-Expiring Account Confirmation Tokens</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 6.3 / 3.7</span>
-                                    <span>·</span>
-                                    <span>Medium</span>
-                                </div>
-                                <p class="cve-description">
-                                    Account confirmation tokens remained valid beyond their intended expiration period, allowing indefinite account activation.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Auth</span>
-                                    <span class="cve-tag">Tokens</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 98;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">6.3</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
-                            </div>
+                        <h3 class="cve-title">Non-Expiring Account Confirmation Tokens</h3>
+                        <p class="cve-desc">
+                            Account confirmation tokens remained valid beyond their intended expiration period, allowing indefinite account activation.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                6.3 / 3.7 CVSS
+                            </span>
+                            <span class="cve-status disclosed">Disclosed</span>
                         </div>
                     </div>
 
-                    <!-- 7. Critical Pending -->
-                    <div class="cve-card reveal-achievement" data-sev="critical" data-status="pending" style="--sev-color: #dc2626; --sev-glow: rgba(220, 38, 38, 0.15);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-Pending</span>
-                            <span class="status-text status-pending">Pending</span>
+                    <!-- 7. MariaDB Root Access — Critical, CVSS 9.8 (CVE pending) -->
+                    <div class="cve-card sev-critical reveal-achievement" data-sev="critical" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Critical</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Unauthenticated Remote MariaDB Root Access</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 9.8</span>
-                                    <span>·</span>
-                                    <span>Critical</span>
-                                </div>
-                                <p class="cve-description">
-                                    Critical vulnerability allowing unauthenticated remote access to the MariaDB root account. CVE ID pending assignment.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Database</span>
-                                    <span class="cve-tag">Auth Bypass</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 10;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">9.8</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Critical</span>
-                            </div>
+                        <h3 class="cve-title">Unauthenticated Remote MariaDB Root Access</h3>
+                        <p class="cve-desc">
+                            Critical vulnerability allowing unauthenticated remote access to the MariaDB root account. CVE ID pending assignment.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                9.8 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
                         </div>
                     </div>
 
-                    <!-- 8. Low Pending -->
-                    <div class="cve-card reveal-achievement" data-sev="low" data-status="pending" style="--sev-color: #22d3ee; --sev-glow: rgba(34, 211, 238, 0.15);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-Pending</span>
-                            <span class="status-text status-pending">Pending</span>
+                    <!-- 8. CSRF Protection — Low, CVSS 3.5 (CVE pending) -->
+                    <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Low</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Insufficient CSRF Protection in Backend Login</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 3.5</span>
-                                    <span>·</span>
-                                    <span>Low</span>
-                                </div>
-                                <p class="cve-description">
-                                    Backend login endpoint lacks sufficient CSRF protections, potentially allowing cross-site request forgery attacks.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">CSRF</span>
-                                    <span class="cve-tag">Auth</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 172;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">3.5</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Low</span>
-                            </div>
+                        <h3 class="cve-title">Insufficient CSRF Protection in Backend Login</h3>
+                        <p class="cve-desc">
+                            Backend login endpoint lacks sufficient CSRF protections, potentially allowing cross-site request forgery attacks.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                3.5 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
                         </div>
                     </div>
 
-                    <!-- 9. Low Pending -->
-                    <div class="cve-card reveal-achievement" data-sev="low" data-status="pending" style="--sev-color: #22d3ee; --sev-glow: rgba(34, 211, 238, 0.15);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-Pending</span>
-                            <span class="status-text status-pending">Pending</span>
+                    <!-- 9. Session Invalidation — Low, CVSS 3.7 (CVE pending) -->
+                    <div class="cve-card sev-low reveal-achievement" data-sev="low" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Low</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>Session Invalidation on 2FA Toggle</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 3.7</span>
-                                    <span>·</span>
-                                    <span>Low</span>
-                                </div>
-                                <p class="cve-description">
-                                    Sessions are not properly invalidated when enabling or disabling 2FA, potentially allowing session hijacking.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Session Management</span>
-                                    <span class="cve-tag">2FA</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 165;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">3.7</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Low</span>
-                            </div>
+                        <h3 class="cve-title">Session Invalidation on 2FA Toggle</h3>
+                        <p class="cve-desc">
+                            Sessions are not properly invalidated when enabling or disabling 2FA, potentially allowing session hijacking.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                3.7 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
                         </div>
                     </div>
 
-                    <!-- 10. Medium Pending -->
-                    <div class="cve-card reveal-achievement" data-sev="medium" data-status="pending" style="--sev-color: #ca8a04; --sev-glow: rgba(202, 138, 4, 0.15);">
-                        <div class="cve-header">
-                            <span class="cve-id">CVE-Pending</span>
-                            <span class="status-text status-pending">Pending</span>
+                    <!-- 10. PeerTube URL Validation — Medium, CVSS 5.4 (CVE pending) -->
+                    <div class="cve-card sev-medium reveal-achievement" data-sev="medium" data-status="pending">
+                        <div class="cve-top">
+                            <span class="cve-id">GHSA-Pending</span>
+                            <span class="cve-sev">Medium</span>
                         </div>
-                        <div class="cve-body">
-                            <div class="cve-content">
-                                <h3>PeerTube Video URL Validation Issue</h3>
-                                <div class="cve-meta">
-                                    <span>CVSS 5.4</span>
-                                    <span>·</span>
-                                    <span>Medium</span>
-                                </div>
-                                <p class="cve-description">
-                                    Inadequate URL validation in PeerTube's video import feature. CVE ID pending.
-                                </p>
-                                <div class="cve-tags">
-                                    <span class="cve-tag">Input Validation</span>
-                                    <span class="cve-tag">SSRF</span>
-                                </div>
-                            </div>
-                            <div class="cve-gauge-wrap">
-                                <div class="gauge">
-                                    <svg viewBox="0 0 100 100">
-                                        <circle class="gauge-track" cx="50" cy="50" r="42"></circle>
-                                        <circle class="gauge-fill" cx="50" cy="50" r="42" style="--offset: 122;"></circle>
-                                    </svg>
-                                    <div class="gauge-text">
-                                        <span class="gauge-num">5.4</span>
-                                        <span class="gauge-lbl">CVSS</span>
-                                    </div>
-                                </div>
-                                <span class="sev-label">Medium</span>
-                            </div>
+                        <h3 class="cve-title">PeerTube Video URL Validation Issue</h3>
+                        <p class="cve-desc">
+                            Inadequate URL validation in PeerTube's video import feature. CVE ID pending.
+                        </p>
+                        <div class="cve-bottom">
+                            <span class="cve-cvss">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5 3.5 9 9 11 5.5-2 9-6 9-11V7l-9-5z"/></svg>
+                                5.4 CVSS
+                            </span>
+                            <span class="cve-status pending">Pending</span>
                         </div>
+                    </div>
+
+                    <!-- Empty state -->
+                    <div class="cve-empty" id="cveEmpty" hidden>
+                        <h3>No advisories found</h3>
+                        <p>Try a different filter.</p>
                     </div>
 
                 </div>
@@ -535,5 +382,69 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- PAGE SPECIFIC LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Staggered reveal
+            const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-achievement');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const allCards = Array.from(document.querySelectorAll('.reveal-achievement'));
+                        const index = allCards.indexOf(entry.target);
+                        const delay = index >= 0 ? index * 60 : 0;
+
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, delay);
+
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // Filters
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cveCards = document.querySelectorAll('.cve-card');
+            const emptyState = document.getElementById('cveEmpty');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+                    let visibleCount = 0;
+
+                    cveCards.forEach(card => {
+                        const sev = card.getAttribute('data-sev');
+                        const status = card.getAttribute('data-status');
+
+                        let matches = false;
+                        if (filter === 'all') matches = true;
+                        else if (filter === 'pending') matches = status === 'pending';
+                        else matches = sev === filter;
+
+                        if (matches) {
+                            card.classList.remove('filtered-out');
+                            card.classList.add('revealed');
+                            visibleCount++;
+                        } else {
+                            card.classList.add('filtered-out');
+                        }
+                    });
+
+                    if (emptyState) emptyState.hidden = visibleCount > 0;
+                });
+            });
+        });
+    </script>
 </body>
 </html>
