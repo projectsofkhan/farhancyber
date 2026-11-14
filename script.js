@@ -26,7 +26,6 @@ const introDone = new Promise(r => { resolveIntro = r; });
 
     if (!intro) { finishSite(); return; }
 
-    // Very fast — 200ms hold for the ambient glow to build, then curtains open
     setTimeout(() => {
         intro.classList.add('exit');
         setTimeout(() => {
@@ -35,7 +34,6 @@ const introDone = new Promise(r => { resolveIntro = r; });
         }, 600);
     }, 200);
 
-    // Safety fallback in case something hangs
     setTimeout(() => {
         if (document.body.classList.contains('intro-active')) {
             finishSite();
@@ -99,7 +97,7 @@ function initNavigation() {
 }
 
 // ========================================
-// DROPDOWNS (View buttons)
+// DROPDOWNS (View buttons) - Fixed scrolling
 // ========================================
 function initDropdowns() {
     const toggles = [...document.querySelectorAll('.dropdown-toggle')];
@@ -127,8 +125,8 @@ function initDropdowns() {
 
         setTimeout(() => {
             const r = content.getBoundingClientRect();
-            if (r.bottom > window.innerHeight || r.top < 80) {
-                btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (r.bottom > window.innerHeight - 40) {
+                window.scrollBy({ top: r.bottom - window.innerHeight + 60, behavior: 'smooth' });
             }
         }, 360);
     }
@@ -225,7 +223,6 @@ function initContactForm() {
         btn.style.transform = 'scale(0.98)';
 
         try {
-            // Real EmailJS send
             const templateParams = {
                 from_name: name.value.trim(),
                 from_email: email.value.trim(),
