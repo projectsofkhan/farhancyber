@@ -99,7 +99,7 @@ body {
 .btn-primary:hover { box-shadow: 0 12px 40px rgba(168, 85, 247, 0.4); transform: translateY(-3px) scale(1.02); }
 .btn-sm { padding: 8px 20px; font-size: 0.85rem; min-width: auto; }
 
-/* NAVBAR */
+/* NAVBAR (Exact Homepage Styles) */
 .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(8, 8, 13, 0.85); backdrop-filter: blur(20px) saturate(1.4); border-bottom: 1px solid var(--color-border); transition: all var(--transition-medium) ease; width: 100%; max-width: 100vw; }
 .navbar.scrolled { background: rgba(8, 8, 13, 0.95); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5); }
 .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 74px; width: 100%; }
