@@ -425,7 +425,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .reveal-left.settled, .reveal-right.settled, .reveal-up.settled { transition-delay: 0s !important; }
 
 /* =========================================================
-   SKILLS
+   SKILLS, DROPDOWNS, CARDS
    ========================================================= */
 .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; width: 100%; }
 .skill-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 36px 28px; text-align: center; transition: all var(--transition-slow) var(--transition-bounce); position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
@@ -437,9 +437,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .skill-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--color-text); }
 .skill-card p { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.7; }
 
-/* =========================================================
-   DROPDOWNS & EXPERIENCE
-   ========================================================= */
 .dropdown-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .dropdown-toggle { margin: 0; display: inline-flex; justify-content: center; align-items: center; gap: 12px; }
 .dropdown-toggle .dropdown-arrow { transition: transform 0.5s var(--transition-bounce); }
@@ -468,9 +465,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .exp-details li::before { content: '◆'; position: absolute; left: 0; color: var(--color-primary); font-size: 0.6rem; top: 9px; opacity: 0.5; transition: all 0.4s ease; }
 .experience-card:hover .exp-details li::before { opacity: 1; transform: scale(1.2); }
 
-/* =========================================================
-   ACHIEVEMENTS
-   ========================================================= */
 .achievement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
 .achievement-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 28px 24px; text-align: center; transition: all 0.5s var(--transition-bounce); position: relative; overflow: hidden; box-shadow: var(--shadow-card); }
 .achievement-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--color-primary); transform: scaleX(0); transition: transform 0.5s var(--transition-bounce); }
@@ -480,9 +474,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .achievement-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: var(--color-text); }
 .achievement-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; }
 
-/* =========================================================
-   EDUCATION
-   ========================================================= */
 .education-box { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 44px 52px; display: flex; gap: 36px; align-items: flex-start; transition: all 0.5s var(--transition-bounce); max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; width: 100%; box-shadow: var(--shadow-card); }
 .education-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); opacity: 0; transition: opacity 0.5s ease; }
 .education-box:hover { border-color: var(--color-primary); box-shadow: var(--shadow-hover); transform: translateY(-4px); }
@@ -496,9 +487,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .edu-details span { font-size: 0.85rem; color: var(--color-text-muted); padding: 4px 14px; background: var(--color-bg-elevated); border-radius: 20px; border: 1px solid var(--color-border); }
 .edu-description { color: var(--color-text-muted); line-height: 1.8; font-size: 0.95rem; }
 
-/* =========================================================
-   PROJECTS
-   ========================================================= */
 .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; }
 .project-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow: hidden; transition: all 0.5s var(--transition-bounce); width: 100%; box-shadow: var(--shadow-card); }
 .project-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--color-primary); box-shadow: var(--shadow-hover); }
@@ -514,9 +502,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .project-tags span { font-size: 0.75rem; font-weight: 500; background: rgba(168, 85, 247, 0.1); color: var(--color-primary); padding: 3px 14px; border-radius: 20px; border: 1px solid rgba(168, 85, 247, 0.15); }
 .project-meta { display: flex; gap: 18px; font-size: 0.8rem; color: var(--color-text-muted); }
 
-/* =========================================================
-   WRITEUPS & CERTS
-   ========================================================= */
 .writeups-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
 .writeup-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 22px 28px; display: flex; gap: 18px; align-items: center; transition: all 0.5s var(--transition-bounce); width: 100%; box-shadow: var(--shadow-card); }
 .writeup-card:hover { transform: translateX(8px); border-color: var(--color-primary); box-shadow: var(--shadow-hover); }
@@ -533,9 +518,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .cert-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; color: var(--color-text); }
 .cert-info p { font-size: 0.85rem; color: var(--color-text-muted); }
 
-/* =========================================================
-   PROFILES
-   ========================================================= */
 .profiles-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; }
 .profile-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: 32px 20px; text-align: center; text-decoration: none; color: var(--color-text); transition: all 0.5s var(--transition-bounce); display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; overflow: hidden; width: 100%; box-shadow: var(--shadow-card); }
 .profile-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(168, 85, 247, 0.06), transparent 70%); opacity: 0; transition: opacity 0.5s ease; }
@@ -548,9 +530,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .profile-followers { font-size: 0.8rem; color: var(--color-text-muted); }
 .profile-card:hover .profile-followers { color: var(--color-text); }
 
-/* =========================================================
-   CONTACT
-   ========================================================= */
 .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; width: 100%; }
 .contact-info { display: flex; flex-direction: column; gap: 18px; }
 .contact-info h2 { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, #fff 0%, var(--color-primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -570,9 +549,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .form-group input:focus, .form-group textarea:focus { border-color: var(--color-primary); background: var(--color-bg); box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1); }
 .form-group textarea { resize: vertical; min-height: 130px; }
 
-/* =========================================================
-   BACK TO TOP & FOOTER
-   ========================================================= */
 .back-to-top { position: fixed; bottom: 32px; right: 32px; width: 58px; height: 58px; border-radius: 50%; background: var(--color-bg-card); border: 1px solid var(--color-border); cursor: pointer; z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.8); transition: all 0.5s var(--transition-bounce); box-shadow: var(--shadow-card); padding: 0; }
 .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
 .back-to-top:hover { transform: translateY(-4px) scale(1.06); box-shadow: 0 14px 40px rgba(168, 85, 247, 0.3); border-color: var(--color-primary); }
@@ -592,9 +568,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 24px; border-top: 1px solid var(--color-border); width: 100%; }
 .footer-bottom p { font-size: 0.85rem; color: var(--color-text-muted); }
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
 @media (max-width: 1024px) {
     .hero-split-inner { grid-template-columns: 1fr; gap: 40px; justify-items: center; text-align: center; }
     .hero-left { align-items: center; text-align: center; }
@@ -602,7 +575,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .hero-desc { margin: 0 auto; }
     .hero-right { align-items: center; text-align: center; }
     .hero-stats { width: 100%; max-width: 560px; }
-
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
     .achievement-grid { grid-template-columns: repeat(2, 1fr); }
     .projects-grid { grid-template-columns: repeat(2, 1fr); }
@@ -618,7 +590,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .nav-links.open { display: flex; }
     .nav-links a { padding: 14px 18px; width: 100%; border-radius: 8px; white-space: normal; }
     .nav-toggle { display: flex; }
-
     .hero-split { padding: 100px 20px 50px; min-height: auto; }
     .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .stat-block { padding: 12px 10px 16px; }
@@ -626,7 +597,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .stat-suffix { font-size: 0.95rem; }
     .stat-label { font-size: 0.58rem; letter-spacing: 1px; }
     .tagline-text { font-size: 0.72rem; letter-spacing: 2px; }
-
     .skills-grid { grid-template-columns: 1fr; }
     .achievement-grid { grid-template-columns: 1fr; }
     .projects-grid { grid-template-columns: 1fr; }
@@ -634,7 +604,6 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .cert-grid { grid-template-columns: 1fr; }
     .profiles-grid { grid-template-columns: 1fr 1fr; }
     .section-header h2 { font-size: 2rem; }
-
     .contact-form { padding: 28px 24px; }
     .exp-header { flex-direction: column; }
     .hero-actions { flex-direction: column; width: 100%; }
@@ -642,10 +611,8 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .footer-nav { flex-direction: column; gap: 6px; }
     .footer-bottom { flex-direction: column; text-align: center; }
     .back-to-top { bottom: 20px; right: 20px; width: 50px; height: 50px; }
-
     .dropdown-view-more { flex-direction: column; gap: 12px; }
     .dropdown-view-more .btn { width: 100%; }
-
     .experience-card:hover { transform: none; }
     .writeup-card:hover { transform: none; }
 }
@@ -662,14 +629,7 @@ body.site-ready .stat-bar span { animation: barGrow 1.6s var(--transition-bounce
     .contact-form { padding: 20px 16px; }
     .tagline-text { font-size: 0.65rem; letter-spacing: 1.5px; }
     .hero-tagline { gap: 10px; max-width: 260px; }
-
-    .btn {
-        padding: 12px 24px;
-        font-size: 0.85rem;
-        min-width: 120px;
-        white-space: normal;
-    }
-
+    .btn { padding: 12px 24px; font-size: 0.85rem; min-width: 120px; white-space: normal; }
     .back-to-top { bottom: 16px; right: 16px; width: 46px; height: 46px; }
 }
 
