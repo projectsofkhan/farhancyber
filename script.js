@@ -26,6 +26,7 @@ const introDone = new Promise(r => { resolveIntro = r; });
 
     if (!intro) { finishSite(); return; }
 
+    // Very fast — 200ms hold for the ambient glow to build, then curtains open
     setTimeout(() => {
         intro.classList.add('exit');
         setTimeout(() => {
@@ -34,6 +35,7 @@ const introDone = new Promise(r => { resolveIntro = r; });
         }, 600);
     }, 200);
 
+    // Safety fallback in case something hangs
     setTimeout(() => {
         if (document.body.classList.contains('intro-active')) {
             finishSite();
@@ -223,6 +225,7 @@ function initContactForm() {
         btn.style.transform = 'scale(0.98)';
 
         try {
+            // Real EmailJS send
             const templateParams = {
                 from_name: name.value.trim(),
                 from_email: email.value.trim(),
@@ -327,7 +330,7 @@ function initCardGlow() {
             const y = e.clientY - rect.top;
             const rotateX = (y - rect.height / 2) / 25;
             const rotateY = (rect.width / 2 - x) / 25;
-            card.style.transition = 'transform 0.12s ease-out, border-color 0.5s ease, box-shadow 0.5s ease';
+            card.style.transition = 'transform 0.12s ease-out, border-color 0.4s ease, box-shadow 0.4s ease';
             card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         });
 
