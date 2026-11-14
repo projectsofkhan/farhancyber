@@ -81,10 +81,9 @@ function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Find the index of this element to create a staggered/cascading effect
                 const allAchievements = Array.from(document.querySelectorAll('.reveal-achievement'));
                 const index = allAchievements.indexOf(entry.target);
-                const delay = index >= 0 ? index * 150 : 0; // 150ms delay between cards
+                const delay = index >= 0 ? index * 150 : 0;
                 
                 setTimeout(() => {
                     entry.target.classList.add('revealed');
